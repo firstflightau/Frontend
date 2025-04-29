@@ -3,7 +3,7 @@ name: 🚀 FTP Deploy
 on:
   push:
     branches:
-      - main  # or your active branch
+      - main
 
 jobs:
   deploy:
@@ -24,6 +24,19 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: Add .htaccess for SPA routing
+      run: |
+        echo '<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteBase /
+        RewriteRule ^index\.html$ - [L]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule . /index.html [L]
+        </IfModule>
+
+        ErrorDocument 404 /index.html' > dist/.htaccess
+
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
@@ -31,4 +44,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: /
+        server-dir: /public_html/
