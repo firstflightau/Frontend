@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Build project
-      run: npm run build
+      run: npm run build  # Ensure this command builds your project correctly
 
     - name: Add .htaccess for SPA routing
       run: |
@@ -35,6 +35,7 @@ jobs:
         </IfModule>
 
         ErrorDocument 404 /index.html' > dist/.htaccess
+      # Ensure this is required and the server supports it for SPA routing
 
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -42,5 +43,5 @@ jobs:
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
-        server-dir: /  # Deploy to root directory, adjust as needed
+        local-dir: ./dist/  # Local directory to deploy
+        server-dir: /  # Root directory to deploy to (adjust as needed)
