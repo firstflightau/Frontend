@@ -1,0 +1,95 @@
+a {
+    text-decoration: none !important;
+    color: var(--primary-color);
+}
+
+.lang a {
+    color: var(--primary-color) !important;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+ul {
+    margin-bottom: 0 ;
+}
+
+.trip-pills {
+    margin-top: -30px;
+    margin-bottom: 58px !important;
+    gap: 16px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .trip-pills .trip-nav {
+    background-color: transparent;
+    border: 1px solid var(--tertiary-border);
+    padding: 8px 20px;
+    border-radius: 20px !important;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-title);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  .trip-pills .trip-nav.active, .trip-pills .trip-nav:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--white);
+    border: 1px solid transparent;
+  }
+
+
+  .footer-wrapper .footer-area .footer-tittle .listing .single-list a {
+    color: var(--tertiary-title) !important;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+
+  .breadcrumbs-area .breadcrumb .single-list:last-child::before {
+    float: left;
+    padding-right: var(--bs-breadcrumb-item-padding-x);
+    content: "--";
+    font-family: "remixIcon";
+    font-size: 16px;
+    margin-top: 8px;
+    line-height: 1;
+    color: var(--primary-title);
+  }
+
+
+  .section-padding {
+    padding-top: 20px;
+    padding-bottom: 98px;
+    background-image: url("./assets/images/gallery/register-bg.png");
+    background-repeat: no-repeat;
+  }
+
+  .feature-area-bg::before {
+    position: absolute;
+    content: "";
+    background-image: url("./assets/images/gallery/feature-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.75;
+    width: 100%;
+    height: 332px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    background-repeat: no-repeat;
+  }
+
+  .mask-img-2 {
+    /* -webkit-mask-image: url(./assets/images/icon/mask-1.png); */
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  .collapse {
+    visibility: unset !important;
+  }
