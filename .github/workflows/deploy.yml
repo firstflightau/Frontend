@@ -3,7 +3,7 @@ name: 🚀 FTP Deploy
 on:
   push:
     branches:
-      - main  # or 'master', adjust to your branch name
+      - main  # or your active branch
 
 jobs:
   deploy:
@@ -25,10 +25,10 @@ jobs:
       run: npm run build
 
     - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ${{ secrets.FTP_HOST }}
+        server: ${{ secrets.FTP_HOST }}:21
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./build
-        server-dir: /public_html/   # Change if your server uses a different folder
+        server-dir: /public_html/
