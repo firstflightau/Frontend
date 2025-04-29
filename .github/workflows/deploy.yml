@@ -3,7 +3,7 @@ name: 🚀 FTP Deploy
 on:
   push:
     branches:
-      - main
+      - main  # Change if your branch name is different
 
 jobs:
   deploy:
@@ -31,7 +31,7 @@ jobs:
         RewriteBase /
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule ^.*$ /index.html [L]
+        RewriteRule ^(.*)$ /index.html [L]
         </IfModule>
 
         ErrorDocument 404 /index.html' > dist/.htaccess
@@ -43,4 +43,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: /
+        server-dir: /  # Deploy to root directory, adjust as needed
