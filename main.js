@@ -20,6 +20,27 @@ import Swiper from "swiper";
         :: Nav tab
     -------------------------------------------------*/
 
+  $(document).ready(function () {
+    $(document).on("click", "#hamburger", function (e) {
+      e.stopPropagation();
+      $(".search-filter-section").toggleClass("sidenav-active");
+      $(".cover").addClass("cover-active");
+    });
+    $(document).on("click", function (e) {
+      if (
+        !$(e.target).closest(".search-filter-section").length &&
+        !$(e.target).is("#hamburger")
+      ) {
+        $(".search-filter-section").removeClass("sidenav-active");
+        $(".cover").removeClass("cover-active");
+      }
+    });
+    $(document).on("click", ".close-btn", function (e) {
+      $(".search-filter-section").removeClass("sidenav-active");
+      $(".cover").removeClass("cover-active");
+    });
+  });
+
   $(".tab-section-one").show();
   $(".tab-btn a").on("click", function () {
     $(".tab-btn a").removeClass("active");
@@ -65,26 +86,6 @@ import Swiper from "swiper";
   /*------------------------------------------------
         :: Filter side nav
     ------------------------------------------------*/
-  $(document).ready(function () {
-    $(document).on("click", "#hamburger", function (e) {
-      e.stopPropagation();
-      $(".search-filter-section").toggleClass("sidenav-active");
-      $(".cover").addClass("cover-active");
-    });
-    $(document).on("click", function (e) {
-      if (
-        !$(e.target).closest(".search-filter-section").length &&
-        !$(e.target).is("#hamburger")
-      ) {
-        $(".search-filter-section").removeClass("sidenav-active");
-        $(".cover").removeClass("cover-active");
-      }
-    });
-    $(document).on("click", ".close-btn", function (e) {
-      $(".search-filter-section").removeClass("sidenav-active");
-      $(".cover").removeClass("cover-active");
-    });
-  });
 
   /*-------------------------------------------------
         :: Play video Slider
