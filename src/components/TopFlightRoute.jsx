@@ -19,11 +19,29 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Melbourne",
         toCode: "MEL",
         toAirport: "Tullamarine Airport",
+
+        _id: "668278aa909eb1823ba94615",
+        name: "Melbourne",
+        CityCode: "MEL",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "MEL",
+        code: "Tullamarine",
+        id: "MEL",
       },
       icon: "PlaneTakeoff",
     },
@@ -33,11 +51,30 @@ const TopFlightRoute = () => {
         fromCity: "Brisbane",
         fromCode: "BNE",
         fromAirport: "Brisbane Airport",
+
+        _id: "668278a9909eb1823ba93e66",
+        name: "Brisbane",
+        CityCode: "BNE",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "BNE",
+        code: "Brisbane Airport",
+        id: "BNE",
       },
       to: {
         toCity: "Melbourne",
         toCode: "MEL",
         toAirport: "Tullamarine Airport",
+        _id: 4,
+
+        _id: "668278aa909eb1823ba94615",
+        name: "Melbourne",
+        CityCode: "MEL",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "MEL",
+        code: "Tullamarine",
+        id: "MEL",
       },
       icon: "PlaneTakeoff",
     },
@@ -47,11 +84,29 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Brisbane",
         toCode: "BNE",
         toAirport: "Brisbane Airport",
+
+        _id: "668278a9909eb1823ba93e66",
+        name: "Brisbane",
+        CityCode: "BNE",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "BNE",
+        code: "Brisbane Airport",
+        id: "BNE",
       },
       icon: "PlaneTakeoff",
     },
@@ -61,11 +116,29 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Adelaide",
         toCode: "ADL",
         toAirport: "Adelaide Airport",
+
+        _id: "668278a9909eb1823ba93cc0",
+        name: "Adelaide",
+        CityCode: "ADL",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "ADL",
+        code: "Adelaide",
+        id: "ADL",
       },
       icon: "PlaneTakeoff",
     },
@@ -75,11 +148,28 @@ const TopFlightRoute = () => {
         fromCity: "Adelaide",
         fromCode: "ADL",
         fromAirport: "Adelaide Airport",
+
+        _id: "668278a9909eb1823ba93cc0",
+        name: "Adelaide",
+        CityCode: "ADL",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "ADL",
+        code: "Adelaide",
+        id: "ADL",
       },
       to: {
         toCity: "Brisbane",
         toCode: "BNE",
         toAirport: "Brisbane Airport",
+        _id: 10,
+        AirportCode: "BNE",
+        CityCode: "BNE",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Brisbane Airport",
+        id: "BNE",
+        name: "Brisbane",
       },
       icon: "PlaneTakeoff",
     },
@@ -89,11 +179,32 @@ const TopFlightRoute = () => {
         fromCity: "Perth",
         fromCode: "PER",
         fromAirport: "Perth Airport",
+
+        _id: "668278aa909eb1823ba948af",
+        name: "Perth",
+        CityCode: "PER",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        AirportCode: "PER",
+        code: "Perth",
+        id: "PER",
       },
       to: {
         toCity: "Sydney",
         toCode: "SYD",
         toAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       icon: "PlaneTakeoff",
     },
@@ -105,11 +216,32 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Dubai",
         toCode: "DXB",
         toAirport: "Dubai Airport",
+
+        _id: "668278aa909eb1823ba940a3",
+        name: "Dubai",
+        CityCode: "DXB",
+        CountryCode: "AE",
+        CountryName: "United Arab Emirates",
+        AirportCode: "DXB",
+        code: "Dubai",
+        id: "DXB",
       },
       icon: "PlaneTakeoff",
     },
@@ -119,11 +251,32 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Singapore",
         toCode: "QPG",
         toAirport: "Paya Lebar Airport",
+
+        _id: "668278aa909eb1823ba94abf",
+        name: "Singapore",
+        CityCode: "SIN",
+        CountryCode: "SG",
+        CountryName: "Singapore",
+        AirportCode: "QPG",
+        code: "Paya Lebar",
+        id: "QPG",
       },
       icon: "PlaneTakeoff",
     },
@@ -133,11 +286,32 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Tokyo",
         toCode: "HND",
         toAirport: "Haneda Airport",
+
+        _id: "668278ab909eb1823ba94cb9",
+        name: "Tokyo",
+        CityCode: "TYO",
+        CountryCode: "JP",
+        CountryName: "Japan",
+        AirportCode: "HND",
+        code: "Haneda",
+        id: "HND",
       },
       icon: "PlaneTakeoff",
     },
@@ -147,11 +321,33 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "New Delhi",
         toCode: "DEL",
         toAirport: "Indira Gandhi Airport",
+
+        _id: "668278a9909eb1823ba94034",
+        name: "New Delhi",
+        CityCode: "DEL",
+        CountryCode: "IN",
+        CountryName: "India",
+        AirportCode: "DEL",
+        code: "Indira Gandhi Airport",
+        id: "DEL",
+        state: "Delhi",
       },
       icon: "PlaneTakeoff",
     },
@@ -161,11 +357,33 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Mumbai",
         toCode: "BOM",
         toAirport: "Chhatrapati Shivaji Airport",
+
+        _id: "668278a9909eb1823ba93e78",
+        name: "Mumbai",
+        CityCode: "BOM",
+        CountryCode: "IN",
+        CountryName: "India",
+        AirportCode: "BOM",
+        code: "Chhatrapati Shivaji International Airport",
+        id: "BOM",
+        state: "Maharashtra",
       },
       icon: "PlaneTakeoff",
     },
@@ -175,20 +393,47 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
       },
       to: {
         toCity: "Los Angeles",
         toCode: "LAX",
         toAirport: "Los Angeles Airport",
+
+        _id: "668278aa909eb1823ba944ef",
+        name: "Los Angeles",
+        CityCode: "LAX",
+        CountryCode: "US",
+        CountryName: "United States",
+        AirportCode: "LAX",
+        code: "Los Angeles Int'l",
+        id: "LAX",
       },
       icon: "PlaneTakeoff",
     },
   ];
 
-  const [selectedFlight, setSelectedFlight] = useState(null);
+  // const [selectedFlight, setSelectedFlight] = useState(null);
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(1);
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(0);
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(0);
+  const [recentSearches, setRecentSearches] = useState(
+    JSON.parse(localStorage.getItem("FlightRecentSearchesFrom")) || []
+  );
+  const [recentSearchesTO, setRecentSearchesTO] = useState(
+    JSON.parse(localStorage.getItem("FlightRecentSearchesTo")) || []
+  );
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -210,11 +455,11 @@ const TopFlightRoute = () => {
   };
 
   const handleCardClick = (flight) => {
-    setSelectedFlight(flight);
+    // setSelectedFlight(flight);
     setIsOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, selectedFlight) => {
     e.preventDefault();
 
     // const guests = {
@@ -229,7 +474,7 @@ const TopFlightRoute = () => {
     sessionStorage.setItem("infants", guestInfantsInputValue);
 
     const departDate = new Date();
-    departDate.setDate(departDate.getDate() + 5);
+    departDate.setDate(departDate.getDate() + 1);
     const formattedDate = departDate.toISOString().split("T")[0];
 
     const params = {
@@ -244,6 +489,31 @@ const TopFlightRoute = () => {
       class: JSON.stringify(flightClassState),
       FlightCabinClass: flightClassState.value,
     };
+    const updatedRecentSearches = [
+      selectedFlight?.from,
+      ...recentSearches.filter((item) => item._id !== selectedFlight?.from._id),
+    ].slice(0, 5);
+    const updatedRecentSearchesTO = [
+      selectedFlight?.to,
+      ...recentSearchesTO.filter((item) => item._id !== selectedFlight?.to._id),
+    ].slice(0, 5);
+
+    setRecentSearches(updatedRecentSearches);
+    setRecentSearchesTO(updatedRecentSearchesTO);
+    console.log(
+      selectedFlight,
+      "seledddd",
+      recentSearches,
+      updatedRecentSearches
+    );
+    localStorage.setItem(
+      "FlightRecentSearchesFrom",
+      JSON.stringify(updatedRecentSearches)
+    );
+    localStorage.setItem(
+      "FlightRecentSearchesTo",
+      JSON.stringify(updatedRecentSearchesTO)
+    );
 
     const queryString = new URLSearchParams(params).toString();
     dispatch(searchpy(params));
@@ -291,7 +561,8 @@ const TopFlightRoute = () => {
           {filteredData?.map((item, index) => (
             <div
               key={index}
-              onClick={() => handleCardClick(item)}
+              // onClick={() => handleCardClick(item)}
+              onClick={(e) => handleSubmit(e, item)}
               className="col-xl-4 col-md-6 mb-3 cursor-pointer"
             >
               <div className="flex items-center justify-between p-3 bg-yellow-200 border rounded-lg transition hover:bg-white">

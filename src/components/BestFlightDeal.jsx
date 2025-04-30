@@ -25,6 +25,63 @@ const BestFlightDeal = () => {
       toCity: "Dubai",
       toCode: "DXB",
       toAirport: "Dubai Airport",
+      from: {
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
+      },
+      to: {
+        toCity: "Dubai",
+        toCode: "DXB",
+        toAirport: "Dubai Airport",
+
+        _id: "668278aa909eb1823ba940a3",
+        name: "Dubai",
+        CityCode: "DXB",
+        CountryCode: "AE",
+        CountryName: "United Arab Emirates",
+        AirportCode: "DXB",
+        code: "Dubai",
+        id: "DXB",
+        from: {
+          fromCity: "Sydney",
+          fromCode: "SYD",
+          fromAirport: "Kingsford Smith Airport",
+
+          AirportCode: "SYD",
+          CityCode: "SYD",
+          CountryCode: "AU",
+          CountryName: "Australia",
+          code: "Kingsford Smith",
+          id: "SYD",
+          name: "Sydney",
+          _id: "668278aa909eb1823ba94b92",
+        },
+        to: {
+          toCity: "New Delhi",
+          toCode: "DEL",
+          toAirport: "Indira Gandhi Airport",
+
+          _id: "668278a9909eb1823ba94034",
+          name: "New Delhi",
+          CityCode: "DEL",
+          CountryCode: "IN",
+          CountryName: "India",
+          AirportCode: "DEL",
+          code: "Indira Gandhi Airport",
+          id: "DEL",
+          state: "Delhi",
+        },
+      },
     },
     {
       img: package2,
@@ -34,6 +91,35 @@ const BestFlightDeal = () => {
       toCity: "Mumbai",
       toCode: "BOM",
       toAirport: "Chhatrapati Shivaji Airport",
+      from: {
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
+      },
+      to: {
+        toCity: "Mumbai",
+        toCode: "BOM",
+        toAirport: "Chhatrapati Shivaji Airport",
+
+        _id: "668278a9909eb1823ba93e78",
+        name: "Mumbai",
+        CityCode: "BOM",
+        CountryCode: "IN",
+        CountryName: "India",
+        AirportCode: "BOM",
+        code: "Chhatrapati Shivaji International Airport",
+        id: "BOM",
+        state: "Maharashtra",
+      },
     },
     {
       img: package3,
@@ -43,6 +129,31 @@ const BestFlightDeal = () => {
       toCity: "Hyderabad",
       toCode: "HYD",
       toAirport: "Rajiv Gandhi Airport",
+      from: {
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
+      },
+      to: {
+        _id: "668278aa909eb1823ba942db",
+        name: "Hyderabad",
+        CityCode: "HYD",
+        CountryCode: "IN",
+        CountryName: "India",
+        AirportCode: "HYD",
+        code: "Rajiv Gandhi International Airport",
+        id: "HYD",
+        state: "Telangana",
+      },
     },
     {
       img: package4,
@@ -52,6 +163,30 @@ const BestFlightDeal = () => {
       toCity: "Thailand",
       toCode: "THS",
       toAirport: "Sukhothai Airport",
+      from: {
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
+      },
+      to: {
+        _id: "668278aa909eb1823ba94c03",
+        name: "Sukhothai",
+        CityCode: "THS",
+        CountryCode: "TH",
+        CountryName: "Thailand",
+        AirportCode: "THS",
+        code: "SUKHOTHAI",
+        id: "THS",
+      },
     },
     {
       img: package5,
@@ -61,14 +196,44 @@ const BestFlightDeal = () => {
       toCity: "Toronto",
       toCode: "YYZ",
       toAirport: "Pearson Int'l Airport",
+      from: {
+        fromCity: "Sydney",
+        fromCode: "SYD",
+        fromAirport: "Kingsford Smith Airport",
+
+        AirportCode: "SYD",
+        CityCode: "SYD",
+        CountryCode: "AU",
+        CountryName: "Australia",
+        code: "Kingsford Smith",
+        id: "SYD",
+        name: "Sydney",
+        _id: "668278aa909eb1823ba94b92",
+      },
+      to: {
+        _id: "668278ab909eb1823ba94f05",
+        name: "Toronto",
+        CityCode: "YTO",
+        CountryCode: "CA",
+        CountryName: "Canada",
+        AirportCode: "YYZ",
+        code: "Pearson Int'l",
+        id: "YYZ",
+      },
     },
   ];
 
-  const [selectedFlight, setSelectedFlight] = useState(null);
+  // const [selectedFlight, setSelectedFlight] = useState(null);
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(1);
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(0);
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [recentSearches, setRecentSearches] = useState(
+    JSON.parse(localStorage.getItem("FlightRecentSearchesFrom")) || []
+  );
+  const [recentSearchesTO, setRecentSearchesTO] = useState(
+    JSON.parse(localStorage.getItem("FlightRecentSearchesTo")) || []
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -89,11 +254,11 @@ const BestFlightDeal = () => {
   };
 
   const handleCardClick = (flight) => {
-    setSelectedFlight(flight);
+    // setSelectedFlight(flight);
     setIsOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, selectedFlight) => {
     e.preventDefault();
 
     // const guests = {
@@ -108,7 +273,7 @@ const BestFlightDeal = () => {
     sessionStorage.setItem("infants", guestInfantsInputValue);
 
     const departDate = new Date();
-    departDate.setDate(departDate.getDate() + 5);
+    departDate.setDate(departDate.getDate() + 1);
     const formattedDate = departDate.toISOString().split("T")[0];
 
     const params = {
@@ -125,6 +290,31 @@ const BestFlightDeal = () => {
     };
 
     const queryString = new URLSearchParams(params).toString();
+    const updatedRecentSearches = [
+      selectedFlight?.from,
+      ...recentSearches.filter((item) => item._id !== selectedFlight?.from._id),
+    ].slice(0, 5);
+    const updatedRecentSearchesTO = [
+      selectedFlight?.to,
+      ...recentSearchesTO.filter((item) => item._id !== selectedFlight?.to._id),
+    ].slice(0, 5);
+
+    setRecentSearches(updatedRecentSearches);
+    setRecentSearchesTO(updatedRecentSearchesTO);
+    console.log(
+      selectedFlight,
+      "seledddd",
+      recentSearches,
+      updatedRecentSearches
+    );
+    localStorage.setItem(
+      "FlightRecentSearchesFrom",
+      JSON.stringify(updatedRecentSearches)
+    );
+    localStorage.setItem(
+      "FlightRecentSearchesTo",
+      JSON.stringify(updatedRecentSearchesTO)
+    );
     dispatch(searchpy(params));
     navigate(`/onewaySearchResult?${queryString}`);
   };
@@ -155,7 +345,7 @@ const BestFlightDeal = () => {
             }}
           >
             {data.map((item, index) => (
-              <SwiperSlide key={index} onClick={() => handleCardClick(item)}>
+              <SwiperSlide key={index} onClick={(e) => handleSubmit(e, item)}>
                 <div className="max-w-sm mx-auto mb-2 bg-white rounded-lg shadow-md overflow-hidden">
                   {/* Image Section */}
                   <div className="relative">
