@@ -52,24 +52,26 @@ const FlightResultCard = ({
 
   // console.log(item, "item");
   return (
-    <div class="w-full relative transition-all ease-in-out hover:scale-[1.01] bg-white shadow-sm rounded-lg  p-3 px-3 hover:shadow-sm cursor-pointer border">
+    <div class="w-full relative transition-all ease-in-out hover:scale-[1.01] bg-white shadow-sm rounded-lg  p-2 px-2 md:p-3 md:px-3 hover:shadow-sm cursor-pointer border">
       <div class="flex justify-between">
         <div className="flex flex-1 flex-col items-start justify-center gap-2">
-          <img
-            class="w-[30%] object-cover rounded-md"
-            src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flights?.[0]?.carrier}.png`}
-            // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
-            alt="Flight "
-          />
+          <div className="w-[30px] h-[30px]">
+            <img
+              class="w-full object-cover rounded-md"
+              src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flights?.[0]?.carrier}.png`}
+              // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
+              alt="Flight "
+            />
+          </div>
 
           <div>
-            <p class="text-sm text-gray-500">
+            <p class="text-xs md:text-sm text-gray-500">
               {item?.flights?.[0]?.carrier}-{item?.flights?.[0]?.number}
             </p>
           </div>
         </div>
         <div className="flex flex-1 flex-col items-center justify-center gap-2">
-          <p class="text-sm text-gray-500">
+          <p class="text-xs md:text-sm text-gray-500">
             {item?.flights?.[0]?.Departure?.location}
           </p>
           <p class="font-semibold text-gray-700">
@@ -81,46 +83,11 @@ const FlightResultCard = ({
         {/* <!-- Duration and Stops --> */}
         <div className="relative  flex flex-1 flex-col items-center justify-center gap-2">
           {/* <p class="text-sm text-gray-500">{item?.destination}</p> */}
-          <p class="font-semibold text-gray-700">{durations11}</p>
-          {/* <div className=" w-2/3 h-[1.5px] bg-primary-500 mt-2">
-            <div className=" ">
-              {item?.flights?.length > 1 && (
-                <div className="w-2 h-2 rounded-full bg-gray-400 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-              )}
-           
-              {item?.flights?.length > 1 && (
-                <div className="absolute hidden -top-0 left-1/2 transform -translate-x-1/2  group-hover:block  bg-white whitespace-nowrap  text-white text-sm px-3 py-1 rounded shadow-md border border-gray-600">
-                  <p className="text-center text-gray-900 block text-[12px] font-medium">
-                    {item?.flights?.length - 1} stop via{" "}
-                    {
-                      findAirportByCode(item?.flights?.[1]?.Departure?.location)
-                        ?.name
-                    }
-                  </p>
-                  <ul className="p-0 list-disc mb-0">
-                    {item?.flights?.map((i, index) => {
-                      return (
-                        <>
-                          {index < item?.length && (
-                            <li className="block  text-gray-700 text-[11px] font-medium">
-                              {i} (
-                              {findAirportByCode(i?.Departure?.location)?.name}){" "}
-                            </li>
-                          )}
-                        </>
-                      );
-                    })}
-                  </ul>
-                  <div className="absolute -bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-white rotate-45 border-b border-gray-300 border-r"></div>
-                </div>
-              )}
-            </div>
-          </div> */}
+          <p class="font-semibold text-gray-700 text-xs md:text-sm">
+            {durations11}
+          </p>
 
           <div className="absolute flex flex-row items-center w-2/3 top-1/2">
-            {/* {item?.flights?.length > 1 && (
-              <div className="w-2 h-2 rounded-full bg-white absolute left-1/2 -top-1/2 border-1 border-primary-6000"></div>
-            )} */}
             <div className="  w-2 -top-1/2  h-2 rounded-full bg-gray-400"></div>
             <div className=" w-full  border-gray-400  border-t-2 border-dashed"></div>
             <div className="  w-2 -top-1/2  h-2 rounded-full bg-gray-400"></div>
@@ -135,7 +102,7 @@ const FlightResultCard = ({
 
         {/* <!-- Arrival Time --> */}
         <div className="flex flex-1 flex-col items-center justify-center gap-2">
-          <p class="text-sm text-gray-500">
+          <p class="text-xs md:text-sm text-gray-500">
             {" "}
             {/* {findAirportByCode(item?.destination)?.name} */}
             {item?.flights?.[item?.flights?.length - 1]?.Arrival?.location}
@@ -147,8 +114,8 @@ const FlightResultCard = ({
             )}
           </p>
         </div>
-        <div className="flex flex-1 flex-col items-end justify-center gap-2">
-          <p class={`text-lg font-semibold text-gray-700"`}>
+        <div className="flex flex-1 flex-col items-end justify-center gap-2 min-w-[75px]">
+          <p class={`text-xs md:text-lg font-semibold text-gray-700"`}>
             {/* $ {item?.productsoption?.[0]?.Price?.TotalPrice} AUD */}${" "}
             {item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice} AUD
           </p>
@@ -162,21 +129,6 @@ const FlightResultCard = ({
       </div>
       <div class="flex justify-between items-center mt-2">
         <div className="flex gap-2 items-center">
-          {/* <div>
-            {brandAttribute?.some(
-              (item) =>
-                item?.classification === "Refund" &&
-                item?.inclusion === "Not Offered"
-            ) ? (
-              <div className="text-red-300 py-0.5 px-2 rounded-md border-1 border-red-300 bg-red-100">
-                <p className="text-red-600 text-[12px]">Non Refundable</p>
-              </div>
-            ) : (
-              <div className="text-red-300 py-0.5 px-2 rounded-md border-1 border-red-300 bg-red-100">
-                <p className="text-red-600 text-[12px]">Refundable</p>
-              </div>
-            )}
-          </div> */}
           <div>
             {brandAttribute?.some(
               (item) =>
@@ -191,7 +143,7 @@ const FlightResultCard = ({
         </div>
         <button
           onClick={() => setIsFlightDetail((pre) => !pre)}
-          className="text-secondary-6000  flex gap-2 items-center font-semibold text-[14px] hover:text-indigo-700 focus:outline-none text-right"
+          className="text-secondary-6000  flex gap-2 items-center font-semibold text-xs md:text-[14px] hover:text-indigo-700 focus:outline-none text-right"
         >
           View Details{" "}
           {isFlightDetail ? (

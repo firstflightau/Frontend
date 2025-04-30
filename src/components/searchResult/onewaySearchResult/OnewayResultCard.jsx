@@ -75,38 +75,44 @@ const OnewayResultCard = ({
         <div className="flex  flex-grow gap-2">
           {/* Best Box */}
           <div
-            className={`flex-grow cursor-pointer px-4 py-2 rounded-lg text-center ${
+            className={`flex-grow cursor-pointer px-2 md:px-4 py-2 rounded-lg text-center ${
               activeBox === "Best"
                 ? "bg-primary-6000 text-white"
                 : "bg-gray-200 text-black"
             }`}
             onClick={() => handleFilter("Best")}
           >
-            <span>Best ${priceTab?.bestPrice}</span>
+            <span className="text-xs md:text-lg">
+              Best ${(priceTab?.bestPrice).toFixed(0)}
+            </span>
           </div>
 
           {/* Cheapest Box */}
           <div
-            className={`flex-grow cursor-pointer px-4 py-2 rounded-lg text-center ${
+            className={`flex-grow cursor-pointer px-2 md:px-4  py-2 rounded-lg text-center ${
               activeBox === "Cheapest"
                 ? "bg-primary-6000 text-white"
                 : "bg-gray-200 text-black"
             }`}
             onClick={() => handleFilter("Cheapest")}
           >
-            <span>Cheapest ${priceTab?.cheapestPrice}</span>
+            <span className="text-xs md:text-lg">
+              Cheapest ${(priceTab?.cheapestPrice).toFixed(0)}
+            </span>
           </div>
 
           {/* Fastest Box */}
           <div
-            className={`flex-grow cursor-pointer px-4 py-2 rounded-lg text-center ${
+            className={`flex-grow cursor-pointer px-2 md:px-4 py-2 rounded-lg text-center ${
               activeBox === "Fastest"
                 ? "bg-primary-6000 text-white"
                 : "bg-gray-200 text-black"
             }`}
             onClick={() => handleFilter("Fastest")}
           >
-            <span>Fastest ${priceTab?.fastestPrice}</span>
+            <span className="text-xs md:text-lg">
+              Fastest ${(priceTab?.fastestPrice).toFixed(0)}
+            </span>
           </div>
         </div>
       </div>

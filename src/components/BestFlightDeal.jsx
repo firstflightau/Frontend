@@ -346,7 +346,7 @@ const BestFlightDeal = () => {
           >
             {data.map((item, index) => (
               <SwiperSlide key={index} onClick={(e) => handleSubmit(e, item)}>
-                <div className="max-w-sm mx-auto mb-2 bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="max-w-sm mx-auto mb-2 cursor-pointer bg-white rounded-lg shadow-md overflow-hidden">
                   {/* Image Section */}
                   <div className="relative">
                     <img
