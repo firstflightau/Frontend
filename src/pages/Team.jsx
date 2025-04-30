@@ -71,7 +71,7 @@ const Team = () => {
               </p>
             </div>
           </div>
-          <div className="row g-4">
+          {/* <div className="row g-4">
             <div className="col-xl-5 col-lg-5 col-md-6">
               <div
                 className="all-explore"
@@ -526,7 +526,7 @@ const Team = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </main>

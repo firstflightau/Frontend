@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, Fragment } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/logo.png";
 import { ChevronDown, Phone, Star } from "lucide-react";
 
 // import { Dropdown } from "flowbite-react";
 // import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/login/loginSlice";
@@ -15,6 +21,13 @@ const Navbar = () => {
   const reducerState = useSelector((state) => state?.auth);
   const [authentic, setAuthentic] = useState(reducerState?.isAuthenticated);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const handleNav = (path) => {
+    navigate(path);
+  };
+
   useEffect(() => {
     setAuthentic(reducerState?.isAuthenticated);
   }, [reducerState]);
@@ -271,8 +284,87 @@ const Navbar = () => {
                     </nav>
                   </div>
                 </div>
-                <div className="div">
-                  <div className="mobile_menu d-block d-lg-none"></div>
+                <div className="flex justify-end absolute right-4 top-6 z-10 md:hidden">
+                  {/* Hamburger Menu Button */}
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasExample"
+                    aria-controls="offcanvasExample"
+                  >
+                    <i className="fa-solid fa-bars"></i>
+                  </button>
+
+                  {/* Offcanvas Sidebar */}
+                  <div
+                    className="offcanvas offcanvas-start"
+                    tabIndex="-1"
+                    id="offcanvasExample"
+                    aria-labelledby="offcanvasExampleLabel"
+                  >
+                    <div className="offcanvas-header">
+                      <div className="logo">
+                        <button
+                          className="bg-transparent border-0 p-0"
+                          onClick={() => handleNav("/")}
+                          data-bs-dismiss="offcanvas"
+                        >
+                          <img
+                            src={logo}
+                            alt="logo"
+                            className="w-4/6 md:w-5/6"
+                          />
+                        </button>
+                      </div>
+                      <button
+                        type="button"
+                        className="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div className="offcanvas-body">
+                      <nav className="flex flex-col !text-gray-800 justify-start items-start space-y-4 text-lg font-medium">
+                        {[
+                          { label: "Home", path: "/" },
+                          { label: "About Us", path: "/about" },
+                          { label: "Services", path: "/services" },
+                          { label: "Our Team", path: "/team" },
+                          { label: "FAQs", path: "/faq" },
+                          { label: "Testimonials", path: "/testimonials" },
+                          { label: "Contact Us", path: "/contact-us" },
+                          { label: "Cookie Policy", path: "/cookie-policy" },
+                          { label: "Privacy Policy", path: "/privacy-policy" },
+                          { label: "Disclaimer", path: "/disclaimer" },
+                          {
+                            label: "Terms & Conditions",
+                            path: "/term-condition",
+                          },
+                        ].map((item) => (
+                          <button
+                            key={item.path}
+                            className="text-left w-full hover:text-blue-600 border-b-2"
+                            onClick={() => handleNav(item.path)}
+                            data-bs-dismiss="offcanvas"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+
+                        <div className="mt-4 w-full">
+                          <button
+                            className="btn-secondary-sm w-full"
+                            onClick={() => handleNav("/contact-us")}
+                            data-bs-dismiss="offcanvas"
+                          >
+                            Quick Enquiry
+                          </button>
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

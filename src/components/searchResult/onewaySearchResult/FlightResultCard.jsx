@@ -52,9 +52,9 @@ const FlightResultCard = ({
 
   // console.log(item, "item");
   return (
-    <div class="w-full relative transition-all ease-in-out hover:scale-[1.01] bg-white shadow-sm rounded-lg  p-2 px-2 md:p-3 md:px-3 hover:shadow-sm cursor-pointer border">
+    <div class="w-full relative transition-all ease-in-out hover:scale-[1.01] bg-white shadow-sm rounded-lg  !p-2 !px-2 md:!p-3 md:!px-3 hover:shadow-sm cursor-pointer border">
       <div class="flex justify-between">
-        <div className="flex flex-1 flex-col items-start justify-center gap-2">
+        <div className="flex flex-1 flex-col items-start justify-center gap-2 max-w-[45px] md:max-w-none">
           <div className="w-[30px] h-[30px]">
             <img
               class="w-full object-cover rounded-md"
@@ -114,7 +114,7 @@ const FlightResultCard = ({
             )}
           </p>
         </div>
-        <div className="flex flex-1 flex-col items-end justify-center gap-2 min-w-[75px]">
+        <div className="flex flex-1 flex-col items-end justify-center gap-2 min-w-[82px]">
           <p class={`text-xs md:text-lg font-semibold text-gray-700"`}>
             {/* $ {item?.productsoption?.[0]?.Price?.TotalPrice} AUD */}${" "}
             {item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice} AUD
