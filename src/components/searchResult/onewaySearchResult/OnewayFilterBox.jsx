@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, RangeSlider } from "flowbite-react";
+import { closeSidebar } from "../../../redux/slices/sidebarToggle/sidebarSlice";
 const OnewayFilterBox = ({
   airlineCodes,
   minPrice,
@@ -14,7 +15,9 @@ const OnewayFilterBox = ({
 }) => {
   // console.log(stopsAirline, "stopsAirlinedddd");
   const [selectedCodes, setSelectedCodes] = useState([]);
-
+  const isOpenBurger = useSelector((state) => state.sidebar.isOpen);
+  const dispatch = useDispatch();
+  const handleCloseBurger = () => dispatch(closeSidebar());
   const [selectedStops, setSelectedStops] = useState([]);
   const [selectedStopsReturn, setSelectedStopsRetrun] = useState([]);
   const [currentPriceRange, setCurrentPriceRange] = useState(priceRange);
@@ -412,10 +415,31 @@ const OnewayFilterBox = ({
     );
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        !e.target.closest(".search-filter-section") &&
+        !e.target.closest("#hamburger")
+      ) {
+        dispatch(closeSidebar());
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [dispatch]);
+
   return (
     <>
-      <div className="p-3.5 sm:p-2 lg:p-4 sticky top-28 search-filter-section rounded-lg bg-white border border-gray-200 space-y-4 ">
-        <div className="expand-icon close-btn flex text-gray-500 d-lg-none">
+      <div
+        className={`p-3.5 sm:p-2 lg:p-4 sticky top-28 search-filter-section rounded-lg bg-white border border-gray-200 space-y-4 ${
+          isOpenBurger ? "sidenav-active" : ""
+        }`}
+      >
+        <div
+          onClick={handleCloseBurger}
+          className="expand-icon close-btn flex text-gray-500 d-lg-none"
+        >
           <i class="fa-solid fa-angles-left"></i>
         </div>
         <StopFilter
@@ -454,7 +478,7 @@ const OnewayFilterBox = ({
           </div>
         </div>
       </div>
-      <div class="cover"></div>
+      <div className={`cover ${isOpenBurger ? "cover-active" : ""}`}></div>
     </>
   );
 };

@@ -7,11 +7,12 @@ import FlightClass from "../flightSearchForm/FlightClass";
 import { useLocation, useNavigate } from "react-router-dom";
 import OnewayLocationTo from "../flightSearchForm/OnewayLocationTo";
 import { searchpy } from "../../redux/slices/SearchFlightPayload/searchFlightPayloadSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 useLocation;
 
 const OnewaySearchFormInner = () => {
   const navigate = useNavigate();
+  const reducerState = useSelector((state) => state);
   const queryParams = new URLSearchParams(useLocation().search);
   const [fromCity, setFromCity] = useState(null);
   const [toCity, setToCity] = useState(null);

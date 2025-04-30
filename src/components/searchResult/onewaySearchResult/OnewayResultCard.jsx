@@ -9,6 +9,8 @@ import {
   cheapesBestFastest,
   cheapesBestFastestPrice,
 } from "../../../utils/utils";
+import { useDispatch } from "react-redux";
+import { openSidebar } from "../../../redux/slices/sidebarToggle/sidebarSlice";
 
 dayjs.extend(duration);
 
@@ -23,6 +25,7 @@ const OnewayResultCard = ({
 }) => {
   const [activeBox, setActiveBox] = useState(null);
   const [sortedData, setSortedData] = useState(data);
+  const dispatch = useDispatch();
   const [selectedType, setSelectedType] = useState("Cheapest");
   const [priceTab, setPriceTab] = useState({
     bestPrice: 0,
@@ -48,12 +51,21 @@ const OnewayResultCard = ({
   }, [data]);
   // console.log(data, "dataa");
 
+  const handleClickBurger = (e) => {
+    e.stopPropagation();
+    dispatch(openSidebar());
+  };
+
   return (
     <>
       <div className="flex mb-4 flex-grow space-x-4">
         <div class=" flex justify-between h-full">
           <div class="flex h-full items-center">
-            <div class="expand-icon hamburger flex d-lg-none" id="hamburger">
+            <div
+              class="expand-icon hamburger flex d-lg-none"
+              id="hamburger"
+              onClick={handleClickBurger}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

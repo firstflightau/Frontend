@@ -25,7 +25,8 @@ import workbenchReducer from "./slices/workbench/workBenchSlice";
 import addOfferReducer from "./slices/workbench/addOfferSlice";
 import addPassengerReducer from "./slices/passenger/addTravellerSlice";
 import addPNRReducer from "./slices/pnr/generatePNRSlice";
-import markupReducer from "./slices/markup/markupSlice"
+import markupReducer from "./slices/markup/markupSlice";
+import sidebarReducer from "./slices/sidebarToggle/sidebarSlice";
 // Load persisted state
 import { saveToLocalStorage, loadFromLocalStorage } from "./localStorageHelper";
 const persistedState = loadFromLocalStorage();
@@ -45,7 +46,8 @@ export const store = configureStore({
     addOffer: addOfferReducer,
     addPassenger: addPassengerReducer,
     pnr: addPNRReducer,
-    markupData: markupReducer
+    markupData: markupReducer,
+    sidebar: sidebarReducer,
   },
   preloadedState: persistedState, // Use the persisted state
 });
