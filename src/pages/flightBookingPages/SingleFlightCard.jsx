@@ -9,7 +9,7 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
   useEffect(() => {
     if (flight) {
       const data = standardizeFlightDetailResponse(flight?.flights); // Get standardized data
-      console.log(data, "itememmmem");
+      // console.log(data, "itememmmem");
       //   let data = [];
       setFlightDetail(data); // Update state with data
     }
@@ -17,21 +17,29 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
 
   // console.log(FlightData, "flight data ");
 
-  console.log(flightDetail);
+  // console.log(flightDetail);
 
   const FlightDetailsCard = ({ item, isLast }) => {
     return (
       <div className="w-full flex flex-col gap-2  mb-2 rounded-2xl p-2 md:p-4">
         <div className="flex justify-between w-full ">
           <div className="flex gap-2">
-            <img
+            {/* <img
               src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flightName}.png`}
               // src=""
               alt="QF"
               width="30%"
               height=""
               className="object-contain rounded-md"
-            />
+            /> */}
+            <div className="w-[30px] h-[30px]">
+              <img
+                class="w-full object-cover rounded-md"
+                src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flightName}.png`}
+                // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
+                alt="Flight "
+              />
+            </div>
             <div className="flex flex-col justify-between ">
               <p className="text-sm md:text-lg font-semibold">
                 {item?.flightName} | {item?.flightNumber}

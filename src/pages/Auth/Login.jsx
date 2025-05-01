@@ -62,10 +62,10 @@ const Login = () => {
 
   return (
     <main>
-      <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 py-10">
+      <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
         <div className="container">
           <h1
-            className=" text-4xl font-bold capitalize mb-1 relative text-secondary-6000 wow fadeInUp"
+            className=" text-2xl md:text-4xl font-bold capitalize mb-1 relative text-secondary-6000 wow fadeInUp"
             data-wow-delay="0.0s"
           >
             Login
@@ -164,13 +164,13 @@ const Login = () => {
                       </Link>
                     </p>
                   </div>
-                  <a
+                  {/* <a
                     href="javascript:void(0)"
                     className="login-btn d-flex align-items-center justify-content-center gap-10"
                   >
                     <img src={googleIcon} alt="img" className="m-0" />
                     <span> Login with Google</span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

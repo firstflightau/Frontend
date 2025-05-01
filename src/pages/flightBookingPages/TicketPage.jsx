@@ -37,7 +37,7 @@ const NewBookTicket = () => {
     content: () => componentRef.current,
   });
 
-  console.log(status, "status");
+  // console.log(status, "status");
 
   // save pnr to database
 
@@ -57,7 +57,7 @@ const NewBookTicket = () => {
           },
         }
       );
-      console.log("Response:", response.data);
+      // console.log("Response:", response.data);
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
     }

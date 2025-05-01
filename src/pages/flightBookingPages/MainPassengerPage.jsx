@@ -14,7 +14,7 @@ import {
   clearAddOffer,
 } from "../../redux/slices/workbench/addOfferSlice";
 import { addPassenger } from "../../redux/slices/passenger/addTravellerSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import SearchResultLoader from "../../components/SearchResultLoader";
@@ -96,7 +96,7 @@ const MainPassengerPage = () => {
             },
           }
         );
-        console.log("Response:", response.data);
+        // console.log("Response:", response.data);
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
       }
@@ -213,96 +213,136 @@ const MainPassengerPage = () => {
     }
   };
 
-  console.log(reducerState, "reducer state");
+  // console.log(reducerState, "reducer state");
 
   return (
-    <div className="container mt-5 relative">
+    <main>
+      <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
+        <div className="container">
+          <h1
+            className=" text-2xl md:text-4xl font-bold capitalize mb-1 relative text-secondary-6000 wow fadeInUp"
+            data-wow-delay="0.0s"
+          >
+            Passenger Details
+          </h1>
+          <div className="">
+            <nav
+              aria-label="breadcrumb"
+              className="breadcrumb-nav wow fadeInUp"
+              data-wow-delay="0.1s"
+            >
+              <ul className="breadcrumb listing mb-0 flex relative">
+                <li className="breadcrumb-item single-list">
+                  <Link
+                    to="/"
+                    className=" text-base font-normal text-black capitalize font"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <span> &nbsp; /&nbsp; </span>
+                <li
+                  className=" text-base font-normal text-primary-6000 capitalize font"
+                  aria-current="page"
+                >
+                  {/* <Link to="" className=" active"> */}
+                  Passenger Details
+                  {/* </Link> */}
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+
       {loader && <SearchResultLoader text={"Creating Your Itenerary"} />}
 
-      <div className="row">
-        <div className="col-12 col-md-8 col-lg-8 col-xl-8">
-          <FlightDetails selectedFlight={selectedFlight} />
-          <PassengerComponent ref={passengerRef} />
-          <BookButton onClick={handleBookClick} name={"Continue Booking"} />
+      <div className="container mt-5 relative">
+        <div className="row">
+          <div className="col-12 col-md-8 col-lg-8 col-xl-8">
+            <FlightDetails selectedFlight={selectedFlight} />
+            <PassengerComponent ref={passengerRef} />
+            <BookButton onClick={handleBookClick} name={"Continue Booking"} />
+          </div>
+          <div className="col-12 col-md-4 col-lg-4 col-xl-4">
+            <PriceSummary />
+          </div>
         </div>
-        <div className="col-12 col-md-4 col-lg-4 col-xl-4">
-          <PriceSummary />
-        </div>
-      </div>
 
-      <Dialog
-        open={showConfirmationModal}
-        as="div"
-        className="relative z-50 focus:outline-none"
-        onClose={() => setShowConfirmationModal(false)}
-      >
-        <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 bg-black/50">
-            <DialogPanel
-              transition
-              className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-            >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 flex flex-row items-center justify-start gap-2 font-medium text-black"
+        <Dialog
+          open={showConfirmationModal}
+          as="div"
+          className="relative z-50 focus:outline-none"
+          onClose={() => setShowConfirmationModal(false)}
+        >
+          <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 bg-black/50">
+              <DialogPanel
+                transition
+                className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
               >
-                Confirm Details <HiOutlineExclamationCircle />
-              </DialogTitle>
-              <p className="mt-2 text-base/6 text-black/50">
-                Are you sure all passenger details are correct?
-              </p>
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={() => setShowConfirmationModal(false)}
-                  className="mr-2 px-6 py-2 flex flex-row-reverse gap-2 items-center text-gray-700 bg-gray-200 border-1 border-gray-300 hover:bg-gray-200 rounded-lg focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
+                <DialogTitle
+                  as="h3"
+                  className="text-base/7 flex flex-row items-center justify-start gap-2 font-medium text-black"
                 >
-                  Recheck <LogOut size={15} className="rotate-180" />
-                </button>
-                <button
-                  onClick={handleContinue}
-                  className="px-6 py-2 text-white bg-secondary-6000 hover:bg-secondary-500 border-1 border-secondary-6000 rounded-lg focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
-                >
-                  Continue
-                </button>
-              </div>
-            </DialogPanel>
+                  Confirm Details <HiOutlineExclamationCircle />
+                </DialogTitle>
+                <p className="mt-2 text-base/6 text-black/50">
+                  Are you sure all passenger details are correct?
+                </p>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={() => setShowConfirmationModal(false)}
+                    className="mr-2 px-6 py-2 flex flex-row-reverse gap-2 items-center text-gray-700 bg-gray-200 border-1 border-gray-300 hover:bg-gray-200 rounded-lg focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
+                  >
+                    Recheck <LogOut size={15} className="rotate-180" />
+                  </button>
+                  <button
+                    onClick={handleContinue}
+                    className="px-6 py-2 text-white bg-secondary-6000 hover:bg-secondary-500 border-1 border-secondary-6000 rounded-lg focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
+                  >
+                    Continue
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
-        </div>
-      </Dialog>
-      <Dialog
-        open={showErrorModal}
-        as="div"
-        className="relative z-50  focus:outline-none"
-        onClose={() => setShowErrorModal(false)}
-      >
-        <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 bg-black/50">
-            <DialogPanel
-              transition
-              className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-            >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 flex flex-row items-center justify-start gap-2 font-medium text-black"
+        </Dialog>
+        <Dialog
+          open={showErrorModal}
+          as="div"
+          className="relative z-50  focus:outline-none"
+          onClose={() => setShowErrorModal(false)}
+        >
+          <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 bg-black/50">
+              <DialogPanel
+                transition
+                className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
               >
-                Error Occured <HiOutlineExclamationCircle />
-              </DialogTitle>
-              <p className="mt-2 text-base/6 text-black/50">
-                There is an error, please try again.
-              </p>
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={() => window.close()}
-                  className="px-6 py-2 text-white bg-secondary-6000 hover:bg-secondary-500 border-1 border-secondary-6000 rounded-lg focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
+                <DialogTitle
+                  as="h3"
+                  className="text-base/7 flex flex-row items-center justify-start gap-2 font-medium text-black"
                 >
-                  Okay
-                </button>
-              </div>
-            </DialogPanel>
+                  Error Occured <HiOutlineExclamationCircle />
+                </DialogTitle>
+                <p className="mt-2 text-base/6 text-black/50">
+                  There is an error, please try again.
+                </p>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={() => window.close()}
+                    className="px-6 py-2 text-white bg-secondary-6000 hover:bg-secondary-500 border-1 border-secondary-6000 rounded-lg focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
+                  >
+                    Okay
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
-        </div>
-      </Dialog>
-    </div>
+        </Dialog>
+      </div>
+    </main>
   );
 };
 

@@ -12,7 +12,6 @@ export const findCheapestFlight = (a, b) => {
     // b?.productsoption?.[0]?.Price?.TotalPrice
     a?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice -
     b?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice
-
   );
 };
 export const findStopsFlight = (a, b) => {
@@ -90,7 +89,7 @@ export const cheapesBestFastest = ({ sortedData, key }) => {
         );
     }
   });
-  console.log("keyddddAFTER", key, sortedData);
+  // console.log("keyddddAFTER", key, sortedData);
   return sortedArray;
 };
 export const cheapesBestFastestPrice = ({ sortedData }) => {
@@ -178,7 +177,8 @@ export const standardizeFlightFareResponse = (flight) => {
     INF: { Basic: 0, Taxes: 0, Total: 0 },
   };
   // let PriceBreakdown = flight?.productsoption?.[0]?.Price?.PriceBreakdown;
-  let PriceBreakdown = flight?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown;
+  let PriceBreakdown =
+    flight?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown;
   // console.log(flight, PriceBreakdown, "PriceBreakdown")
   PriceBreakdown.forEach((item) => {
     let type = item?.requestedPassengerType;
@@ -240,11 +240,7 @@ export const standardizeFlightBaggageResponse = (BaggageAllowance) => {
 
 export function addMarkup(value, percentage) {
   const reducerState = store.getState();
-  let markup = reducerState?.
-    markupData?.
-    markupAmount?.
-    markup
-
+  let markup = reducerState?.markupData?.markupAmount?.markup;
 
   return value * (markup / 100);
 }

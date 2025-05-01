@@ -70,22 +70,22 @@ export const fetchFlightData = createAsyncThunk(
           ],
           SearchModifiersAir: {
             "@type": "SearchModifiersAir",
-            "CabinPreference": [
-                {
-                    "@type": "CabinPreference",
-                    "preferenceType": "Permitted",
-                    "cabins": [
-      JSON.parse(FlightCabinClass)?.value,
+            CabinPreference: [
+              {
+                "@type": "CabinPreference",
+                preferenceType: "Permitted",
+                cabins: [
+                  JSON.parse(FlightCabinClass)?.value,
 
-                            // "Economy"
-                            // "PremiumEconomy"
-                            // "Business"
-                            // "First"
-                            // "PremiumFirst"
-                    ]
-                }
-            ]
-            }
+                  // "Economy"
+                  // "PremiumEconomy"
+                  // "Business"
+                  // "First"
+                  // "PremiumFirst"
+                ],
+              },
+            ],
+          },
         },
       },
     };
@@ -168,22 +168,22 @@ export const fetchFlightReturnData = createAsyncThunk(
           ],
           SearchModifiersAir: {
             "@type": "SearchModifiersAir",
-            "CabinPreference": [
-                {
-                    "@type": "CabinPreference",
-                    "preferenceType": "Permitted",
-                    "cabins": [
-      JSON.parse(FlightCabinClass)?.value,
+            CabinPreference: [
+              {
+                "@type": "CabinPreference",
+                preferenceType: "Permitted",
+                cabins: [
+                  JSON.parse(FlightCabinClass)?.value,
 
-                            // "Economy"
-                            // "PremiumEconomy"
-                            // "Business"
-                            // "First"
-                            // "PremiumFirst"
-                    ]
-                }
-            ]
-            }
+                  // "Economy"
+                  // "PremiumEconomy"
+                  // "Business"
+                  // "First"
+                  // "PremiumFirst"
+                ],
+              },
+            ],
+          },
         },
       },
     };
@@ -257,12 +257,11 @@ const flightSearchResultSlice = createSlice({
         state.isLoading = false;
         let journeyFlight = [];
         let returnFlight = [];
-        console.log(
-          data,
-          "element?.flights?.[0]?.Departure?.location"
-        )
+        // console.log(
+        //   data,
+        //   "element?.flights?.[0]?.Departure?.location"
+        // )
         data?.data?.forEach((element) => {
-
           if (element?.flights?.[0]?.Departure?.location === data?.from) {
             journeyFlight.push(element);
           } else {
@@ -271,14 +270,14 @@ const flightSearchResultSlice = createSlice({
         });
 
         if (type === "journey") {
-          console.log(
-            data,
-            journeyFlight,
-            "journeyFlight",
-            returnFlight,
-            "return data",
-            data.from
-          );
+          // console.log(
+          //   data,
+          //   journeyFlight,
+          //   "journeyFlight",
+          //   returnFlight,
+          //   "return data",
+          //   data.from
+          // );
 
           state.journeyFlight = journeyFlight;
           state.returnFlight = returnFlight;

@@ -16,7 +16,7 @@ const GuestsInput = ({
   Child,
   Infant,
 }) => {
-  console.log(Adult, "Adult", "Child", Child, Infant, "infant");
+  // console.log(Adult, "Adult", "Child", Child, Infant, "infant");
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(
     Number(Adult) || 1
   );
