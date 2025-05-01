@@ -60,42 +60,49 @@ const FlightDetail = ({ item }) => {
                 </div>
                 <div className="flex w-full bg-gray-100 justify-between border border-dashed p-2.5 rounded-md ">
                   <div className="flex flex-1 flex-col items-start justify-center gap-2">
-                    <img
-                      // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flightName}.png`}
-                      src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
-                      alt={item?.flightName}
-                      width={"20px"}
-                      height={"20px"}
-                    />
-                    <p className="text-sm">
+                    <div className="w-[30px] h-[30px]">
+                      <img
+                        src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${item?.flightName}.png`}
+                        // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
+                        alt={item?.flightName}
+                        class="w-full object-cover rounded-md"
+                      />
+                    </div>
+                    <p className="text-xs md:text-sm">
                       {findAirlineByCode(item?.flightName)?.airlineName}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-xs md:text-sm">
                       {item?.flightName}-{item?.flightNumber}
                     </p>
                   </div>
 
                   <div className="flex flex-1 flex-col items-center justify-center gap-2">
-                    <p className="text-xl font-semibold">
+                    <p className="text-xs md:text-sm font-semibold">
                       {item?.departureTime}
                     </p>
-                    <p className="text-sm font-semibold">
+                    <p className="text-xs md:text-sm font-semibold">
                       {findAirportByCode(item?.origin)?.name} ({item?.origin})
                     </p>
-                    <p className="text-sm">{item?.dateOfDeparture}</p>
+                    <p className="text-xs md:text-sm">
+                      {item?.dateOfDeparture}
+                    </p>
                     {/* <p className="text-sm">Terminal-{item?.terminal}</p> */}
                   </div>
                   <div className="flex flex-1 flex-col items-center justify-center gap-2">
                     <AlarmClock size={16} className="font-bold  text-black" />
-                    <p className="text-sm">{item?.duration || "01h 10m"}</p>
+                    <p className="text-xs md:text-sm">
+                      {item?.duration || "01h 10m"}
+                    </p>
                   </div>
                   <div className="flex flex-1 flex-col items-end justify-center gap-2">
-                    <p className="text-xl font-semibold">{item?.arrivalTime}</p>
-                    <p className="text-sm font-semibold">
+                    <p className="text-xs md:text-sm font-semibold">
+                      {item?.arrivalTime}
+                    </p>
+                    <p className="text-xs md:text-sm font-semibold">
                       {findAirportByCode(item?.destination)?.name}(
                       {item?.destination})
                     </p>
-                    <p className="text-sm">{item?.dateOfArrival}</p>
+                    <p className="text-xs md:text-sm">{item?.dateOfArrival}</p>
                     {/* <p className="text-sm">Terminal-{item?.terminal}</p> */}
                   </div>
                 </div>

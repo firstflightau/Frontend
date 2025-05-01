@@ -33,34 +33,22 @@ export function findAirlineByCode(code) {
   const state = store.getState();
 
   // Access the airport list from the state
-  const airlinetList = state?.
-    airlineList?.airlines;
-  console.log(airlinetList, "airlinetList", state)
+  const airlinetList = state?.airlineList?.airlines;
+  // console.log(airlinetList, "airlinetList", state)
 
   // Perform the lookup
-  if (!Array.isArray(airlinetList) || !code) return {
-    airlineCode
-      :
-      code,
-    airlineName
-      :
-
-      code,
-
-  };
+  if (!Array.isArray(airlinetList) || !code)
+    return {
+      airlineCode: code,
+      airlineName: code,
+    };
   let data = airlinetList.find((airport) => airport?.airlineCode === code);
-  console.log(data, "airlineDataaa");
+  // console.log(data, "airlineDataaa");
   if (data.length == 0) {
     return {
-      airlineCode
-        :
-        code,
-      airlineName
-        :
-
-        code,
-
-    }
+      airlineCode: code,
+      airlineName: code,
+    };
   }
 
   return data;

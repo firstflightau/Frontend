@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Search, Eye, Edit } from "lucide-react";
+import { Search, Eye, Edit, Calendar } from "lucide-react";
 import axios from "axios";
 import { apiURL } from "../../constant/Constant";
 import SearchResultLoader from "../../components/SearchResultLoader";
@@ -14,10 +14,13 @@ const AdminBookings = () => {
   const token = reducerState?.auth?.user?.token;
   const [bookings, setBookings] = useState([]);
   const tpToken = reducerState?.tpToken?.tpTokenData?.access_token;
-  // console.log(tpToken, "tpToken");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [dateRange, setDateRange] = useState({
+    startDate: "",
+    endDate: "",
+  });
   const itemsPerPage = 20;
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
@@ -50,17 +53,43 @@ const AdminBookings = () => {
     setCurrentPage(1);
   };
 
-  // console.log(bookings, "bookings");
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+    setDateRange((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setCurrentPage(1);
+  };
 
-  const filteredBookings = bookings?.filter(
-    (booking) =>
+  const clearDateFilter = () => {
+    setDateRange({
+      startDate: "",
+      endDate: "",
+    });
+    setCurrentPage(1);
+  };
+
+  const filteredBookings = bookings?.filter((booking) => {
+    // Search term filter
+    const matchesSearch =
       booking?.pnr?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       booking?.userId?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       dayjs(booking.createdAt)
         .format("DD/MM/YYYY")
         ?.toLowerCase()
-        .includes(searchTerm?.toLowerCase())
-  );
+        .includes(searchTerm?.toLowerCase());
+
+    // Date range filter
+    const bookingDate = dayjs(booking.createdAt);
+    const matchesDateRange =
+      (!dateRange.startDate ||
+        bookingDate.isAfter(dayjs(dateRange.startDate).subtract(1, "day"))) &&
+      (!dateRange.endDate ||
+        bookingDate.isBefore(dayjs(dateRange.endDate).add(1, "day")));
+
+    return matchesSearch && matchesDateRange;
+  });
 
   const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage);
 
@@ -73,15 +102,12 @@ const AdminBookings = () => {
     setCurrentPage(newPage);
   };
 
-  // for single booking details
-
   const getSingleBooking = async (pnr) => {
     setLoadingDetails((prev) => ({ ...prev, [pnr]: true }));
     try {
       const response = await axios({
         method: "GET",
         url: `${apiURL.baseURL}/api/flight/retrievepnr`,
-
         headers: {
           "Content-Type": "application/json",
           tptoken: tpToken,
@@ -108,32 +134,90 @@ const AdminBookings = () => {
     return <SearchResultLoader text={"Fetching All Bookings"} />;
   }
 
-  // console.log(selectedBooking, "selectedBooking");
-
   return (
-    <div className="uppercase bg-white  rounded-xl p-6 border border-gray-300 mb-8">
+    <div className="uppercase bg-white rounded-xl p-6 border border-gray-300 mb-8">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 w-full">
         <h2 className="flex-1 text-xl font-semibold text-gray-900 whitespace-nowrap">
           Flight Bookings
         </h2>
-        <div className="flex-1 relative">
-          <input
-            type="text"
-            placeholder="Search by Pnr, User Id or Date"
-            className="w-full text-gray-700 truncate text-sm  bg-gray-50 border-1  placeholder-gray-700 border-gray-300  rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <Search
-            className="absolute left-3 top-2.5 text-gray-600 "
-            size={18}
-          />
+      </div>
+
+      {/* Date Range Filter */}
+      <div className="flex flex-col sm:flex-row  gap-4 mb-6">
+        <div className="flex-1 flex flex-col sm:flex-row gap-2 items-end w-full">
+          <div className="flex-1  relative items-end w-full">
+            <input
+              type="text"
+              placeholder="Search by Pnr, User Id or Date"
+              className="w-full text-gray-700 truncate text-sm bg-gray-50 border-1 placeholder-gray-700 border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <Search
+              className="absolute left-3 top-2.5 text-gray-600"
+              size={18}
+            />
+          </div>
+          <div className="relative flex-1 w-full">
+            <label
+              htmlFor="startDate"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              From Date
+            </label>
+            <div className="relative">
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                value={dateRange.startDate}
+                onChange={handleDateChange}
+                className="w-full text-gray-700 text-sm bg-gray-50 border-1 placeholder-gray-700 border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+              />
+              <Calendar
+                className="absolute left-3 top-2.5 text-gray-600"
+                size={18}
+              />
+            </div>
+          </div>
+          <div className="relative flex-1 w-full">
+            <label
+              htmlFor="endDate"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              To Date
+            </label>
+            <div className="relative">
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                value={dateRange.endDate}
+                onChange={handleDateChange}
+                className="w-full text-gray-700 text-sm bg-gray-50 border-1 placeholder-gray-700 border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+              />
+              <Calendar
+                className="absolute left-3 top-2.5 text-gray-600"
+                size={18}
+              />
+            </div>
+          </div>
+          {(dateRange.startDate || dateRange.endDate) && (
+            <div className="flex items-end">
+              <button
+                onClick={clearDateFilter}
+                className="h-[38px] px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm"
+              >
+                Clear Dates
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="relative overflow-x-auto sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="p-4">
                 Sr No.
@@ -147,7 +231,6 @@ const AdminBookings = () => {
               <th scope="col" className="px-6 py-3">
                 Booked At
               </th>
-
               <th scope="col" className="px-6 py-3">
                 Status
               </th>
@@ -157,87 +240,97 @@ const AdminBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedBookings.map((booking, index) => (
-              <tr
-                key={booking._id}
-                className="bg-white border-b   hover:bg-gray-50 "
-              >
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                  {index + 1 + (currentPage - 1) * itemsPerPage}
-                </td>
-                <td className="px-6 py-4">{booking.pnr || "N/A"}</td>
-                <td className="px-6 py-4">{booking.userId}</td>
-
-                <td className="px-6 py-4">
-                  {dayjs(booking.createdAt).format("DD/MM/YYYY")}
-                </td>
-
-                <td
-                  className={`px-6 py-4 font-semibold ${
-                    booking.pnr ? "text-green-600" : "text-red-600"
-                  }`}
+            {paginatedBookings.length > 0 ? (
+              paginatedBookings.map((booking, index) => (
+                <tr
+                  key={booking._id}
+                  className="bg-white border-b hover:bg-gray-50"
                 >
-                  {booking.pnr ? "Booked" : "Failed"}
-                </td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => getSingleBooking(booking?.pnr)}
-                    disabled={loadingDetails}
-                    className="text-blue-600 flex gap-2 items-center  hover:underline"
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    {index + 1 + (currentPage - 1) * itemsPerPage}
+                  </td>
+                  <td className="px-6 py-4">{booking.pnr || "N/A"}</td>
+                  <td className="px-6 py-4">{booking.userId}</td>
+                  <td className="px-6 py-4">
+                    {dayjs(booking.createdAt).format("DD/MM/YYYY")}
+                  </td>
+                  <td
+                    className={`px-6 py-4 font-semibold ${
+                      booking.pnr ? "text-green-600" : "text-red-600"
+                    }`}
                   >
-                    <Eye size={18} />
-                    {loadingDetails[booking?.pnr]
-                      ? "Loading..."
-                      : "View Details"}
-                  </button>
+                    {booking.pnr ? "Booked" : "Failed"}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => getSingleBooking(booking?.pnr)}
+                      disabled={loadingDetails}
+                      className="text-blue-600 flex gap-2 items-center hover:underline"
+                    >
+                      <Eye size={18} />
+                      {loadingDetails[booking?.pnr]
+                        ? "Loading..."
+                        : "View Details"}
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                  No bookings found matching your criteria
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
-        <nav
-          className="flex items-center justify-between pt-4"
-          aria-label="Table navigation"
-        >
-          <span className="text-sm font-normal text-gray-500 ">
-            Showing {currentPage * itemsPerPage - itemsPerPage + 1}-
-            {Math.min(currentPage * itemsPerPage, filteredBookings.length)} of{" "}
-            {filteredBookings.length}
-          </span>
-          <ul className="inline-flex -space-x-px text-sm h-8">
-            <li>
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-3 h-8 leading-tight uppercase  placeholder-gray-700   text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
-              >
-                Previous
-              </button>
-            </li>
-            {[...Array(totalPages)].map((_, index) => (
-              <li key={index}>
+        {filteredBookings.length > 0 && (
+          <nav
+            className="flex items-center justify-between pt-4"
+            aria-label="Table navigation"
+          >
+            <span className="text-sm font-normal text-gray-500">
+              Showing {currentPage * itemsPerPage - itemsPerPage + 1}-
+              {Math.min(currentPage * itemsPerPage, filteredBookings.length)} of{" "}
+              {filteredBookings.length}
+            </span>
+            <ul className="inline-flex -space-x-px text-sm h-8">
+              <li>
                 <button
-                  onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 h-8 leading-tight uppercase  placeholder-gray-700   text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
-                    currentPage === index + 1 ? "text-blue-600 bg-blue-50" : ""
-                  }`}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
                 >
-                  {index + 1}
+                  Previous
                 </button>
               </li>
-            ))}
-            <li>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-3 h-8 leading-tight uppercase  placeholder-gray-700 text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
-              >
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
+              {[...Array(totalPages)].map((_, index) => (
+                <li key={index}>
+                  <button
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
+                      currentPage === index + 1
+                        ? "text-blue-600 bg-blue-50"
+                        : ""
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                >
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        )}
       </div>
 
       <Dialog

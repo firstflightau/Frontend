@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/images/logo/logo.png";
+import logo from "../assets/images/logo/logo01.svg";
 import { ChevronDown, Phone, Star } from "lucide-react";
 
 // import { Dropdown } from "flowbite-react";
@@ -20,6 +20,7 @@ import { logout } from "../redux/slices/login/loginSlice";
 const Navbar = () => {
   const reducerState = useSelector((state) => state?.auth);
   const [authentic, setAuthentic] = useState(reducerState?.isAuthenticated);
+  console.log(reducerState);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -121,14 +122,25 @@ const Navbar = () => {
                             className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                           >
                             <div className="py-1">
-                              <MenuItem>
+                              {reducerState?.user?.data?.isAdmin && (
+                                <MenuItem>
+                                  <Link
+                                    to="/admin"
+                                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none"
+                                  >
+                                    Admin
+                                  </Link>
+                                </MenuItem>
+                              )}
+
+                              {/* <MenuItem>
                                 <a
                                   href="#"
                                   className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none"
                                 >
                                   My Account
                                 </a>
-                              </MenuItem>
+                              </MenuItem> */}
                               <MenuItem>
                                 <Link
                                   to="/bookings"

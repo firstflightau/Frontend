@@ -15,7 +15,7 @@ const Footer = () => {
           <div className=" py-5">
             <div className="row g-4">
               {/* Quick Maps Section */}
-              <div className="col-xl-3 col-lg-4 col-sm-6">
+              <div className="col-6 col-md-6 col-lg-3 ">
                 <div className="">
                   <div className="">
                     <h4 className="text-white text-base md:text-2xl mb-3 font-bold">
@@ -52,7 +52,7 @@ const Footer = () => {
               </div>
 
               {/* Explore Section */}
-              <div className="col-xl-3 col-lg-4 col-sm-6">
+              <div className="col-6 col-md-6 col-lg-3">
                 <div className="">
                   <div className="">
                     <h4 className="text-white text-base md:text-2xl mb-3 font-bold">
@@ -90,7 +90,7 @@ const Footer = () => {
               </div>
 
               {/* Social Media Section */}
-              <div className="col-xl-3 col-lg-4 col-sm-6">
+              <div className="col-5 col-md-6 col-lg-3">
                 <div className="">
                   <div className="">
                     <h4 className="text-white text-base md:text-2xl mb-3 font-bold">
@@ -133,7 +133,7 @@ const Footer = () => {
               </div>
 
               {/* Get In Touch Section */}
-              <div className="col-xl-3 col-lg-4 col-sm-6">
+              <div className="col-7 col-md-6 col-lg-3">
                 <div className="">
                   <div className="f">
                     <h4 className="text-white text-base md:text-2xl mb-3 font-bold">
@@ -196,9 +196,9 @@ const Footer = () => {
                     use.
                   </p>
                 </div>
-                <div className="footer-right">
+                <div className="footer-right !w-full md:!w-[350px]">
                   <h4 className="title">Subscribe Our Newsletter</h4>
-                  <div className="subscribe-wraper">
+                  <div className="subscribe-wraper ">
                     <input
                       className="footer-search"
                       type="search"
@@ -283,232 +283,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-// <footer>
-// <div className="footer-wrapper footer-bg">
-//   <div className="container">
-//     <div className="footer-area">
-//       <div className="row g-4">
-//         {/* Quick Maps Section */}
-//         <div className="col-xl-3 col-lg-4 col-sm-6">
-//           <div className="single-footer-caption">
-//             <div className="footer-tittle">
-//               <h4 className="title">Quick Maps</h4>
-//               <ul className="listing">
-//                 <li className="single-list">
-//                   <a href="about-us.php">About Us</a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="services.php">Services</a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="our-team.php">Our Team</a>
-//                 </li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Explore Section */}
-//         <div className="col-xl-3 col-lg-4 col-sm-6">
-//           <div className="single-footer-caption">
-//             <div className="footer-tittle">
-//               <h4 className="title">Explore</h4>
-//               <ul className="listing">
-//                 <li className="single-list">
-//                   <a href="faqs.php">FAQ's</a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="#">Quick Enquiry</a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="testimonial.php"> Testimonial</a>
-//                 </li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Social Media Section */}
-//         <div className="col-xl-3 col-lg-4 col-sm-6">
-//           <div className="single-footer-caption">
-//             <div className="footer-tittle">
-//               <h4 className="title">Social Media</h4>
-//               <ul className="listing">
-//                 <li className="single-list">
-//                   <a
-//                     href="https://www.instagram.com/AU.FirstFlight/"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                   >
-//                     <img src={instagramIcon} alt="Instagram" /> Instagram
-//                   </a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a
-//                     href="https://www.facebook.com/AUFirstFlight"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                   >
-//                     <img src={facebookIcon} alt="Facebook" /> Facebook
-//                   </a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a
-//                     href="https://x.com/FirstFlightAU"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                   >
-//                     <img src={twitterIcon} alt="Twitter" /> Twitter
-//                   </a>
-//                 </li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Get In Touch Section */}
-//         <div className="col-xl-3 col-lg-4 col-sm-6">
-//           <div className="single-footer-caption">
-//             <div className="footer-tittle">
-//               <h4 className="title">Get In Touch</h4>
-//               <ul className="listing">
-//                 <li className="single-list">
-//                   <a href="#" className="mb-20 d-block">
-//                     57 Second street Brompton, SA, 5007, Australia
-//                   </a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="#">
-//                     <div className="d-flex gap-12">
-//                       <Phone size={16} /> (+61) 450 424 186
-//                     </div>
-//                   </a>
-//                 </li>
-//                 <li className="single-list">
-//                   <a href="#">
-//                     <div className="d-flex gap-12">
-//                       <i className="fa-regular fa-envelope"></i>{" "}
-//                       info@first-flight.com.au
-//                     </div>
-//                   </a>
-//                 </li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-
-//     {/* Footer Middle Area */}
-//     <div className="footer-middle-area">
-//       <div className="footer-body">
-//         <div className="footer-content">
-//           <div className="d-flex flex-column gap-20">
-//             <div className="logo">
-//               <img
-//                 src={logo}
-//                 alt="First Flight Logo"
-//                 className="changeLogo"
-//               />
-//             </div>
-//             <p className="pera">
-//               In the ever-evolving realm of online travel, the key to a
-//               fulfilling travelling experience lies in choosing the right
-//               travel experts to make the journey seamless. Reserving a
-//               flight to a dream destination depends on many factors like
-//               date, time, prices, best deals, discounts, fare class,
-//               airline, and more. To understand the needs and demands of
-//               modern travellers the First Flight Pty Ltd came into
-//               existence on 16th July 2024. We are an Australian-based
-//               online flight booking travel agency registered under the
-//               Corporation Act 2001. We pride ourselves on providing
-//               plethora of options to ensure that every traveller not only
-//               secures the best flight deal but also experiences a seamless
-//               and unparalleled booking process that is fast and easy to
-//               use.
-//             </p>
-//           </div>
-//           <div className="footer-right">
-//             <h4 className="title">Subscribe Our Newsletter</h4>
-//             <div className="subscribe-wraper">
-//               <input
-//                 className="footer-search"
-//                 type="search"
-//                 name="footer"
-//                 placeholder="Enter Your Email"
-//               />
-//               <button className="subscribe-btn">Subscribe</button>
-//             </div>
-
-//             <div align="right">
-//               <a
-//                 href="https://www.trustpilot.com/review/first-flight.com.au"
-//                 target="_blank"
-//               >
-//                 <img src={trustpilotLogo} className="responsive" />
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="footer-bottom">
-//         <ul className="listing">
-//           <li className="single-list">
-//             <a href="cookie-policy.php" className="single">
-//               Cookie Policy
-//             </a>
-//           </li>
-//           <li className="single-list">
-//             <a href="privacy-policy.php" className="single">
-//               Privacy Policy
-//             </a>
-//           </li>
-//           <li className="single-list">
-//             <a href="disclaimer.php" className="single">
-//               Disclaimer
-//             </a>
-//           </li>
-//           <li className="single-list">
-//             <a href="terms-conditions.php" className="single">
-//               Terms & Conditions
-//             </a>
-//           </li>
-//         </ul>
-//       </div>
-//     </div>
-//   </div>
-
-//   {/* Footer Bottom Area */}
-//   <div className="footer-bottom-area">
-//     <div className="container">
-//       <div className="row">
-//         <div className="col-lg-12">
-//           <div className="d-flex justify-content-between gap-14 flex-wrap">
-//             <p className="pera">
-//               © <span className="current-year">2024</span> FIRST FLIGHT
-//               PTY LTD. All Rights Reserved.
-//             </p>
-//             <p className="pera">Powered by @The Design'O</p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-
-//   {/* Scroll Up */}
-//   <div className="progressParent" id="back-top">
-//     <svg
-//       className="backCircle svg-inner"
-//       width="100%"
-//       height="100%"
-//       viewBox="-1 -1 102 102"
-//     >
-//       <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-//     </svg>
-//   </div>
-
-//   {/* Search Overlay */}
-//   <div className="search-overlay"></div>
-// </div>
-// </footer>

@@ -7,7 +7,6 @@ const Headers = ({ isCollapsed }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    console.log("clickend");
     sessionStorage.clear("");
     dispatch(logout());
     navigate("/");
@@ -28,12 +27,20 @@ const Headers = ({ isCollapsed }) => {
               />
             </Link>
           </div>
-          <button
-            onClick={() => handleLogout()}
-            className="bg-secondary-6000 text-white px-4 py-2 rounded hover:bg-secondary-700"
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-white-6000 text-secondary-6000 px-4 py-2 rounded border-2 border-secondary-6000 hover:bg-secondary-6000 hover:text-white"
+            >
+              Go to Website
+            </button>
+            <button
+              onClick={() => handleLogout()}
+              className="bg-secondary-6000 text-white px-4 py-2 border-2 border-secondary-6000 rounded hover:bg-secondary-700"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </header>

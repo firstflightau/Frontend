@@ -11,7 +11,7 @@ const ProcessingTicket = () => {
   const jwtToken = reducerState?.auth?.user?.token;
   const params = useParams();
 
-  console.log(reducerState, jwtToken, "reducerState");
+  // console.log(reducerState, jwtToken, "reducerState");
   const navigate = useNavigate();
   const generatePnr = async () => {
     const payload = {

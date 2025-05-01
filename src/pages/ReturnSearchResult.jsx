@@ -660,18 +660,17 @@ const ReturnSearchResult = () => {
                                   </div>
                                   <div className="flex gap-2">
                                     <div className=" content-center">
-                                      <img
-                                        src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
-                                        // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${selectedFlights?.onward?.flights?.[0]?.carrier}.png`}
-                                        // src=""
-                                        alt={
-                                          selectedFlights?.onward?.flights?.[0]
-                                            ?.carrier
-                                        }
-                                        className=" rounded-lg"
-                                        width="30px"
-                                        height="30px"
-                                      />
+                                      <div className="w-[30px] h-[30px]">
+                                        <img
+                                          class="w-full object-cover rounded-md"
+                                          src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${selectedFlights?.onward?.flights?.[0]?.carrier}.png`}
+                                          // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
+                                          alt={
+                                            selectedFlights?.onward
+                                              ?.flights?.[0]?.carrier
+                                          }
+                                        />
+                                      </div>
                                     </div>
                                     <div>
                                       <p className=" content-center text-2xl font-bold  flex items-center text-white">
@@ -725,15 +724,19 @@ const ReturnSearchResult = () => {
                                   </div>
                                   <div className="flex gap-2">
                                     <div className=" content-center">
-                                      <img
-                                        // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${selectedFlights?.return?.flights?.[0]?.carrier}.png`}
-                                        src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
-                                        alt=""
-                                        className=" rounded-lg"
-                                        width="30px"
-                                        height="30px"
-                                      />
+                                      <div className="w-[30px] h-[30px]">
+                                        <img
+                                          class="w-full object-cover rounded-md"
+                                          src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${selectedFlights?.return?.flights?.[0]?.carrier}.png`}
+                                          // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
+                                          alt={
+                                            selectedFlights?.return
+                                              ?.flights?.[0]?.carrier
+                                          }
+                                        />
+                                      </div>
                                     </div>
+
                                     <div>
                                       <p className=" content-center text-2xl font-bold  flex items-center text-white">
                                         {selectedFlights?.return?.flights?.[0]?.Departure?.time?.slice(

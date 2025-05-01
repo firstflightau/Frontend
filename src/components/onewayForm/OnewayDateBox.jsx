@@ -25,7 +25,7 @@ const OnewayDateBox = ({
   StartDate,
 }) => {
   const today = ensureDate(StartDate) || new Date();
-  console.log(StartDate, new Date(), "startDate,new Date()");
+  // console.log(StartDate, new Date(), "startDate,new Date()");
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
   const [startDate, setStartDate] = useState(tomorrow);
