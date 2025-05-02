@@ -14,7 +14,7 @@ const Footer = () => {
       <div className="footer-wrapper footer-bg  bg-secondary-6000">
         <div
           className={`container ${
-            location?.pathname === "/" ? "flex" : "hidden"
+            location?.pathname === "/" ? "block" : "hidden"
           }`}
         >
           <div className=" py-5">
@@ -177,13 +177,13 @@ const Footer = () => {
             <div className="footer-body">
               <div className="footer-content">
                 <div className="d-flex flex-column gap-20">
-                  <div className="logo">
+                  {/* <div className="logo">
                     <img
                       src={logo}
                       alt="First Flight Logo"
                       className="changeLogo"
                     />
-                  </div>
+                  </div> */}
                   <p className="pera">
                     In the ever-evolving realm of online travel, the key to a
                     fulfilling travelling experience lies in choosing the right
@@ -202,7 +202,7 @@ const Footer = () => {
                   </p>
                 </div>
                 <div className="footer-right !w-full md:!w-[350px]">
-                  <h4 className="title">Subscribe Our Newsletter</h4>
+                  {/* <h4 className="title">Subscribe Our Newsletter</h4>
                   <div className="subscribe-wraper ">
                     <input
                       className="footer-search"
@@ -211,7 +211,7 @@ const Footer = () => {
                       placeholder="Enter Your Email"
                     />
                     <button className="subscribe-btn">Subscribe</button>
-                  </div>
+                  </div> */}
 
                   <div align="right">
                     <a
