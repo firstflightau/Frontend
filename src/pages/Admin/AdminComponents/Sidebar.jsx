@@ -6,7 +6,7 @@ import {
   HiChevronRight,
   HiUsers,
 } from "react-icons/hi";
-import { DollarSign, Headset } from "lucide-react";
+import { DollarSign, Headset, MessageCircleMore } from "lucide-react";
 
 const Sidebar = ({ isCollapsed, toggleSidebar }) => {
   const location = useLocation();
@@ -36,6 +36,11 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
       path: "/admin/enquiry",
       name: "Enquiry",
       icon: <Headset className="w-6 h-6" />,
+    },
+    {
+      path: "/admin/testimonial",
+      name: "Testimonial",
+      icon: <MessageCircleMore className="w-6 h-6" />,
     },
   ];
 

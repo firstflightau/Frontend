@@ -354,9 +354,9 @@ const BestFlightDeal = () => {
                       alt="Thailand"
                       className="w-full h-48 object-cover"
                     />
-                    <div className="absolute top-2 left-2 bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                    {/* <div className="absolute top-2 left-2 bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded-full">
                       Direct Flight
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Content Section */}
