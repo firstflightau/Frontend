@@ -6,7 +6,7 @@ import {
   HiChevronRight,
   HiUsers,
 } from "react-icons/hi";
-import { DollarSign } from "lucide-react";
+import { DollarSign, Headset } from "lucide-react";
 
 const Sidebar = ({ isCollapsed, toggleSidebar }) => {
   const location = useLocation();
@@ -31,6 +31,11 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
       path: "/admin/markup",
       name: "Markup",
       icon: <DollarSign className="w-6 h-6" />,
+    },
+    {
+      path: "/admin/enquiry",
+      name: "Enquiry",
+      icon: <Headset className="w-6 h-6" />,
     },
   ];
 

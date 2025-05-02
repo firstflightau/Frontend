@@ -6,6 +6,7 @@ import { Toast } from "flowbite-react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { HiFire } from "react-icons/hi";
 import callcentergirl from "../assets/images/gallery/callcentergirl.png";
+import { apiURL } from "../constant/Constant";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +74,11 @@ const Contact = () => {
         },
       };
 
-      const response = await axios.post("/api/contact", formData, config);
+      const response = await axios.post(
+        `${apiURL.baseURL}/api/contact`,
+        formData,
+        config
+      );
 
       setToast({
         show: true,

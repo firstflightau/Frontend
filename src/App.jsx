@@ -42,6 +42,7 @@ import { fetchMarkupAmount } from "./redux/slices/markup/markupSlice";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
+import AdminEnquiry from "./pages/Admin/AdminEnquiry";
 
 // Admin Components
 // import AdminLayout from "./pages/Admin/AdminLayout";
@@ -141,6 +142,7 @@ function App() {
             <Route path="users" element={<AdminUsers />} />
             <Route path="bookings" element={<AdminBookings />} />
             <Route path="markup" element={<AdminMarkup />} />
+            <Route path="enquiry" element={<AdminEnquiry />} />
           </Route>
         </Route>
       </Routes>
