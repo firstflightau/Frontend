@@ -5,13 +5,18 @@ import instagramIcon from "../assets/images/social/insta.png";
 import facebookIcon from "../assets/images/social/facebook.png";
 import twitterIcon from "../assets/images/social/twitter.png";
 import { Map, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
   return (
     <footer>
       <div className="footer-wrapper footer-bg  bg-secondary-6000">
-        <div className="container">
+        <div
+          className={`container ${
+            location?.pathname === "/" ? "flex" : "hidden"
+          }`}
+        >
           <div className=" py-5">
             <div className="row g-4">
               {/* Quick Maps Section */}

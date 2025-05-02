@@ -218,7 +218,7 @@ const OnewaySearchFormInner = () => {
                 <div className="h-full w-full md:w-auto ">
                   <button
                     onClick={handleSubmit}
-                    className="bg-primary-6000 text-white  font-semibold px-3 py-[22px] rounded-md w-full  cursor-pointer"
+                    className="bg-secondary-6000 text-white  font-semibold px-3 py-[22px] rounded-md w-full  cursor-pointer"
                   >
                     Search
                   </button>
