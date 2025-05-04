@@ -53,7 +53,8 @@ const AdminTopFlightRoute = () => {
       //   // },
       // });
 
-      await axios.post(`${apiURL.baseURL}/api/toproute`, {
+      // await axios.post(`${apiURL.baseURL}/api/toproute`, {
+      await axios.post(`https://ffbackend-sn85.onrender.com/api/toproute`, {
         tripData: [payload],
       });
       setDialogMessage("Top route flight added successfully!");

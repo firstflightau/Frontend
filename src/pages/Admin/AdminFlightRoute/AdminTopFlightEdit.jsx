@@ -15,7 +15,10 @@ const AdminTopFlightEdit = () => {
 
   const fetchRoutes = async () => {
     try {
-      const res = await axios.get(`${apiURL.baseURL}/api/toproute`);
+      // const res = await axios.get(`${apiURL.baseURL}/api/toproute`);
+      const res = await axios.get(
+        `https://ffbackend-sn85.onrender.com/api/toproute`
+      );
       setRoutes(res.data.routes || []);
     } catch (err) {
       console.error("Error fetching routes", err);
@@ -28,7 +31,10 @@ const AdminTopFlightEdit = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${apiURL.baseURL}/api/toproute/${selectedId}`);
+      // await axios.delete(`${apiURL.baseURL}/api/toproute/${selectedId}`);
+      await axios.delete(
+        `https://ffbackend-sn85.onrender.com/api/toproute/${selectedId}`
+      );
       setConfirmOpen(false);
       setSelectedId(null);
       fetchRoutes();

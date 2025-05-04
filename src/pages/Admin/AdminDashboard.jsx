@@ -1,7 +1,7 @@
 import DashboardCard from "./AdminComponents/DashboardCard";
-import { Users, Calendar, DollarSign } from "lucide-react";
+import { Users, Calendar, DollarSign, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { HiTicket } from "react-icons/hi";
+import { HiSupport, HiTicket } from "react-icons/hi";
 import { apiURL } from "../../constant/Constant";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -28,7 +28,8 @@ const AdminDashboard = () => {
     const fetchDashboardCount = async () => {
       try {
         const response = await axios.get(
-          `${apiURL.baseURL}/api/admin/dashboard/counts`,
+          // `${apiURL.baseURL}/api/admin/dashboard/counts`,
+          `https://ffbackend-sn85.onrender.com/api/admin/dashboard/counts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,6 +77,20 @@ const AdminDashboard = () => {
               link=""
               icon={DollarSign}
               colorIndex={2}
+            />
+            <DashboardCard
+              title="Total Enquiry"
+              value={data?.totalContact}
+              link="admin/enquiry"
+              icon={HiSupport}
+              colorIndex={3}
+            />
+            <DashboardCard
+              title="Total Review"
+              value={data?.totalTestimonial}
+              link="admin/testimonial"
+              icon={StarIcon}
+              colorIndex={4}
             />
           </>
         )}

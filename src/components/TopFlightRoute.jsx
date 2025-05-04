@@ -410,7 +410,10 @@ const TopFlightRoute = () => {
   useEffect(() => {
     const fetchTopROute = async () => {
       try {
-        const response = await axios.get(`${apiURL.baseURL}/api/toproute`);
+        // const response = await axios.get(`${apiURL.baseURL}/api/toproute`);
+        const response = await axios.get(
+          `https://ffbackend-sn85.onrender.com/api/toproute`
+        );
         setData(response?.data?.routes);
         // console.log(response);
         setLoader(false);
