@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "../../node_modules/swiper/swiper-bundle.min.css";
@@ -6,10 +6,37 @@ import testimonial1 from "../assets/images/testimonial/testimonial-1.jpeg";
 import logo from "../assets/images/logo/logo.png";
 import featureShape from "../assets/images/icon/graphic.png";
 import videoBanner from "../assets/images/hero/testimonial-three-banner.png";
+import axios from "axios";
+import { apiURL } from "../constant/Constant";
 
 const Testimonial = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state for GET API
+
+  // Fetch testimonials on component mount
+  const fetchTestimonials = async () => {
+    try {
+      const res = await axios.get(`${apiURL.baseURL}/api/testimonial`);
+      if (res.status === 200) {
+        console.log(res);
+        setTestimonials(res?.data?.testimonials); // Assuming res.data is an array of testimonials
+      }
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+    } finally {
+      setLoading(false); // Stop loading regardless of success or failure
+    }
+  };
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const sortedTestimonial = testimonials?.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
   return (
-    <section className="testimonial-area-three position-relative section-bg-before-two top-padding">
+    <section className="testimonial-area-three position-relative section-bg-before-two top-padding pb-[100px]">
       <div className="container">
         <div className="row justify-content-center position-relative">
           <div className="col-xl-7 col-lg-7">
@@ -38,38 +65,40 @@ const Testimonial = () => {
               }}
               className="testimonialThree-active"
             >
-              <SwiperSlide className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="user-img">
-                    <img src={testimonial1} alt="first flight" />
+              {sortedTestimonial?.map((item, index) => (
+                <SwiperSlide className="testimonial-card">
+                  <div className="testimonial-header">
+                    <div className="user-img">
+                      <img src={testimonial1} alt="first flight" />
+                    </div>
+                    <div className="user-info">
+                      <p className="name">{item?.name}</p>
+                      <p className="designation">Traveler</p>
+                    </div>
                   </div>
-                  <div className="user-info">
-                    <p className="name">Jessica</p>
-                    <p className="designation">Traveler</p>
+                  <div className="rattings">
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star"></i>
                   </div>
-                </div>
-                <div className="rattings">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                </div>
-                <div className="testimonial-body">
-                  <p className="pera line-clamp-3">
-                    Thank you for the easy and seamless bookings. You guys are
-                    amazing at customer assistance. I also want to thank your
-                    company for including the insurance in the package.
-                  </p>
-                </div>
-                <div className="testimonial-footer">
-                  <div className="logo">
-                    <img src={logo} alt="first flight" className="changeLogo" />
+                  <div className="testimonial-body">
+                    <p className="pera line-clamp-3">{item?.message}</p>
                   </div>
-                  <p className="date">August 15, 2024</p>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide className="testimonial-card">
+                  <div className="testimonial-footer">
+                    <div className="logo">
+                      <img
+                        src={logo}
+                        alt="first flight"
+                        className="changeLogo"
+                      />
+                    </div>
+                    <p className="date">August 15, 2024</p>
+                  </div>
+                </SwiperSlide>
+              ))}
+              {/* <SwiperSlide className="testimonial-card">
                 <div className="testimonial-header">
                   <div className="user-img">
                     <img src={testimonial1} alt="first flight" />
@@ -129,7 +158,7 @@ const Testimonial = () => {
                   </div>
                   <p className="date">August 20, 2024</p>
                 </div>
-              </SwiperSlide>
+              </SwiperSlide> */}
             </Swiper>
             {/* </div>
               <div className="swiper-pagination"></div>

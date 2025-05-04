@@ -11,10 +11,10 @@ const Home = () => {
     <div>
       <HeroSection />
       <FlightSearchForm />
+      <Partners />
       <TopFlightRoute />
       <BestFlightDeal />
       <Testimonial />
-      <Partners />
     </div>
   );
 };

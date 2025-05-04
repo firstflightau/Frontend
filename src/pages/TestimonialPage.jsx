@@ -167,30 +167,32 @@ const Testimonial = () => {
                       </div>
                     ))
                   : // Render testimonials once data is fetched
-                    sortedTestimonial?.map((testimonial, index) => (
-                      <div
-                        key={index}
-                        className="relative py-4 md:py-10 px-4 md:px-12 rounded-xl bg-gray-200 flex gap-5 mb-10 border-l-4 border-secondary-6000"
-                      >
-                        <img
-                          src={testimonialImg}
-                          className="w-14 h-14 md:w-24 md:h-24 mb-3 rounded-full shadow-lg"
-                          alt={testimonial?.name}
-                        />
-                        <div>
-                          <h4 className="text-2xl font-bold text-black mb-1">
-                            {testimonial?.name}
-                          </h4>
-                          <p className="text-base font-semibold mb-1">
-                            Traveler
-                            {/* ({dayjs(testimonial?.date).format("DD MMM, YY")}) */}
-                          </p>
-                          <p className="text-base font-normal text-gray-700">
-                            {testimonial?.message}
-                          </p>
+                    sortedTestimonial
+                      ?.slice?.(0, 5)
+                      ?.map((testimonial, index) => (
+                        <div
+                          key={index}
+                          className="relative py-4 md:py-10 px-4 md:px-12 rounded-xl bg-gray-200 flex gap-5 mb-10 border-l-4 border-secondary-6000"
+                        >
+                          <img
+                            src={testimonialImg}
+                            className="w-14 h-14 md:w-24 md:h-24 mb-3 rounded-full shadow-lg"
+                            alt={testimonial?.name}
+                          />
+                          <div>
+                            <h4 className="text-2xl font-bold text-black mb-1">
+                              {testimonial?.name}
+                            </h4>
+                            <p className="text-base font-semibold mb-1">
+                              Traveler
+                              {/* ({dayjs(testimonial?.date).format("DD MMM, YY")}) */}
+                            </p>
+                            <p className="text-base font-normal text-gray-700">
+                              {testimonial?.message}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                 <div className="contact-card bg-gray-200 rounded-xl px-10 py-8 relative mt-9">
                   <h4 className="contact-heading text-2xl font-bold text-secondary-6000 mb-8">
                     Write Your Comment

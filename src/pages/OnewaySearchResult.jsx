@@ -335,7 +335,7 @@ const OnewaySearchResult = () => {
 
     window.scrollTo(0, 0);
   }, [from, to, date, retrunDate, Adult, Child, Infant]);
-  // console.log(journeyFlight, jornyFlights, "setJornyFlightsss");
+  console.log(journeyFlight, jornyFlights, "setJornyFlightsss");
   // console.log(reducerState, "reducer state in the oneway result");
   return (
     <div>

@@ -44,6 +44,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import AdminEnquiry from "./pages/Admin/AdminEnquiry";
 import AdminTestimonial from "./pages/Admin/AdminTestimonial";
+import AdminTopFlightEdit from "./pages/Admin/AdminFlightRoute/AdminTopFlightEdit";
+import AdminTopFlightRoute from "./pages/Admin/AdminFlightRoute/AdminTopFlightRoute";
 
 // Admin Components
 // import AdminLayout from "./pages/Admin/AdminLayout";
@@ -145,6 +147,8 @@ function App() {
             <Route path="markup" element={<AdminMarkup />} />
             <Route path="enquiry" element={<AdminEnquiry />} />
             <Route path="testimonial" element={<AdminTestimonial />} />
+            <Route path="topflightadd" element={<AdminTopFlightRoute />} />
+            <Route path="topflightedit" element={<AdminTopFlightEdit />} />
           </Route>
         </Route>
       </Routes>

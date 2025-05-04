@@ -5,11 +5,20 @@ import {
   HiChevronLeft,
   HiChevronRight,
   HiUsers,
+  HiChevronDown,
+  HiChevronUp,
 } from "react-icons/hi";
-import { DollarSign, Headset, MessageCircleMore } from "lucide-react";
+import { DollarSign, Headset, MessageCircleMore, Plane } from "lucide-react";
+import { useState } from "react";
 
 const Sidebar = ({ isCollapsed, toggleSidebar }) => {
   const location = useLocation();
+
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const toggleDropdown = (name) => {
+    setOpenDropdown(openDropdown === name ? null : name);
+  };
 
   const menuItems = [
     {
@@ -41,6 +50,20 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
       path: "/admin/testimonial",
       name: "Testimonial",
       icon: <MessageCircleMore className="w-6 h-6" />,
+    },
+    {
+      name: "Flight Route",
+      icon: <Plane className="w-6 h-6" />,
+      subItems: [
+        {
+          path: "/admin/topflightadd",
+          name: "Add Flight Route",
+        },
+        {
+          path: "/admin/topflightedit",
+          name: "View & Delete",
+        },
+      ],
     },
   ];
 
@@ -76,20 +99,71 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
       <div className="overflow-y-auto h-[calc(100vh-8rem)]">
         <ul className="space-y-2">
           {menuItems.map((item) => (
-            <li key={item.path}>
-              <Link
-                to={item.path}
-                className={`flex items-center py-2 rounded hover:bg-gray-700 
+            <li key={item.path || item.name}>
+              {item.subItems ? (
+                <>
+                  <button
+                    onClick={() => toggleDropdown(item.name)}
+                    className={`flex items-center justify-between w-full py-2 rounded hover:bg-gray-700 
                     ${
-                      location.pathname === item.path
+                      item.subItems.some(
+                        (subItem) => location.pathname === subItem.path
+                      )
                         ? "bg-gray-900 text-white"
                         : "text-gray-300"
                     } 
                     ${isCollapsed ? "px-2" : "px-4"}`}
-              >
-                <span className="mr-3">{item.icon}</span>
-                {!isCollapsed && <span>{item.name}</span>}
-              </Link>
+                  >
+                    <div className="flex items-center">
+                      <span className="mr-3">{item.icon}</span>
+                      {!isCollapsed && <span>{item.name}</span>}
+                    </div>
+                    {!isCollapsed && (
+                      <span>
+                        {openDropdown === item.name ? (
+                          <HiChevronUp className="w-5 h-5" />
+                        ) : (
+                          <HiChevronDown className="w-5 h-5" />
+                        )}
+                      </span>
+                    )}
+                  </button>
+
+                  {!isCollapsed && openDropdown === item.name && (
+                    <ul className="ml-8 mt-1 space-y-1">
+                      {item.subItems.map((subItem) => (
+                        <li key={subItem.path}>
+                          <Link
+                            to={subItem.path}
+                            className={`flex items-center py-2 px-3 rounded hover:bg-gray-700 
+                            ${
+                              location.pathname === subItem.path
+                                ? "bg-gray-700 text-white"
+                                : "text-gray-300"
+                            }`}
+                          >
+                            {subItem.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              ) : (
+                <Link
+                  to={item.path}
+                  className={`flex items-center py-2 rounded hover:bg-gray-700 
+                  ${
+                    location.pathname === item.path
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300"
+                  } 
+                  ${isCollapsed ? "px-2" : "px-4"}`}
+                >
+                  <span className="mr-3">{item.icon}</span>
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Link>
+              )}
             </li>
           ))}
         </ul>

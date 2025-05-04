@@ -2,10 +2,12 @@ import dayjs from "dayjs";
 import { findAirportByCode } from "../../redux/slices/feature2/utils";
 import { useEffect, useState } from "react";
 import { standardizeFlightDetailResponse } from "../../utils/utils";
+import { useSelector } from "react-redux";
 
 const SingleFlightCard = ({ type, flight, isOnward }) => {
   const FlightData = flight;
   const [flightDetail, setFlightDetail] = useState(null); // Set initial state to null to check later
+  const reducerState = useSelector((state) => state);
   useEffect(() => {
     if (flight) {
       const data = standardizeFlightDetailResponse(flight?.flights); // Get standardized data
@@ -21,7 +23,7 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
 
   const FlightDetailsCard = ({ item, isLast }) => {
     return (
-      <div className="w-full flex flex-col gap-2  mb-2 rounded-2xl p-2 md:p-4">
+      <div className="w-full  flex flex-col gap-2  mb-2 rounded-2xl p-2 md:p-4">
         <div className="flex justify-between w-full ">
           <div className="flex gap-2">
             {/* <img
@@ -55,8 +57,8 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
             </div>
           </div>
           <div className="text-sm md:text-lg">
-            {/* {reducerState?.flightDetails?.FlightCabinClass}{" "} */}
-            <span className="font-semibold">Economy | SAVER</span>
+            {/* {reducerState?.flightDetails?.FlightCabinClass}{" "}
+            <span className="font-semibold">Economy | SAVER</span> */}
           </div>
         </div>
         <div className="flex w-full justify-between items-center gap-2">
@@ -83,13 +85,17 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
             <p className="text-base font-semibold">{item?.Departure}</p>
           </div>
           <div className=" relative w-full flex my-1 items-center  flex-col">
-            <div className="absolute -z-10 flex flex-row items-center w-1/2 top-1/2">
+            <div className="absolute z-0 flex flex-row items-center w-1/2 top-1/2">
               <div className="  w-2 -top-1/2  h-2 rounded-full bg-gray-400"></div>
               <div className=" w-full  border-gray-400  border-t-2 border-dashed"></div>
               <div className="  w-2 -top-1/2  h-2 rounded-full bg-gray-400"></div>
             </div>
-            <div className=" bg-white   flex justify-center  px-2">
-              <div className="flex flex-col bg-white px-1">
+            <div
+              className={` ${
+                type == "Return" ? "bg-blue-50" : "bg-white"
+              }    flex justify-center  px-2 relative`}
+            >
+              <div className="flex flex-col  px-1">
                 <span className="text-center text-lg font-semibold ">
                   {item?.duration}
                 </span>
@@ -164,9 +170,15 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
     );
   };
 
+  console.log(type, "type in the single flight cred");
+
   return (
-    <div className="border p-2 flex flex-col rounded-2xl gap-2  relative">
-      <p className="text-sm absolute top-0 left-0  md:text-[13px] bg-gradient-to-r from-primary-6000 to-primary-300  text-white rounded-ss-2xl rounded-ee-2xl py-1 px-3">
+    <div
+      className={`border p-2 flex flex-col rounded-2xl gap-2 ${
+        type == "Return" ? "bg-blue-50" : ""
+      }   relative`}
+    >
+      <p className="text-sm absolute top-0 left-0  md:text-[13px] bg-gradient-to-r from-primary-6000 to-red-300  text-white rounded-ss-2xl rounded-ee-2xl py-1 px-3">
         {type}
       </p>
       <div className="flex flex-col w-full pt-4">

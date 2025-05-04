@@ -1,6 +1,5 @@
 import { ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 const OnewayLocationFrom = ({
@@ -51,21 +50,35 @@ const OnewayLocationFrom = ({
   ];
 
   useEffect(() => {
-    if (recentSearches.length > 0) {
-      const mostRecent = recentSearches?.[0];
-      setSelectedLocation(mostRecent);
-      setValue(mostRecent.name);
-      if (onLocationSelect) {
-        onLocationSelect(mostRecent);
+    const initDefaultLocation = () => {
+      if (recentSearches.length > 0) {
+        const mostRecentCode = recentSearches?.[0]?.fromCode;
+        const matched = onlyAustralia?.find(
+          (item) => item?.AirportCode === mostRecentCode
+        );
+
+        console.log(matched, "matched");
+
+        if (matched) {
+          setSelectedLocation(matched);
+          setValue(matched.name);
+          if (onLocationSelect) {
+            onLocationSelect(matched);
+          }
+          return;
+        }
       }
-    } else {
+
+      // fallback to default
       const defaultCity = suggestedPlaces[0];
       setSelectedLocation(defaultCity);
       setValue(defaultCity.name);
       if (onLocationSelect) {
         onLocationSelect(defaultCity);
       }
-    }
+    };
+
+    initDefaultLocation();
   }, []);
 
   useEffect(() => {
@@ -163,34 +176,34 @@ const OnewayLocationFrom = ({
     }
   };
 
-  const renderRecentSearches = () => {
-    const uniqueRecentSearches = [...new Set(recentSearches)].slice(0, 2);
-    return (
-      <>
-        {uniqueRecentSearches.length > 0 && (
-          <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800">
-            Recent searches
-          </h3>
-        )}
-        <div className="mt-2">
-          {uniqueRecentSearches.map((item, index) => (
-            <span
-              onClick={() => handleSelectLocation(item)}
-              key={index}
-              className="flex mb-2 px-4 sm:px-8 items-center space-x-3 sm:space-x-4 lg:py-4 md:py-4 sm:py-3 hover:bg-neutral-100 cursor-pointer"
-            >
-              <span className="block text-neutral-400">
-                <ClockIcon className="h-4 sm:h-6 w-4 sm:w-6 text-gray-800" />
-              </span>
-              <span className="block font-medium text-neutral-700">
-                {item.name} ({item.AirportCode}), {item.CountryName}
-              </span>
-            </span>
-          ))}
-        </div>
-      </>
-    );
-  };
+  // const renderRecentSearches = () => {
+  //   const uniqueRecentSearches = [...new Set(recentSearches)].slice(0, 2);
+  //   return (
+  //     <>
+  //       {uniqueRecentSearches.length > 0 && (
+  //         <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800">
+  //           Recent searches
+  //         </h3>
+  //       )}
+  //       <div className="mt-2">
+  //         {uniqueRecentSearches.map((item, index) => (
+  //           <span
+  //             onClick={() => handleSelectLocation(item)}
+  //             key={index}
+  //             className="flex mb-2 px-4 sm:px-8 items-center space-x-3 sm:space-x-4 lg:py-4 md:py-4 sm:py-3 hover:bg-neutral-100 cursor-pointer"
+  //           >
+  //             <span className="block text-neutral-400">
+  //               <ClockIcon className="h-4 sm:h-6 w-4 sm:w-6 text-gray-800" />
+  //             </span>
+  //             <span className="block font-medium text-neutral-700">
+  //               {item.name} ({item.AirportCode}), {item.CountryName}
+  //             </span>
+  //           </span>
+  //         ))}
+  //       </div>
+  //     </>
+  //   );
+  // };
 
   const renderSuggestedPlaces = () => {
     return (
@@ -239,6 +252,8 @@ const OnewayLocationFrom = ({
     );
   };
 
+  console.log(selectedLocation, "selected location ");
+
   return (
     <div
       className={`relative w-full flex border bg-white border-gray-300  rounded-lg ${className}`}
@@ -278,7 +293,7 @@ const OnewayLocationFrom = ({
             renderSearchResults()
           ) : (
             <>
-              {renderRecentSearches()}
+              {/* {renderRecentSearches()} */}
               {renderSuggestedPlaces()}
             </>
           )}
