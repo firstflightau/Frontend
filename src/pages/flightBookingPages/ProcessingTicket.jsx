@@ -16,8 +16,8 @@ const ProcessingTicket = () => {
   const generatePnr = async () => {
     const payload = {
       ReservationQueryCommitReservation: {
-        "@type": "ReservationQueryCommitReservation",
-        scheduleChangeAcceptedInd: false,
+        // "@type": "ReservationQueryCommitReservation",
+        // scheduleChangeAcceptedInd: false,
       },
     };
 

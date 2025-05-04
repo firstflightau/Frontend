@@ -13,7 +13,7 @@ import "../../node_modules/swiper/swiper-bundle.min.css";
 
 const Partners = () => {
   return (
-    <div className="brand-area mb-14">
+    <div className="brand-area mb-14 relative z-0">
       <div className="container">
         <div className="swiper brandSwiper-active">
           <div className="swiper-wrapper">
@@ -43,37 +43,37 @@ const Partners = () => {
               // navigation={true}
             >
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={transAustraliaAirlines} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={australianAirlinesLogo} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={virginAustralia} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={qantasAirways} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={australianAirlines} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={aslAirlines} alt="" />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="swiper-slide">
+                <div className="swiper-slide bg-gray-100">
                   <img src={aaa} alt="" />
                 </div>
               </SwiperSlide>

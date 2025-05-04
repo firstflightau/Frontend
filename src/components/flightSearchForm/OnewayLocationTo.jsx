@@ -47,22 +47,52 @@ const OnewayLocationTo = ({
     },
   ];
 
+  // useEffect(() => {
+  //   if (recentSearches.length > 0) {
+  //     const mostRecent = recentSearches?.[0];
+  //     setSelectedLocation(mostRecent);
+  //     setValue(mostRecent.name);
+  //     if (onLocationSelect) {
+  //       onLocationSelect(mostRecent);
+  //     }
+  //   } else {
+  //     const defaultCity = suggestedPlaces[0];
+  //     setSelectedLocation(defaultCity);
+  //     setValue(defaultCity.name);
+  //     if (onLocationSelect) {
+  //       onLocationSelect(defaultCity);
+  //     }
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (recentSearches.length > 0) {
-      const mostRecent = recentSearches?.[0];
-      setSelectedLocation(mostRecent);
-      setValue(mostRecent.name);
-      if (onLocationSelect) {
-        onLocationSelect(mostRecent);
+    const initDefaultLocation = () => {
+      if (recentSearches.length > 0) {
+        const mostRecentCode = recentSearches?.[0]?.toCode;
+        const matched = airports?.find(
+          (item) => item?.AirportCode === mostRecentCode
+        );
+        console.log(airports, mostRecentCode, "mmaattcchhss");
+        if (matched) {
+          setSelectedLocation(matched);
+          setValue(matched.name);
+          if (onLocationSelect) {
+            onLocationSelect(matched);
+          }
+          return;
+        }
       }
-    } else {
+
+      // fallback to default
       const defaultCity = suggestedPlaces[0];
       setSelectedLocation(defaultCity);
       setValue(defaultCity.name);
       if (onLocationSelect) {
         onLocationSelect(defaultCity);
       }
-    }
+    };
+
+    initDefaultLocation();
   }, []);
 
   useEffect(() => {
@@ -91,31 +121,6 @@ const OnewayLocationTo = ({
       }, delay);
     };
   };
-
-  // Search function using the flight API response
-  // const handleSearch = async (keyword) => {
-  //   if (keyword.length > 2) {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://back.theskytrails.com/skyTrails/city/searchCityData?keyword=${keyword}`
-  //       );
-  //       const locations =
-  //         response?.data?.data?.map((item) => ({
-  //           _id: item._id,
-  //           name: item.name,
-  //           CityCode: item.CityCode,
-  //           CountryCode: item.CountryCode,
-  //           CountryName: item.CountryName,
-  //           AirportCode: item.AirportCode,
-  //           code: item.code,
-  //           state: item.state,
-  //         })) || [];
-  //       setSearchResults(locations);
-  //     } catch (error) {
-  //       console.error("Error fetching flight data:", error);
-  //     }
-  //   }
-  // };
 
   const handleSearch = (keyword) => {
     if (keyword.length > 2) {
@@ -184,34 +189,34 @@ const OnewayLocationTo = ({
     }
   };
 
-  const renderRecentSearches = () => {
-    const uniqueRecentSearches = [...new Set(recentSearches)].slice(0, 2);
-    return (
-      <>
-        {uniqueRecentSearches.length > 0 && (
-          <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800">
-            Recent searches
-          </h3>
-        )}
-        <div className="mt-2">
-          {uniqueRecentSearches.map((item, index) => (
-            <span
-              onClick={() => handleSelectLocation(item)}
-              key={index}
-              className="flex mb-2 px-4 sm:px-8 items-center space-x-3 sm:space-x-4 lg:py-4 md:py-4 sm:py-3 hover:bg-neutral-100 cursor-pointer"
-            >
-              <span className="block text-neutral-400">
-                <ClockIcon className="h-4 sm:h-6 w-4 sm:w-6 text-gray-800" />
-              </span>
-              <span className="block font-medium text-neutral-700">
-                {item.name} ({item.AirportCode}), {item.CountryName}
-              </span>
-            </span>
-          ))}
-        </div>
-      </>
-    );
-  };
+  // const renderRecentSearches = () => {
+  //   const uniqueRecentSearches = [...new Set(recentSearches)].slice(0, 2);
+  //   return (
+  //     <>
+  //       {uniqueRecentSearches.length > 0 && (
+  //         <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800">
+  //           Recent searches
+  //         </h3>
+  //       )}
+  //       <div className="mt-2">
+  //         {uniqueRecentSearches.map((item, index) => (
+  //           <span
+  //             onClick={() => handleSelectLocation(item)}
+  //             key={index}
+  //             className="flex mb-2 px-4 sm:px-8 items-center space-x-3 sm:space-x-4 lg:py-4 md:py-4 sm:py-3 hover:bg-neutral-100 cursor-pointer"
+  //           >
+  //             <span className="block text-neutral-400">
+  //               <ClockIcon className="h-4 sm:h-6 w-4 sm:w-6 text-gray-800" />
+  //             </span>
+  //             <span className="block font-medium text-neutral-700">
+  //               {item.name} ({item.AirportCode}), {item.CountryName}
+  //             </span>
+  //           </span>
+  //         ))}
+  //       </div>
+  //     </>
+  //   );
+  // };
 
   const renderSuggestedPlaces = () => {
     return (
@@ -314,7 +319,7 @@ const OnewayLocationTo = ({
             renderSearchResults()
           ) : (
             <>
-              {renderRecentSearches()}
+              {/* {renderRecentSearches()} */}
               {renderSuggestedPlaces()}
             </>
           )}

@@ -562,7 +562,7 @@ const ReturnSearchResult = () => {
     <div>
       {/* <ReturnSearchFormInner /> */}
       <FlightBreadcrumbReturn />
-      <div className="tour-list-section section-padding2">
+      <div className="tour-list-section pt-[40px]">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">

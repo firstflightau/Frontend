@@ -60,7 +60,11 @@ const ReturnFlightResultCard = ({
 
   // console.log(item, "item");
   return (
-    <div class="w-full relative transition-all ease-in-out hover:scale-[1.01] bg-white shadow-sm rounded-lg  p-3 px-3  hover:shadow-sm cursor-pointer border ">
+    <div
+      class={`w-full relative transition-all ease-in-out hover:scale-[1.01]  shadow-sm rounded-lg  p-3 px-3  hover:shadow-sm cursor-pointer border ${
+        type == "onward" ? "bg-[#fe000012]" : "bg-white"
+      }`}
+    >
       <div
         onClick={() => handleSelectedChange(type, item, index)}
         class="flex justify-between"

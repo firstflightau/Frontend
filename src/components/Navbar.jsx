@@ -200,7 +200,7 @@ const Navbar = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="menu-wrapper">
-                  <div className="main-menu d-none d-lg-block">
+                  <div className="main-menu d-none d-md-block">
                     <nav>
                       <div className="d-flex justify-content-between align-items-center">
                         <ul className="listing mb-0" id="navigation">

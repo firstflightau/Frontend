@@ -18,13 +18,19 @@ const MainBookingPage = () => {
   const onwards = reducerState?.selectedFlight?.Onward;
   const Return = reducerState?.selectedFlight?.Return;
 
+  // console.log(selectedFlight, "selectedFlight");
+
   const grandTotal =
     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-    (Return && Return?.productsoption?.[0]?.Price?.TotalPrice) +
+    (Return &&
+      Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)) +
     addMarkup(
       onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+        (Return &&
+          Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice))
     );
+
+  // console.log(grandTotal, "grand total");
   const reservationIdDevKit =
     reducerState?.workbench?.data?.data?.ReservationResponse?.Reservation
       ?.Identifier?.value;

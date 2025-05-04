@@ -1,11 +1,13 @@
 import { PlaneTakeoff } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import NcInputNumber from "./NcInputNumber";
 import { searchpy } from "../redux/slices/SearchFlightPayload/searchFlightPayloadSlice";
 import dayjs from "dayjs";
+import { apiURL } from "../constant/Constant";
+import axios from "axios";
 
 const TopFlightRoute = () => {
   const [filterType, setFilterType] = useState("DOMESTIC");
@@ -65,7 +67,6 @@ const TopFlightRoute = () => {
         toCity: "Melbourne",
         toCode: "MEL",
         toAirport: "Tullamarine Airport",
-        _id: 4,
 
         _id: "668278aa909eb1823ba94615",
         name: "Melbourne",
@@ -193,10 +194,6 @@ const TopFlightRoute = () => {
         toCity: "Sydney",
         toCode: "SYD",
         toAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
-
         AirportCode: "SYD",
         CityCode: "SYD",
         CountryCode: "AU",
@@ -216,10 +213,6 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
-
         AirportCode: "SYD",
         CityCode: "SYD",
         CountryCode: "AU",
@@ -251,10 +244,6 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
-
         AirportCode: "SYD",
         CityCode: "SYD",
         CountryCode: "AU",
@@ -286,10 +275,6 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
-
         AirportCode: "SYD",
         CityCode: "SYD",
         CountryCode: "AU",
@@ -321,10 +306,6 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
-
         AirportCode: "SYD",
         CityCode: "SYD",
         CountryCode: "AU",
@@ -354,9 +335,6 @@ const TopFlightRoute = () => {
     {
       type: "international",
       from: {
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
@@ -393,9 +371,6 @@ const TopFlightRoute = () => {
         fromCity: "Sydney",
         fromCode: "SYD",
         fromAirport: "Kingsford Smith Airport",
-        fromCity: "Sydney",
-        fromCode: "SYD",
-        fromAirport: "Kingsford Smith Airport",
 
         AirportCode: "SYD",
         CityCode: "SYD",
@@ -428,6 +403,27 @@ const TopFlightRoute = () => {
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(1);
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(0);
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(0);
+
+  const [loader, setLoader] = useState(true);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchTopROute = async () => {
+      try {
+        const response = await axios.get(`${apiURL.baseURL}/api/toproute`);
+        setData(response?.data?.routes);
+        // console.log(response);
+        setLoader(false);
+      } catch (error) {
+        console.error("Failed to fetch markup data:", error);
+      } finally {
+        setLoader(false);
+      }
+    };
+
+    fetchTopROute();
+  }, []);
+
   const [recentSearches, setRecentSearches] = useState(
     JSON.parse(localStorage.getItem("FlightRecentSearchesFrom")) || []
   );
@@ -454,19 +450,8 @@ const TopFlightRoute = () => {
     if (type === "guestInfants") setGuestInfantsInputValue(value);
   };
 
-  const handleCardClick = (flight) => {
-    // setSelectedFlight(flight);
-    setIsOpen(true);
-  };
-
   const handleSubmit = (e, selectedFlight) => {
     e.preventDefault();
-
-    // const guests = {
-    //   adults: guestAdultsInputValue,
-    //   children: guestChildrenInputValue,
-    //   infant: guestInfantsInputValue,
-    // };
 
     sessionStorage.setItem("SessionExpireTime", new Date());
     sessionStorage.setItem("adults", guestAdultsInputValue);
@@ -478,8 +463,8 @@ const TopFlightRoute = () => {
     const formattedDate = departDate.toISOString().split("T")[0];
 
     const params = {
-      from: selectedFlight?.from?.fromCode,
-      to: selectedFlight?.to?.toCode,
+      from: selectedFlight?.tripData?.[0]?.from?.fromCode,
+      to: selectedFlight?.tripData?.[0]?.to?.toCode,
       date: dayjs(formattedDate).format("DD MMM YY"),
       retrunDate: "",
       Adult: guestAdultsInputValue,
@@ -490,22 +475,21 @@ const TopFlightRoute = () => {
       FlightCabinClass: flightClassState.value,
     };
     const updatedRecentSearches = [
-      selectedFlight?.from,
-      ...recentSearches.filter((item) => item._id !== selectedFlight?.from._id),
+      selectedFlight?.tripData?.[0]?.from,
+      ...recentSearches.filter(
+        (item) => item.fromCode !== selectedFlight?.tripData?.[0]?.from.fromCode
+      ),
     ].slice(0, 5);
     const updatedRecentSearchesTO = [
-      selectedFlight?.to,
-      ...recentSearchesTO.filter((item) => item._id !== selectedFlight?.to._id),
+      selectedFlight?.tripData?.[0]?.to,
+      ...recentSearchesTO.filter(
+        (item) => item.toCode !== selectedFlight?.tripData?.[0]?.to.toCode
+      ),
     ].slice(0, 5);
 
     setRecentSearches(updatedRecentSearches);
     setRecentSearchesTO(updatedRecentSearchesTO);
-    console.log(
-      selectedFlight,
-      "seledddd",
-      recentSearches,
-      updatedRecentSearches
-    );
+
     localStorage.setItem(
       "FlightRecentSearchesFrom",
       JSON.stringify(updatedRecentSearches)
@@ -520,13 +504,16 @@ const TopFlightRoute = () => {
     navigate(`/onewaySearchResult?${queryString}`);
   };
 
-  const filteredData = tripData?.filter((item) => {
+  const filteredData = data?.filter((item) => {
+    // Since tripData is an array, check the first item's type (or loop if needed)
     if (filterType === "DOMESTIC") {
-      return item?.type === "domestic";
+      return item?.tripData?.[0]?.type === "domestic"; // Check first element
     } else {
-      return item?.type === "international";
+      return item?.tripData?.[0]?.type === "international";
     }
   });
+
+  console.log(filteredData);
 
   return (
     <section className="special-area">
@@ -567,9 +554,11 @@ const TopFlightRoute = () => {
             >
               <div className="flex items-center justify-between p-3 bg-yellow-200 border rounded-lg transition hover:bg-white">
                 <div className="flex-1">
-                  <h4 className="text-lg font-bold">{item?.from?.fromCity}</h4>
+                  <h4 className="text-lg font-bold">
+                    {item?.tripData?.[0]?.from?.fromCity}
+                  </h4>
                   <p className="text-sm text-gray-600 truncate">
-                    {item?.from?.fromAirport}
+                    {item?.tripData?.[0]?.from?.fromAirport}
                   </p>
                 </div>
                 <div className="relative px-2 flex justify-center">
@@ -583,9 +572,11 @@ const TopFlightRoute = () => {
 
                 {/* To Section */}
                 <div className="flex-1">
-                  <h4 className="text-lg font-bold">{item?.to?.toCity}</h4>
+                  <h4 className="text-lg font-bold">
+                    {item?.tripData?.[0]?.to?.toCity}
+                  </h4>
                   <p className="text-sm text-gray-600 truncate">
-                    {item?.to?.toAirport}
+                    {item?.tripData?.[0]?.to?.toAirport}
                   </p>
                 </div>
               </div>
