@@ -1,6 +1,6 @@
 import React from "react";
 import transAustraliaAirlines from "../assets/images/brand/trans-australia-airlines_opk.png";
-import australianAirlinesLogo from "../assets/images/brand/Australian-Airlines-Logo-1986.png";
+import australianAirlinesLogo from "../assets/images/brand/au.png";
 import virginAustralia from "../assets/images/brand/Virgin-Australias.png";
 import qantasAirways from "../assets/images/brand/Qantas-Airways.png";
 import australianAirlines from "../assets/images/brand/Austrian-Airlines.png";
