@@ -153,7 +153,7 @@ const PriceSummary = () => {
         <div className="flex flex-col justify-between items-start font-semibold text-gray-800">
           <div className="flex w-full justify-between font-semibold text-gray-800">
             <div className="flex flex-col items-start">
-              <span>Grand Total</span>
+              <span>Total Price</span>
             </div>
             <span className="text-primary-6000 text-lg">
               $ {grandTotal?.toFixed(2)} AUD
