@@ -31,6 +31,8 @@ const PriceSummary = () => {
   //     };
   //   }, []);
 
+  console.log(onwards, "onwards");
+
   const noOfPassenger = reducerState?.searchFlighPY;
 
   const findAdultPriceOnwards =
@@ -107,41 +109,41 @@ const PriceSummary = () => {
             <User size={16} />
             <span className="text-sm">{noOfPassenger?.Adult}</span>
           </div>
-          {/* {noOfPassenger?.Child > 0 && ( */}
-          <div className="flex items-center gap-1">
-            <i className="fa-solid fa-child"></i>
-            <span className="text-sm">{noOfPassenger?.Child}</span>
-          </div>
-          {/* )} */}
-          {/* {noOfPassenger?.Infant > 0 && ( */}
-          <div className="flex items-center gap-1">
-            <Baby size={16} />
-            <span className="text-sm">{noOfPassenger?.Infant}</span>
-          </div>
-          {/* )} */}
+          {noOfPassenger?.Child > 0 && (
+            <div className="flex items-center gap-1">
+              <i className="fa-solid fa-child"></i>
+              <span className="text-sm">{noOfPassenger?.Child}</span>
+            </div>
+          )}
+          {noOfPassenger?.Infant > 0 && (
+            <div className="flex items-center gap-1">
+              <Baby size={16} />
+              <span className="text-sm">{noOfPassenger?.Infant}</span>
+            </div>
+          )}
         </div>
       </div>
       <div className="space-y-3">
         <div className="flex justify-between text-gray-600">
           <span>Adult x {noOfPassenger?.Adult}</span>
-          {/* <span>${adultPrice * noOfPassenger?.Adult} AUD</span> */}
+          <span>${adultPrice * noOfPassenger?.Adult} AUD</span>
         </div>
         {noOfPassenger?.Child > 0 && (
           <div className="flex justify-between text-gray-600">
             <span>Child x 1</span>
-            {/* <span>${childPrice * noOfPassenger?.Child} AUD</span> */}
+            <span>${childPrice * noOfPassenger?.Child} AUD</span>
           </div>
         )}
         {noOfPassenger?.Infant > 0 && (
           <div className="flex justify-between text-gray-600">
             <span>Infant x 1</span>
-            {/* <span>${infantPrice * noOfPassenger?.Infant} AUD</span> */}
+            <span>${infantPrice * noOfPassenger?.Infant} AUD</span>
           </div>
         )}
-        {/* <div className="flex justify-between text-gray-600">
+        <div className="flex justify-between text-gray-600">
           <span>Total Taxes +</span>
           <span>${totalTax?.toFixed(2)} AUD</span>
-        </div> */}
+        </div>
       </div>
       <div className="border-t pt-2 mt-3">
         <div className="flex justify-between font-semibold text-gray-800">

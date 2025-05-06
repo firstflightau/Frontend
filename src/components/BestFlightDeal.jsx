@@ -384,6 +384,14 @@ const BestFlightDeal = () => {
                         </p>
                       </div>
                     </div>
+                    <div className="flex justify-end ">
+                      <button
+                        onClick={(e) => handleSubmit(e, item)}
+                        className="w-full bg-secondary-6000 px-3 py-1 text-white font-semibold rounded-md"
+                      >
+                        search
+                      </button>
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>
