@@ -57,8 +57,11 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
             </div>
           </div>
           <div className="text-sm md:text-lg">
-            {/* {reducerState?.flightDetails?.FlightCabinClass}{" "}
-            <span className="font-semibold">Economy | SAVER</span> */}
+            {/* {reducerState?.searchFlighPY?.FlightCabinClass}{" "}
+             */}
+            <span className="font-semibold">
+              {reducerState?.searchFlighPY?.FlightCabinClass}
+            </span>
           </div>
         </div>
         <div className="flex w-full justify-between items-center gap-2">
