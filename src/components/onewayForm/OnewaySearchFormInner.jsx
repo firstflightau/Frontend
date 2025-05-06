@@ -8,6 +8,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import OnewayLocationTo from "../flightSearchForm/OnewayLocationTo";
 import { searchpy } from "../../redux/slices/SearchFlightPayload/searchFlightPayloadSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OnewayDateBoxInner from "./OnewayDateBoxInner";
+import GuestsInputInner from "../flightSearchForm/GuestInputInner";
 useLocation;
 
 const OnewaySearchFormInner = () => {
@@ -201,14 +203,14 @@ const OnewaySearchFormInner = () => {
                   onLocationSelect={handleToSelect}
                 />
 
-                <OnewayDateBox
+                <OnewayDateBoxInner
                   className="flex-1"
                   // onSubmit={handleSubmit}
                   onDateChange={handleDateChange}
                   StartDate={dDate}
                 />
                 {/* <FlightClass /> */}
-                <GuestsInput
+                <GuestsInputInner
                   onGuestChange={handleGuestChange}
                   Adult={Adult}
                   Child={Child}
