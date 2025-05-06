@@ -128,12 +128,12 @@ const AdminMarkup = () => {
     <div className="h-full  flex flex-col justify-center items-center bg-gray-100">
       <div className=" mb-6 text-gray-700 ">
         <p className="text-lg font-semibold">
-          Current Markup Amount :
-          <span className="text-blue-600"> {initialMarkup.markup}%</span>
+          Current Discount:{" "}
+          <span className="text-blue-600">{initialMarkup.oneway}%</span>
         </p>
         <p className="text-lg font-semibold">
-          Current Onward Discount:{" "}
-          <span className="text-blue-600">{initialMarkup.oneway}%</span>
+          Current Markup Amount :
+          <span className="text-blue-600"> {initialMarkup.markup}%</span>
         </p>
         {/* <p className="text-lg font-semibold">
           Current Return Discount:{" "}

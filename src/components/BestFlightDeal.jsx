@@ -324,11 +324,11 @@ const BestFlightDeal = () => {
       <div className="container">
         <div className="row justify-content-center position-relative z-10">
           <div className="col-xl-7 col-lg-7">
-            <div className="section-title mx-430 mx-auto text-center">
+            <div className="section-title mx-650 mx-auto text-center">
               <span className="highlights fancy-font font-400">
                 Best Flight Deals
               </span>
-              <h4 className="title">Most Favorite Tour Place in The World</h4>
+              <h4 className=" title ">Most Favorite Tour Place in The World</h4>
             </div>
           </div>
         </div>
@@ -370,14 +370,14 @@ const BestFlightDeal = () => {
                     </div>
 
                     {/* Airports */}
-                    <div className="space-y-2 mb-3 bg-gray-200 p-2 rounded-md">
-                      <div className="flex items-center gap-1">
+                    <div className="space-y-2 mb-3  p-2 rounded-md">
+                      <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
                         <PlaneTakeoff size={16} />
                         <p className="text-sm text-gray-700 truncate">
                           {item?.fromAirport}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
                         <PlaneLanding size={16} />
                         <p className="text-sm text-gray-700 truncate">
                           {item?.toAirport}

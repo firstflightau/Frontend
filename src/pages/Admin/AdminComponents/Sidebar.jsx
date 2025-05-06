@@ -52,6 +52,11 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
       icon: <MessageCircleMore className="w-6 h-6" />,
     },
     {
+      path: "/admin/instantpayment",
+      name: "Instant Payment",
+      icon: <DollarSign className="w-6 h-6" />,
+    },
+    {
       name: "Flight Route",
       icon: <Plane className="w-6 h-6" />,
       subItems: [

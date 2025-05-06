@@ -123,11 +123,11 @@ const AdminTestimonials = () => {
           <thead className="uppercase text-xs text-gray-700 bg-gray-50">
             <tr>
               <th className="px-2 py-3">#</th>
-              <th className="px-2 py-3">Name</th>
-              <th className="px-2 py-3">Email</th>
+              <th className="px-2 py-3">Name & Email</th>
+              {/* <th className="px-2 py-3">Email</th> */}
               <th className="px-2 py-3">Message</th>
-              <th className="px-2 py-3">Status</th>
-              <th className="px-2 py-3">Date</th>
+              <th className="px-2 py-3">Status & Date</th>
+              {/* <th className="px-2 py-3"></th> */}
               <th className="px-2 py-3">Actions</th>
             </tr>
           </thead>
@@ -140,15 +140,18 @@ const AdminTestimonials = () => {
                 <td className="px-2 py-4 font-medium text-gray-900">
                   {index + 1}
                 </td>
-                <td className="px-2 py-4">{testimonial.name}</td>
-                <td className="px-2 py-4">{testimonial.email}</td>
-                <td className="px-2 py-4 max-w-xs truncate">
-                  {testimonial.message}
-                </td>
-                <td className="px-2 py-4 capitalize">{testimonial.status}</td>
                 <td className="px-2 py-4">
+                  {testimonial.name} <br /> {testimonial.email}
+                </td>
+                {/* <td className="px-2 py-4">{testimonial.email}</td> */}
+                <td className="px-2 py-4 max-w-xs ">{testimonial.message}</td>
+                <td className="px-2 py-4 capitalize">
+                  {testimonial.status} <br />{" "}
                   {dayjs(testimonial.createdAt).format("DD/MM/YYYY")}
                 </td>
+                {/* <td className="px-2 py-4">
+                 
+                </td> */}
                 <td className="px-2 py-4 flex flex-col gap-2 space-x-2">
                   <button
                     className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded"
