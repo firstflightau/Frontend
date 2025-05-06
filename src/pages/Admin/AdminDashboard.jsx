@@ -54,7 +54,7 @@ const AdminDashboard = () => {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {loader ? (
-          [1, 2, 3].map((_, index) => <SkeletonCard key={index} />)
+          [1, 2, 3, 4, 5].map((_, index) => <SkeletonCard key={index} />)
         ) : (
           <>
             <DashboardCard

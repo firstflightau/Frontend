@@ -6,9 +6,15 @@ import testimonialImg from "../assets/images/testimonial/testimonial-1.jpeg";
 import axios from "axios";
 import { apiURL } from "../constant/Constant";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Testimonial = () => {
+  const reducerState = useSelector((state) => state);
+  const navigate = useNavigate();
+  const authentic = reducerState?.auth?.isAuthenticated;
+  const token = reducerState?.auth?.user?.token;
+  console.log(token, "topkekn");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +34,10 @@ const Testimonial = () => {
   // Fetch testimonials on component mount
   const fetchTestimonials = async () => {
     try {
-      const res = await axios.get(`${apiURL.baseURL}/api/testimonial`);
+      const res = await axios.get(
+        `https://ffbackend-sn85.onrender.com/api/testimonial`
+      );
+      // const res = await axios.get(`${apiURL.baseURL}/api/testimonial`);
       if (res.status === 200) {
         console.log(res);
         setTestimonials(res.data.testimonials); // Assuming res.data is an array of testimonials
@@ -51,15 +60,22 @@ const Testimonial = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
+    if (!authentic) {
+      // return;
+      navigate("/login");
+      return;
+    }
     e.preventDefault();
 
     try {
       const res = await axios({
         method: "post",
-        url: `${apiURL.baseURL}/api/testimonial`,
+        url: `https://ffbackend-sn85.onrender.com/api/testimonial`,
+        // url: `${apiURL.baseURL}/api/testimonial`,
         data: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 

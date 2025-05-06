@@ -152,8 +152,8 @@ const OnewaySearchFormInner = () => {
 
     dispatch(searchFlight(searchpy));
 
-    amadeusSearch(payload);
-    flightReturnTboAndKafila(payload);
+    // amadeusSearch(payload);
+    // flightReturnTboAndKafila(payload);
 
     sessionStorage.setItem("adults", adult);
     sessionStorage.setItem("childs", child);
@@ -213,6 +213,7 @@ const OnewaySearchFormInner = () => {
                   Adult={Adult}
                   Child={Child}
                   Infant={Infant}
+                  Class={Class1}
                   onFlightClassChange={handleFlightClassChange}
                 />
                 <div className="h-full w-full md:w-auto ">

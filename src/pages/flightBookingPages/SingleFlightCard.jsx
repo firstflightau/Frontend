@@ -178,7 +178,11 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
         type == "Return" ? "bg-blue-50" : ""
       }   relative`}
     >
-      <p className="text-sm absolute top-0 left-0  md:text-[13px] bg-gradient-to-r from-primary-6000 to-red-300  text-white rounded-ss-2xl rounded-ee-2xl py-1 px-3">
+      <p
+        className={`text-sm absolute top-0 left-0  md:text-[13px]   text-white rounded-ss-2xl rounded-ee-2xl py-1 px-3 ${
+          type == "Return" ? "bg-secondary-6000" : "bg-primary-6000"
+        }`}
+      >
         {type}
       </p>
       <div className="flex flex-col w-full pt-4">

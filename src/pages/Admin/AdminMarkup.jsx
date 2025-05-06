@@ -128,14 +128,14 @@ const AdminMarkup = () => {
     <div className="h-full  flex flex-col justify-center items-center bg-gray-100">
       <div className=" mb-6 text-gray-700 ">
         <p className="text-lg font-semibold">
-          Markup Amount :
+          Current Markup Amount :
           <span className="text-blue-600"> {initialMarkup.markup}%</span>
         </p>
-        {/* <p className="text-lg font-semibold">
+        <p className="text-lg font-semibold">
           Current Onward Discount:{" "}
           <span className="text-blue-600">{initialMarkup.oneway}%</span>
         </p>
-        <p className="text-lg font-semibold">
+        {/* <p className="text-lg font-semibold">
           Current Return Discount:{" "}
           <span className="text-blue-600">{initialMarkup.return}%</span>
         </p> */}
@@ -145,12 +145,12 @@ const AdminMarkup = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
-          {/* <div className="mb-4">
+          <div className="mb-4">
             <label
               htmlFor="oneway"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Update Oneway Discount:
+              Update Discount:
             </label>
             <input
               type="number"
@@ -164,7 +164,7 @@ const AdminMarkup = () => {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               htmlFor="return"
               className="block text-sm font-medium text-gray-700 mb-1"

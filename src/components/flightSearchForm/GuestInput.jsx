@@ -158,13 +158,13 @@ const GuestsInput = ({
                 <div className="nc-NcInputNumber flex items-center justify-between  ">
                   <select
                     id="countries"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    value={flightClassState.value} // Controlled input
                     onChange={(e) => {
                       const selectedItem = flightClass?.find(
                         (item) => item.value === e.target.value
                       );
-                      setFlightClassState(selectedItem); // Update state with the selected item
-                      close(); // Close the dropdown or execute any other desired logic
+                      setFlightClassState(selectedItem);
                     }}
                   >
                     {flightClass?.map((item) => (
