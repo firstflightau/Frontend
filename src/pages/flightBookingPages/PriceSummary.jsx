@@ -96,6 +96,8 @@ const PriceSummary = () => {
         (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
     );
 
+  // console.log(noOfPassenger, "nof of passenger");
+
   return (
     <div
       className={`rounded-2xl shadow-md border border-gray-200 p-4 bg-white overflow-hidden transition-all duration-300 sticky top-28
@@ -126,33 +128,39 @@ const PriceSummary = () => {
       <div className="space-y-3">
         <div className="flex justify-between text-gray-600">
           <span>Adult x {noOfPassenger?.Adult}</span>
-          <span>${adultPrice * noOfPassenger?.Adult} AUD</span>
+          <span>
+            ${(adultPrice * noOfPassenger?.Adult + totalTax).toFixed(2)} AUD
+          </span>
         </div>
         {noOfPassenger?.Child > 0 && (
           <div className="flex justify-between text-gray-600">
             <span>Child x 1</span>
-            <span>${childPrice * noOfPassenger?.Child} AUD</span>
+            <span>${(childPrice * noOfPassenger?.Child).toFixed(2)} AUD</span>
           </div>
         )}
         {noOfPassenger?.Infant > 0 && (
           <div className="flex justify-between text-gray-600">
             <span>Infant x 1</span>
-            <span>${infantPrice * noOfPassenger?.Infant} AUD</span>
+            <span>${(infantPrice * noOfPassenger?.Infant).toFixed(2)} AUD</span>
           </div>
         )}
-        <div className="flex justify-between text-gray-600">
+        {/* <div className="flex justify-between text-gray-600">
           <span>Total Taxes +</span>
           <span>${totalTax?.toFixed(2)} AUD</span>
-        </div>
+        </div> */}
       </div>
       <div className="border-t pt-2 mt-3">
-        <div className="flex justify-between font-semibold text-gray-800">
-          <div className="flex flex-col items-start">
-            <span>Grand Total</span>
-            <span className="text-[12px] font-normal">(Included tax)</span>
+        <div className="flex flex-col justify-between items-start font-semibold text-gray-800">
+          <div className="flex w-full justify-between font-semibold text-gray-800">
+            <div className="flex flex-col items-start">
+              <span>Grand Total</span>
+            </div>
+            <span className="text-primary-6000 text-lg">
+              $ {grandTotal?.toFixed(2)} AUD
+            </span>
           </div>
-          <span className="text-primary-6000 text-lg">
-            $ {grandTotal?.toFixed(2)} AUD
+          <span className="text-[12px] font-normal text-left">
+            All Prices (including taxes & fee) are quoted in AUD
           </span>
         </div>
       </div>
