@@ -8,6 +8,7 @@ import featureShape from "../assets/images/icon/graphic.png";
 import videoBanner from "../assets/images/hero/testimonial-three-banner.png";
 import axios from "axios";
 import { apiURL } from "../constant/Constant";
+import dayjs from "dayjs";
 
 const Testimonial = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -37,6 +38,8 @@ const Testimonial = () => {
   const sortedTestimonial = testimonials?.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
+
+  console.log(sortedTestimonial, "sortedTestimonial");
 
   return (
     <section className="testimonial-area-three position-relative section-bg-before-two top-padding pb-[100px]">
@@ -97,7 +100,9 @@ const Testimonial = () => {
                         className="changeLogo"
                       />
                     </div>
-                    <p className="date">August 15, 2024</p>
+                    <p className="date">
+                      {dayjs(item?.updatedAt).format("MMMM D, YYYY")}
+                    </p>
                   </div>
                 </SwiperSlide>
               ))}

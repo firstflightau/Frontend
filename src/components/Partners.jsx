@@ -36,10 +36,10 @@ const Partners = () => {
                   slidesPerView: 2, // Show 1 slide on smaller devices
                 },
               }}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
+              // autoplay={{
+              //   delay: 3000,
+              //   disableOnInteraction: false,
+              // }}
               // navigation={true}
             >
               <SwiperSlide>
