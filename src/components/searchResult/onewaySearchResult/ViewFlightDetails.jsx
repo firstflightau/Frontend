@@ -151,7 +151,10 @@ const FareDetails = ({ item }) => {
         {0 < FlightFare?.ADT?.Basic && (
           <div className="flex justify-between text-sm mb-1">
             <span>{adult} x Adult</span>
-            <span className="font-medium">$ {FlightFare?.ADT?.Basic} AUD</span>
+            <span className="font-medium">
+              $ {(Number(FlightFare?.ADT?.Basic) + Number(totalTax)).toFixed(2)}{" "}
+              AUD
+            </span>
           </div>
         )}
         {0 < FlightFare?.CHD?.Basic && (
@@ -166,17 +169,17 @@ const FareDetails = ({ item }) => {
             <span className="font-medium">$ {FlightFare?.INF?.Basic} AUD</span>
           </div>
         )}
-        <div className="flex justify-between text-sm mb-1">
+        {/* <div className="flex justify-between text-sm mb-1">
           <span>Total (Base Fare)</span>
           <span className="font-medium">$ {totalBase?.toFixed(0)} AUD</span>
-        </div>
+        </div> */}
         <div className="flex justify-between text-sm mb-1">
           <span>Fee & Surcharges</span>
           <span className="font-medium">+ $ {totalTax?.toFixed(0)} AUD</span>
         </div>
       </div>
       <div className="flex justify-between text-base font-semibold mt-2">
-        <span>Grand Total</span>
+        <span>Total Price</span>
         <span className="text-green-600">$ {grandTotal?.toFixed(2)} AUD</span>
       </div>
     </div>
