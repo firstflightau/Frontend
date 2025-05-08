@@ -100,7 +100,7 @@ const PriceSummary = () => {
 
   return (
     <div
-      className={`rounded-2xl shadow-md border border-gray-200 p-4 bg-white overflow-hidden transition-all duration-300 sticky top-28
+      className={`rounded-2xl mb-5 md:mb-0 shadow-md border border-gray-200 p-4 bg-white overflow-hidden transition-all duration-300 sticky top-28
         `}
       // isSticky ? "sticky top-28" : ""
     >
@@ -149,7 +149,7 @@ const PriceSummary = () => {
           <span>${totalTax?.toFixed(2)} AUD</span>
         </div> */}
       </div>
-      <div className="border-t pt-2 mt-3">
+      <div className="border-t pt-2 mt-3 ">
         <div className="flex flex-col justify-between items-start font-semibold text-gray-800">
           <div className="flex w-full justify-between font-semibold text-gray-800">
             <div className="flex flex-col items-start">
@@ -159,8 +159,9 @@ const PriceSummary = () => {
               $ {grandTotal?.toFixed(2)} AUD
             </span>
           </div>
-          <span className="text-[12px] font-normal text-left">
-            All Prices (including taxes & fee) are quoted in AUD
+          <span className="text-[12px] font-normal text-left mt-3">
+            All Prices (including taxes meals drinks airport surcharges and fee)
+            are quoted in AUD
           </span>
         </div>
       </div>

@@ -173,10 +173,10 @@ const FareDetails = ({ item }) => {
           <span>Total (Base Fare)</span>
           <span className="font-medium">$ {totalBase?.toFixed(0)} AUD</span>
         </div> */}
-        <div className="flex justify-between text-sm mb-1">
+        {/* <div className="flex justify-between text-sm mb-1">
           <span>Fee & Surcharges</span>
           <span className="font-medium">+ $ {totalTax?.toFixed(0)} AUD</span>
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-between text-base font-semibold mt-2">
         <span>Total Price</span>
