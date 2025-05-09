@@ -182,6 +182,10 @@ const FareDetails = ({ item }) => {
         <span>Total Price</span>
         <span className="text-green-600">$ {grandTotal?.toFixed(2)} AUD</span>
       </div>
+      <span className="text-sm mt-2">
+        All Prices (including taxes meals drinks airport surcharges and fee) are
+        quoted in AUD
+      </span>
     </div>
   );
 };

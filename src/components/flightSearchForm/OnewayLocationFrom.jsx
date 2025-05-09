@@ -52,7 +52,8 @@ const OnewayLocationFrom = ({
   useEffect(() => {
     const initDefaultLocation = () => {
       if (recentSearches.length > 0) {
-        const mostRecentCode = recentSearches?.[0]?.fromCode;
+        const mostRecentCode = recentSearches?.[0]?.AirportCode;
+        // const mostRecentCode = recentSearches?.[0]?.fromCode;
         const matched = onlyAustralia?.find(
           (item) => item?.AirportCode === mostRecentCode
         );

@@ -152,7 +152,7 @@ const OnewaySearchFormInner = () => {
       // returnDate: returnDate,
     };
 
-    dispatch(searchFlight(searchpy));
+    // dispatch(searchFlight(searchpy));
 
     // amadeusSearch(payload);
     // flightReturnTboAndKafila(payload);

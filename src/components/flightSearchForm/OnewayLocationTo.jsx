@@ -68,7 +68,8 @@ const OnewayLocationTo = ({
   useEffect(() => {
     const initDefaultLocation = () => {
       if (recentSearches.length > 0) {
-        const mostRecentCode = recentSearches?.[0]?.toCode;
+        // const mostRecentCode = recentSearches?.[0]?.toCode;
+        const mostRecentCode = recentSearches?.[0]?.AirportCode;
         const matched = airports?.find(
           (item) => item?.AirportCode === mostRecentCode
         );

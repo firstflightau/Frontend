@@ -29,7 +29,10 @@ const MainPassengerPage = () => {
   const [loader, setLoader] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [bookingReference, setBookingReference] = useState(null);
   const passengerRef = useRef();
+
+  console.log(selectedFlight, "selected flight");
 
   const payloadPrice = useMemo(
     () => ({
@@ -120,6 +123,79 @@ const MainPassengerPage = () => {
     }
   };
 
+  // save passenger details in the db
+
+  const savePassengerDetails = async () => {
+    try {
+      const formData = passengerRef.current.getPassengerData();
+
+      const payload = {
+        passengers: [
+          ...(formData.adults?.map((p) => ({
+            type: "ADT",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+          })) || []),
+          ...(formData.childs?.map((p) => ({
+            type: "CHD",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+          })) || []),
+          ...(formData.infants?.map((p) => ({
+            type: "INF",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+          })) || []),
+        ],
+        contactInfo: {
+          email: formData.email,
+          phoneNumber: formData.phoneNumber,
+        },
+        selectedFlight: reducerState.selectedFlight,
+      };
+
+      const response = await axios.post(
+        // `${apiURL.baseURL}/api/passenger-details`,
+        `https://ffbackend-sn85.onrender.com/api/passenger-details`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            tptoken: reducerState?.tpToken?.tpTokenData?.access_token,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setBookingReference(response.data.bookingReference);
+        return response.data.bookingReference;
+      }
+    } catch (error) {
+      console.error("Error saving passenger details:", error);
+      throw error;
+    }
+  };
+
+  // save passenger details in the db
+
   const handleContinue = async () => {
     setShowConfirmationModal(false);
 
@@ -127,6 +203,9 @@ const MainPassengerPage = () => {
       const isValid = await passengerRef.current.validateForm();
       if (!isValid) return;
       setLoader(true);
+
+      const reference = await savePassengerDetails();
+      sessionStorage.setItem("bookingReference", reference);
 
       const formData = passengerRef.current.getPassengerData();
       dispatch(setPassengerData(formData));
