@@ -98,6 +98,9 @@ const PriceSummary = () => {
 
   // console.log(noOfPassenger, "nof of passenger");
 
+  console.log(totalTax, "totaltax");
+  console.log(grandTotal, "grandTotal");
+
   return (
     <div
       className={`rounded-2xl mb-5 md:mb-0 shadow-md border border-gray-200 p-4 bg-white overflow-hidden transition-all duration-300 sticky top-28

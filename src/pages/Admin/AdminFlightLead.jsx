@@ -29,8 +29,8 @@ const AdminFlightLead = () => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(
-        // `${apiURL.baseURL}/api/passenger-details`,
-        `https://ffbackend-sn85.onrender.com/api/passenger-details`,
+        `${apiURL.baseURL}/api/passenger-details`,
+        // `https://ffbackend-sn85.onrender.com/api/passenger-details`,
         { headers }
       );
       setPassengerData(response.data.data);

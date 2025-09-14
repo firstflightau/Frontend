@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
 import { ChevronLeft, OctagonAlert, Printer } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../assets/images/logo/logo.png";
 import dayjs from "dayjs";
 import { findAirportByCode } from "../../redux/slices/feature2/utils";
@@ -17,6 +17,7 @@ const NewBookTicket = () => {
   const jwtToken = reducerState?.auth?.user?.token;
 
   const navigate = useNavigate();
+  const params = useParams();
   const componentRef = useRef();
   const traveller =
     reducerState?.pnr?.data?.data?.ReservationResponse?.Reservation?.Traveler;
@@ -47,8 +48,8 @@ const NewBookTicket = () => {
       pnr: pnr == true ? "" : pnr,
     };
     try {
-      const response = await axios.post(
-        `${apiURL.baseURL}/api/booking/create`,
+      const response = await axios.patch(
+        `${apiURL.baseURL}/api/booking/update/${params?.bookingid}`,
         payload,
         {
           headers: {

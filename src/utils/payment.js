@@ -8,11 +8,15 @@ export const handlePayment = async (
   successFunction
 ) => {
   console.log(grandTotal, "grandTotalpy");
+
+  const bookingID = sessionStorage.getItem("bookingId");
+
   try {
     const payload = {
       amount: `${grandTotal.toFixed(2)}`,
       // amount: "500",
       reservationId: reservationIdDevKit,
+      bookingId: bookingID,
     };
 
     console.log(jwtToken, "payload");

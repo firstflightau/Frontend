@@ -123,12 +123,12 @@ function App() {
                   element={<MainBookingPage />}
                 />
                 <Route
-                  path="/flight/reviewbooking/ValidatingPayment/:id"
+                  path="/flight/reviewbooking/validatepayment/:id/:bookingid"
                   element={<ProcessingTicket />}
                 />
-                <Route path="/ticket" element={<TicketPage />} />
+                <Route path="/ticket/:bookingid" element={<TicketPage />} />
                 <Route
-                  path="/ticket/failed/:id"
+                  path="/ticket/failed/:id/:bookingid"
                   element={<FailedTicketPage />}
                 />
 

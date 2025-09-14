@@ -21,10 +21,10 @@ const AdminTestimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      // const res = await axios.get(`${apiURL.baseURL}/api/testimonial/adminAll`);
-      const res = await axios.get(
-        `https://ffbackend-sn85.onrender.com/api/testimonial/adminAll`
-      );
+      const res = await axios.get(`${apiURL.baseURL}/api/testimonial/adminAll`);
+      // const res = await axios.get(
+      //   `https://ffbackend-sn85.onrender.com/api/testimonial/adminAll`
+      // );
       setTestimonials(res.data.testimonials);
     } catch (error) {
       console.error("Error fetching testimonials:", error);
@@ -54,17 +54,16 @@ const AdminTestimonials = () => {
       const { _id } = selectedTestimonial;
 
       if (currentAction === "delete") {
-        // await axios.delete(`${apiURL.baseURL}/api/testimonial/${_id}`, {
-        await axios.delete(
-          `https://ffbackend-sn85.onrender.com/api/testimonial/${_id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        await axios.delete(`${apiURL.baseURL}/api/testimonial/${_id}`, {
+          // await axios.delete(
+          //   `https://ffbackend-sn85.onrender.com/api/testimonial/${_id}`,
+          //   {
+          headers: { Authorization: `Bearer ${token}` },
+        });
       } else {
         await axios.put(
-          `https://ffbackend-sn85.onrender.com/api/testimonial/${_id}/status`,
-          // `${apiURL.baseURL}/api/testimonial/${_id}/status`,
+          // `https://ffbackend-sn85.onrender.com/api/testimonial/${_id}/status`,
+          `${apiURL.baseURL}/api/testimonial/${_id}/status`,
           { status: currentAction },
           {
             headers: {

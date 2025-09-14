@@ -29,8 +29,8 @@ const ProcessingTicket = () => {
       }
       await dispatch(generatePNR(payload)).unwrap();
       sessionStorage.setItem("pnrGenerated", true);
-      window.history.replaceState(null, "", "/ticket");
-      navigate("/ticket", {
+      window.history.replaceState(null, "", `/ticket/${params?.bookingid}`);
+      navigate(`/ticket/${params?.bookingid}`, {
         replace: true,
         state: { noBack: true },
       });
@@ -42,7 +42,7 @@ const ProcessingTicket = () => {
   const successPayment = async () => {
     try {
       const response = await axios.get(
-        `${apiURL.baseURL}/api/transaction/success/${params?.id}`,
+        `${apiURL.baseURL}/api/transaction/success/${params?.id}/${params?.bookingid}`,
         {
           headers: {
             "Content-Type": "application/json",

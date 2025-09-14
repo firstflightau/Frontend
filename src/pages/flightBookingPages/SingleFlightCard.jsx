@@ -17,7 +17,7 @@ const SingleFlightCard = ({ type, flight, isOnward }) => {
     }
   }, [flight]);
 
-  // console.log(FlightData, "flight data ");
+  console.log(FlightData, "flight data ");
 
   // console.log(flightDetail);
 

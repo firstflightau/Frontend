@@ -20,19 +20,38 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import SearchResultLoader from "../../components/SearchResultLoader";
 import { LogOut } from "lucide-react";
 import { clearPnr } from "../../redux/slices/pnr/generatePNRSlice";
+import { addMarkup } from "../../utils/utils";
 
 const MainPassengerPage = () => {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const selectedFlight = reducerState?.selectedFlight;
   const [loader, setLoader] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [bookingReference, setBookingReference] = useState(null);
   const passengerRef = useRef();
+  const jwtToken = reducerState?.auth?.user?.token;
+  const onwards = reducerState?.selectedFlight?.Onward;
+  const Return = reducerState?.selectedFlight?.Return;
 
-  console.log(selectedFlight, "selected flight");
+  const totalTax =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
+    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes) +
+    addMarkup(
+      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+    );
+
+  const grandTotal =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice) +
+    addMarkup(
+      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+    );
 
   const payloadPrice = useMemo(
     () => ({
@@ -112,6 +131,10 @@ const MainPassengerPage = () => {
   }, []);
 
   const handleBookClick = async () => {
+    if (!jwtToken) {
+      navigate("/login");
+      return;
+    }
     if (!passengerRef.current) return;
 
     try {
@@ -173,8 +196,8 @@ const MainPassengerPage = () => {
       };
 
       const response = await axios.post(
-        // `${apiURL.baseURL}/api/passenger-details`,
-        `https://ffbackend-sn85.onrender.com/api/passenger-details`,
+        `${apiURL.baseURL}/api/passenger-details`,
+        // `https://ffbackend-sn85.onrender.com/api/passenger-details`,
         payload,
         {
           headers: {
@@ -194,6 +217,142 @@ const MainPassengerPage = () => {
     }
   };
 
+  const savePassengerDetailsAndEmail = async () => {
+    try {
+      const formData = passengerRef.current.getPassengerData();
+
+      const payloadtosavepassenger = {
+        totalAmount: grandTotal,
+        markup: addMarkup(
+          onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+            (Return &&
+              Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+        ),
+        email: formData.email,
+        onward: {
+          origin:
+            reducerState.selectedFlight?.Onward?.flights[0]?.Departure
+              ?.location || "",
+          destination:
+            reducerState.selectedFlight?.Onward?.flights[
+              reducerState.selectedFlight?.Onward?.flights?.length - 1
+            ]?.Arrival?.location || "",
+          airlineDetails: reducerState.selectedFlight?.Onward?.flights?.map(
+            (flight) => ({
+              departure: {
+                location: flight.Departure.location,
+                date: flight.Departure.date,
+                time: flight.Departure.time,
+                terminal: flight.Departure.terminal,
+              },
+              arrival: {
+                location: flight.Arrival.location,
+                date: flight.Arrival.date,
+                time: flight.Arrival.time,
+                terminal: flight.Arrival.terminal,
+              },
+              duration: flight.duration,
+              carrier: flight.carrier,
+              number: flight.number,
+            })
+          ),
+        },
+
+        return:
+          reducerState.selectedFlight?.Return == null
+            ? null
+            : {
+                origin:
+                  reducerState.selectedFlight?.Return?.flights[0]?.Departure
+                    ?.location || "",
+                destination:
+                  reducerState.selectedFlight?.Return?.flights[
+                    reducerState.selectedFlight?.Return?.flights?.length - 1
+                  ]?.Arrival?.location || "",
+                airlineDetails:
+                  reducerState.selectedFlight?.Return?.flights?.map(
+                    (flight) => ({
+                      departure: {
+                        location: flight.Departure.location,
+                        date: flight.Departure.date,
+                        time: flight.Departure.time,
+                        terminal: flight.Departure.terminal,
+                      },
+                      arrival: {
+                        location: flight.Arrival.location,
+                        date: flight.Arrival.date,
+                        time: flight.Arrival.time,
+                        terminal: flight.Arrival.terminal,
+                      },
+                      duration: flight.duration,
+                      carrier: flight.carrier,
+                      number: flight.number,
+                    })
+                  ),
+              },
+        passengerDetails: [
+          ...(formData.adults?.map((p) => ({
+            paxType: "ADT",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+            amount: 5000,
+            ticketNumber: "",
+          })) || []),
+          ...(formData.childs?.map((p) => ({
+            paxType: "CHD",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+            amount: 5000,
+            ticketNumber: "",
+          })) || []),
+          ...(formData.infants?.map((p) => ({
+            paxType: "INF",
+            title: p.title,
+            firstName: p.firstName,
+            lastName: p.lastName,
+            gender: p.gender === 1 ? "Male" : "Female",
+            dob: p.dob,
+            passportNumber: p.passportNumber,
+            passportExpiry: p.passportExpiry,
+            passportIssuingCountry: p.passportIssuingCountry,
+            amount: 5000,
+            ticketNumber: "",
+          })) || []),
+        ],
+      };
+
+      const response = await axios.post(
+        `${apiURL.baseURL}/api/booking/create`,
+        payloadtosavepassenger,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      console.log(response, "response from save passenger and email");
+      if (response) {
+        sessionStorage.setItem("bookingId", response.data.bookingId);
+      }
+    } catch (error) {
+      console.error("Error saving passenger details:", error);
+      throw error;
+    }
+  };
+
   // save passenger details in the db
 
   const handleContinue = async () => {
@@ -205,6 +364,7 @@ const MainPassengerPage = () => {
       setLoader(true);
 
       const reference = await savePassengerDetails();
+      savePassengerDetailsAndEmail();
       sessionStorage.setItem("bookingReference", reference);
 
       const formData = passengerRef.current.getPassengerData();

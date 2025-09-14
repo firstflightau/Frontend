@@ -28,8 +28,8 @@ const AdminDashboard = () => {
     const fetchDashboardCount = async () => {
       try {
         const response = await axios.get(
-          // `${apiURL.baseURL}/api/admin/dashboard/counts`,
-          `https://ffbackend-sn85.onrender.com/api/admin/dashboard/counts`,
+          `${apiURL.baseURL}/api/admin/dashboard/counts`,
+          // `https://ffbackend-sn85.onrender.com/api/admin/dashboard/counts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
