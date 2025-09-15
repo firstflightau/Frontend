@@ -15,6 +15,8 @@ const PassengerComponent = forwardRef((props, ref) => {
   const reducerState = useSelector((state) => state);
   const countryList = reducerState?.airportList?.countryList;
 
+  console.log(countryList, "country listttt");
+
   const noOfPassenger = reducerState?.searchFlighPY;
 
   const [passengerData, setPassengerData] = useState({
@@ -55,6 +57,8 @@ const PassengerComponent = forwardRef((props, ref) => {
     }),
     passportRequired: true,
     email: "",
+    mobile: "",
+    mobileCode: "+91",
   });
 
   // console.log(passengerData, "passengerData");
@@ -327,6 +331,10 @@ const PassengerComponent = forwardRef((props, ref) => {
     String(currentYear + i).padStart(2, "0")
   );
 
+  console.log(yearAdult, "yearAdult");
+  console.log(yearChild, "yearChild");
+  console.log(yearInfant, "yearInfant");
+
   const renderAccordion = (type, data) => {
     if (!data || !data.length) return null;
 
@@ -598,6 +606,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                                     </div>
                                   </Listbox.Option>
                                 ))}
+
                               {type === "childs" &&
                                 yearChild.map((day) => (
                                   <Listbox.Option
@@ -941,16 +950,48 @@ const PassengerComponent = forwardRef((props, ref) => {
         <p className="text-base font-medium mb-3">
           Your Booking details will be sent to
         </p>
-        <input
-          type="email"
-          id="eemmaaiill"
-          placeholder="Enter Email"
-          value={passengerData.email}
-          onChange={(e) =>
-            setPassengerData((prev) => ({ ...prev, email: e.target.value }))
-          }
-          className="bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 p-2.5"
-        />
+        <div className="flex flex-1 w-full gap-3 flex-col md:flex-row">
+          <div className="w-full">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 "
+            >
+              Email Id
+            </label>
+            <input
+              type="email"
+              id="eemmaaiill"
+              placeholder="Enter Email"
+              value={passengerData.email}
+              onChange={(e) =>
+                setPassengerData((prev) => ({ ...prev, email: e.target.value }))
+              }
+              className="w-full bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
+            />
+          </div>
+
+          <div className="w-full">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 "
+            >
+              Mobile No
+            </label>
+            <input
+              type="tel"
+              id="tellll"
+              placeholder="eg : +91 9876543210"
+              value={passengerData.mobile}
+              onChange={(e) =>
+                setPassengerData((prev) => ({
+                  ...prev,
+                  mobile: e.target.value,
+                }))
+              }
+              className="bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

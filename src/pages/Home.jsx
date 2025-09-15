@@ -11,9 +11,9 @@ const Home = () => {
     <div>
       <HeroSection />
       <FlightSearchForm />
-      <Partners />
       <TopFlightRoute />
       <BestFlightDeal />
+      <Partners />
       <Testimonial />
     </div>
   );

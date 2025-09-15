@@ -418,7 +418,7 @@ const AdminFlightLead = () => {
                       </p>
                       <p>
                         <span className="font-medium">Phone:</span>{" "}
-                        {selectedPassenger.contactInfo.phoneNumber}
+                        {selectedPassenger.contactInfo.mobile}
                       </p>
                       <p>
                         <span className="font-medium">Created:</span>{" "}

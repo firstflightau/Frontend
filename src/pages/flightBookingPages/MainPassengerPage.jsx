@@ -151,6 +151,7 @@ const MainPassengerPage = () => {
   const savePassengerDetails = async () => {
     try {
       const formData = passengerRef.current.getPassengerData();
+      console.log(formData, "formdata");
 
       const payload = {
         passengers: [
@@ -190,7 +191,7 @@ const MainPassengerPage = () => {
         ],
         contactInfo: {
           email: formData.email,
-          phoneNumber: formData.phoneNumber,
+          phoneNumber: formData.mobile,
         },
         selectedFlight: reducerState.selectedFlight,
       };
