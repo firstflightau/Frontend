@@ -58,7 +58,7 @@ const OnewayLocationFrom = ({
           (item) => item?.AirportCode === mostRecentCode
         );
 
-        console.log(matched, "matched");
+        // console.log(matched, "matched");
 
         if (matched) {
           setSelectedLocation(matched);
@@ -253,7 +253,7 @@ const OnewayLocationFrom = ({
     );
   };
 
-  console.log(selectedLocation, "selected location ");
+  // console.log(selectedLocation, "selected location ");
 
   return (
     <div

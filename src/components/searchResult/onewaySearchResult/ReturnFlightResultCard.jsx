@@ -51,14 +51,7 @@ const ReturnFlightResultCard = ({
     item?.flights?.[0]?.Departure,
     item?.flights?.[item?.flights?.length - 1]?.Arrival
   );
-  // console.log(
-  //   item?.flights?.[0]?.Departure,
-  //   item?.flights?.[item?.flights?.length - 1]?.Arrival,
-  //   "fhjffdhjhg"
-  // );
-  let durations11 = `${durations1.hours()}H:${durations1.minutes()}M`;
 
-  // console.log(item, "item");
   return (
     <div
       class={`w-full relative transition-all ease-in-out hover:scale-[1.01]  shadow-sm rounded-lg  p-3 px-3  hover:shadow-sm cursor-pointer border ${

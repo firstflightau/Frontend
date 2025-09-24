@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import store from "../redux/store";
+
+dayjs.extend(duration);
 export const findCheapestFlight = (a, b) => {
   // console.log(
   //   a?.productsoption?.[0]?.Price?.TotalPrice,
@@ -125,6 +127,31 @@ export function calculateFlightDuration(Departure, Arrival) {
 
   return `${flightDuration.hours()}h ${flightDuration.minutes()}m`;
 }
+
+export function calculateFlightDurationNew(departure, arrival) {
+  if (!departure || !arrival) return "";
+
+  // Build full datetime strings
+  const depDateTime = `${departure.date} ${departure.time}`;
+  const arrDateTime = `${arrival.date} ${arrival.time}`;
+
+  const dep = dayjs(depDateTime);
+  const arr = dayjs(arrDateTime);
+
+  if (!dep.isValid() || !arr.isValid()) return "";
+
+  const diffMinutes = arr.diff(dep, "minute");
+  const dur = dayjs.duration(diffMinutes, "minutes");
+
+  const hours = dur.hours();
+  const minutes = dur.minutes();
+  const days = Math.floor(dur.asDays());
+
+  if (days > 0) {
+    return `${days}d ${hours}h ${minutes}m`;
+  }
+  return `${hours}h ${minutes}m`;
+}
 export const standardizeFlightDetailResponse = (flight) => {
   console.log(flight, "flight");
 
@@ -238,9 +265,43 @@ export const standardizeFlightBaggageResponse = (BaggageAllowance) => {
   return baggage;
 };
 
-export function addMarkup(value, percentage) {
-  const reducerState = store.getState();
-  let markup = reducerState?.markupData?.markupAmount?.markup;
+// export function addMarkup(value, percentage) {
+//   const reducerState = store.getState();
+//   let markup = reducerState?.markupData?.markupAmount?.markup;
 
-  return value * (markup / 100);
+//   return value * (markup / 100);
+// }
+
+export function addMarkup(value, tripType = "onward", destinationCode = "") {
+  const reducerState = store.getState();
+  const markupData = reducerState?.markupData?.markupAmount;
+  console.log(markupData, "markupData");
+
+  if (!markupData) return 0;
+
+  let markupPercentage = 0;
+
+  console.log(value, tripType, destinationCode, "addMarkup");
+
+  // ✅ Check if destination-specific markup exists
+  if (destinationCode && Array.isArray(markupData.destinationMarkups)) {
+    const destMarkup = markupData.destinationMarkups.find(
+      (dest) => dest.code.toUpperCase() === destinationCode.toUpperCase()
+    );
+
+    if (destMarkup) {
+      markupPercentage =
+        tripType === "return" ? destMarkup.return : destMarkup.onward;
+    }
+  }
+
+  // ✅ Fallback to global markup if no destination match
+  if (!markupPercentage) {
+    markupPercentage =
+      tripType === "return"
+        ? markupData.markup.return
+        : markupData.markup.onward;
+  }
+
+  return value * (markupPercentage / 100);
 }

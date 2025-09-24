@@ -20,15 +20,33 @@ const MainBookingPage = () => {
 
   // console.log(selectedFlight, "selectedFlight");
 
-  const grandTotal =
-    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-    (Return &&
-      Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)) +
-    addMarkup(
-      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return &&
-          Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice))
-    );
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   (Return &&
+  //     Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)) +
+  //   addMarkup(
+  //     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //       (Return &&
+  //         Number(Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice))
+  //   );
+
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   addMarkup(onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice);
+
+  const type = Return ? "return" : "onward";
+
+  const onwardPrice =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardTaxes =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes;
+  const onwardDestination =
+    onwards?.flights?.[onwards?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+
+  const onwardMarkup = addMarkup(onwardPrice, type, onwardDestination);
+
+  const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
 
   // console.log(grandTotal, "grand total");
   const reservationIdDevKit =

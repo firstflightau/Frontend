@@ -30,9 +30,9 @@ const AdminFlightLead = () => {
       };
       const response = await axios.get(
         `${apiURL.baseURL}/api/passenger-details`,
-        // `https://ffbackend-sn85.onrender.com/api/passenger-details`,
         { headers }
       );
+      console.log(response.data.data, "passenger data");
       setPassengerData(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -102,6 +102,12 @@ const AdminFlightLead = () => {
   const paginatedPassengers = filteredPassengers?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
+  );
+
+  console.log(paginatedPassengers, "paginatedPassengers");
+  console.log(
+    paginatedPassengers?.[0]?.flights.Onward?.[0]?.departure.location,
+    "paginatedPassengers?.[0]?.flights?.Onward"
   );
 
   const handlePageChange = (newPage) => {
@@ -198,62 +204,41 @@ const AdminFlightLead = () => {
         </div>
       </div>
 
-      {/* Passenger Data Table with Horizontal Scroll */}
+      {/* Passenger Data Table */}
       <div className="relative overflow-x-auto sm:rounded-lg">
         <div className="min-w-full inline-block align-middle">
           <div className="overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Sr No.
                   </th>
-
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Passengers
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Flight
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Contact
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Created At
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedPassengers.length > 0 ? (
+                {paginatedPassengers?.[0]?.flights?.Onward &&
+                paginatedPassengers.length > 0 ? (
                   paginatedPassengers.map((passenger, index) => (
                     <tr key={passenger._id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {index + 1 + (currentPage - 1) * itemsPerPage}
                       </td>
-                      {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {passenger.bookingReference}
-                      </td> */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
                           {passenger.passengers.length} passenger(s)
@@ -267,14 +252,46 @@ const AdminFlightLead = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {passenger.flights.onward.carrier}{" "}
-                          {passenger.flights.onward.flightNumber}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {passenger.flights.onward.departure.location} →{" "}
-                          {passenger.flights.onward.arrival.location}
-                        </div>
+                        {passenger.flights.Onward?.length > 0 && (
+                          <>
+                            <div className="text-sm text-gray-900">
+                              {passenger.flights.Onward?.[0]?.carrier}{" "}
+                              {passenger.flights.Onward?.[0]?.flightNumber}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {
+                                passenger.flights.Onward?.[0]?.departure
+                                  .location
+                              }{" "}
+                              →{" "}
+                              {
+                                passenger.flights.Onward?.[
+                                  passenger.flights.Onward.length - 1
+                                ]?.arrival.location
+                              }
+                            </div>
+                          </>
+                        )}
+                        {passenger.flights.Return?.length > 0 && (
+                          <>
+                            <div className="text-sm text-gray-900">
+                              {passenger.flights.Return?.[0]?.carrier}{" "}
+                              {passenger.flights.Return?.[0]?.flightNumber}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {
+                                passenger.flights.Return?.[0]?.departure
+                                  .location
+                              }{" "}
+                              →{" "}
+                              {
+                                passenger.flights.Return?.[
+                                  passenger.flights.Return.length - 1
+                                ]?.arrival.location
+                              }
+                            </div>
+                          </>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {passenger.contactInfo.email}
@@ -312,10 +329,7 @@ const AdminFlightLead = () => {
 
         {/* Pagination */}
         {filteredPassengers.length > 0 && (
-          <nav
-            className="flex items-center justify-between pt-4"
-            aria-label="Table navigation"
-          >
+          <nav className="flex items-center justify-between pt-4">
             <span className="text-sm font-normal text-gray-500">
               Showing {currentPage * itemsPerPage - itemsPerPage + 1}-
               {Math.min(currentPage * itemsPerPage, filteredPassengers.length)}{" "}
@@ -326,7 +340,7 @@ const AdminFlightLead = () => {
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                  className="px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
                 >
                   Previous
                 </button>
@@ -335,7 +349,7 @@ const AdminFlightLead = () => {
                 <li key={index}>
                   <button
                     onClick={() => handlePageChange(index + 1)}
-                    className={`px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
+                    className={`px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
                       currentPage === index + 1
                         ? "text-blue-600 bg-blue-50"
                         : ""
@@ -349,7 +363,7 @@ const AdminFlightLead = () => {
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="px-3 h-8 leading-tight uppercase placeholder-gray-700 text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                  className="px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
                 >
                   Next
                 </button>
@@ -374,37 +388,59 @@ const AdminFlightLead = () => {
                   Passenger Details - {selectedPassenger.bookingReference}
                 </DialogTitle>
 
+                {/* Flight Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <h3 className="font-semibold text-lg mb-2">
                       Flight Information
                     </h3>
-                    <div className="space-y-2">
-                      <p>
-                        <span className="font-medium">Flight:</span>{" "}
-                        {selectedPassenger.flights.onward.carrier}{" "}
-                        {selectedPassenger.flights.onward.flightNumber}
-                      </p>
-                      <p>
-                        <span className="font-medium">Route:</span>{" "}
-                        {selectedPassenger.flights.onward.departure.location} →{" "}
-                        {selectedPassenger.flights.onward.arrival.location}
-                      </p>
-                      <p>
-                        <span className="font-medium">Departure:</span>{" "}
-                        {dayjs(
-                          selectedPassenger.flights.onward.departure.date
-                        ).format("DD/MM/YYYY")}{" "}
-                        at {selectedPassenger.flights.onward.departure.time}
-                      </p>
-                      <p>
-                        <span className="font-medium">Arrival:</span>{" "}
-                        {dayjs(
-                          selectedPassenger.flights.onward.arrival.date
-                        ).format("DD/MM/YYYY")}{" "}
-                        at {selectedPassenger.flights.onward.arrival.time}
-                      </p>
-                    </div>
+                    {selectedPassenger.flights.Onward.map((f, idx) => (
+                      <div key={idx} className="mb-4 p-3 border rounded-lg">
+                        <p>
+                          <span className="font-medium">Flight:</span>{" "}
+                          {f.carrier} {f.flightNumber}
+                        </p>
+                        <p>
+                          <span className="font-medium">Route:</span>{" "}
+                          {f.departure.location} → {f.arrival.location}
+                        </p>
+                        <p>
+                          <span className="font-medium">Departure:</span>{" "}
+                          {dayjs(f.departure.date).format("DD/MM/YYYY")} at{" "}
+                          {f.departure.time}
+                        </p>
+                        <p>
+                          <span className="font-medium">Arrival:</span>{" "}
+                          {dayjs(f.arrival.date).format("DD/MM/YYYY")} at{" "}
+                          {f.arrival.time}
+                        </p>
+                      </div>
+                    ))}
+                    {selectedPassenger.flights.Return.map((f, idx) => (
+                      <div
+                        key={idx}
+                        className="mb-4 p-3 border rounded-lg bg-gray-50"
+                      >
+                        <p>
+                          <span className="font-medium">Flight:</span>{" "}
+                          {f.carrier} {f.flightNumber}
+                        </p>
+                        <p>
+                          <span className="font-medium">Route:</span>{" "}
+                          {f.departure.location} → {f.arrival.location}
+                        </p>
+                        <p>
+                          <span className="font-medium">Departure:</span>{" "}
+                          {dayjs(f.departure.date).format("DD/MM/YYYY")} at{" "}
+                          {f.departure.time}
+                        </p>
+                        <p>
+                          <span className="font-medium">Arrival:</span>{" "}
+                          {dayjs(f.arrival.date).format("DD/MM/YYYY")} at{" "}
+                          {f.arrival.time}
+                        </p>
+                      </div>
+                    ))}
                   </div>
 
                   <div>
@@ -418,7 +454,7 @@ const AdminFlightLead = () => {
                       </p>
                       <p>
                         <span className="font-medium">Phone:</span>{" "}
-                        {selectedPassenger.contactInfo.mobile}
+                        {selectedPassenger.contactInfo.phoneNumber}
                       </p>
                       <p>
                         <span className="font-medium">Created:</span>{" "}
@@ -430,6 +466,7 @@ const AdminFlightLead = () => {
                   </div>
                 </div>
 
+                {/* Passenger List */}
                 <h3 className="font-semibold text-lg mb-2">Passenger List</h3>
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">

@@ -10,38 +10,73 @@ const PriceSummary = () => {
   const onwards = reducerState?.selectedFlight?.Onward;
   const Return = reducerState?.selectedFlight?.Return;
 
-  //   useEffect(() => {
-  //     const handleScroll = () => {
-  //       const scrollPosition = window.scrollY; // Get the vertical scroll position
-
-  //       // Check if the scroll position is 200px or more
-  //       if (scrollPosition > 300) {
-  //         setIsSticky(true);
-  //       } else {
-  //         setIsSticky(false);
-  //       }
-  //     };
-
-  //     // Attach the scroll event listener
-  //     window.addEventListener("scroll", handleScroll);
-
-  //     // Cleanup event listener on component unmount
-  //     return () => {
-  //       window.removeEventListener("scroll", handleScroll);
-  //     };
-  //   }, []);
-
-  console.log(onwards, "onwards");
+  // console.log(onwards, "onwards");
 
   const noOfPassenger = reducerState?.searchFlighPY;
 
+  // const findAdultPriceOnwards =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "ADT"
+  //   );
+  // const findAdultPriceReturn =
+  //   Return &&
+  //   Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "ADT"
+  //   );
+
+  // const findChildPriceOnwards =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "CHD"
+  //   );
+  // const findChildPriceReturn =
+  //   Return &&
+  //   Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "CHD"
+  //   );
+  // const findInfantPriceOnwards =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "INF"
+  //   );
+  // const findInfantPriceReturn =
+  //   Return &&
+  //   Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
+  //     (item) => item?.requestedPassengerType === "INF"
+  //   );
+
+  // const adultPrice =
+  //   findAdultPriceOnwards?.[0]?.Amount?.Base +
+  //   (Return && findAdultPriceReturn?.[0]?.Amount?.Base);
+  // const childPrice =
+  //   findChildPriceOnwards?.length > 0 &&
+  //   findChildPriceOnwards?.[0]?.Amount?.Base +
+  //     (Return &&
+  //       findChildPriceReturn?.length > 0 &&
+  //       findChildPriceReturn?.[0]?.Amount?.Base);
+  // const infantPrice =
+  //   findInfantPriceOnwards?.length > 0 &&
+  //   findInfantPriceOnwards?.[0]?.Amount?.Base +
+  //     (Return &&
+  //       findInfantPriceReturn?.length > 0 &&
+  //       findChildPriceReturn?.[0]?.Amount?.Base);
+
+  // const totalTax =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
+  //   (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes) +
+  //   addMarkup(
+  //     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //       (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+  //   );
+
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice) +
+  //   addMarkup(
+  //     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //       (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+  //   );
+
   const findAdultPriceOnwards =
     onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
-      (item) => item?.requestedPassengerType === "ADT"
-    );
-  const findAdultPriceReturn =
-    Return &&
-    Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
       (item) => item?.requestedPassengerType === "ADT"
     );
 
@@ -49,57 +84,41 @@ const PriceSummary = () => {
     onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
       (item) => item?.requestedPassengerType === "CHD"
     );
-  const findChildPriceReturn =
-    Return &&
-    Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
-      (item) => item?.requestedPassengerType === "CHD"
-    );
+
   const findInfantPriceOnwards =
     onwards?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
       (item) => item?.requestedPassengerType === "INF"
     );
-  const findInfantPriceReturn =
-    Return &&
-    Return?.productsoption?.[0]?.BestCombinablePrice?.PriceBreakdown?.filter(
-      (item) => item?.requestedPassengerType === "INF"
-    );
 
-  const adultPrice =
-    findAdultPriceOnwards?.[0]?.Amount?.Base +
-    (Return && findAdultPriceReturn?.[0]?.Amount?.Base);
+  const adultPrice = findAdultPriceOnwards?.[0]?.Amount?.Base;
   const childPrice =
     findChildPriceOnwards?.length > 0 &&
-    findChildPriceOnwards?.[0]?.Amount?.Base +
-      (Return &&
-        findChildPriceReturn?.length > 0 &&
-        findChildPriceReturn?.[0]?.Amount?.Base);
+    findChildPriceOnwards?.[0]?.Amount?.Base;
   const infantPrice =
     findInfantPriceOnwards?.length > 0 &&
-    findInfantPriceOnwards?.[0]?.Amount?.Base +
-      (Return &&
-        findInfantPriceReturn?.length > 0 &&
-        findChildPriceReturn?.[0]?.Amount?.Base);
+    findInfantPriceOnwards?.[0]?.Amount?.Base;
 
-  const totalTax =
-    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
-    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes) +
-    addMarkup(
-      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
-    );
+  // const totalTax =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
+  //   addMarkup(onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice);
 
-  const grandTotal =
-    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice) +
-    addMarkup(
-      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
-    );
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   addMarkup(onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice);
 
-  // console.log(noOfPassenger, "nof of passenger");
+  const type = Return ? "return" : "onward";
 
-  console.log(totalTax, "totaltax");
-  console.log(grandTotal, "grandTotal");
+  const onwardPrice =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardTaxes =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes;
+  const onwardDestination =
+    onwards?.flights?.[onwards?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+
+  const onwardMarkup = addMarkup(onwardPrice, type, onwardDestination);
+
+  const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
 
   return (
     <div

@@ -37,21 +37,39 @@ const MainPassengerPage = () => {
   const onwards = reducerState?.selectedFlight?.Onward;
   const Return = reducerState?.selectedFlight?.Return;
 
-  const totalTax =
-    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
-    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes) +
-    addMarkup(
-      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
-    );
+  // const totalTax =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes +
+  //   (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes) +
+  //   addMarkup(
+  //     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //       (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+  //   );
 
-  const grandTotal =
-    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-    (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice) +
-    addMarkup(
-      onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-        (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
-    );
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   addMarkup(onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice);
+
+  // const grandTotal =
+  //   onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //   (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice) +
+  //   addMarkup(
+  //     onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
+  //       (Return && Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
+  //   );
+
+  const type = Return ? "return" : "onward";
+
+  const onwardPrice =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardTaxes =
+    onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes;
+  const onwardDestination =
+    onwards?.flights?.[onwards?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+
+  const onwardMarkup = addMarkup(onwardPrice, type, onwardDestination);
+
+  const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
 
   const payloadPrice = useMemo(
     () => ({
@@ -147,6 +165,7 @@ const MainPassengerPage = () => {
   };
 
   // save passenger details in the db
+  console.log(reducerState.selectedFlight, "reducer state");
 
   const savePassengerDetails = async () => {
     try {
@@ -224,12 +243,9 @@ const MainPassengerPage = () => {
 
       const payloadtosavepassenger = {
         totalAmount: grandTotal,
-        markup: addMarkup(
-          onwards?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice +
-            (Return &&
-              Return?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice)
-        ),
+        markup: onwardMarkup,
         email: formData.email,
+        phoneNumber: formData.mobile,
         onward: {
           origin:
             reducerState.selectedFlight?.Onward?.flights[0]?.Departure

@@ -92,7 +92,7 @@ const NewBookTicket = () => {
     departureDate?.setHours(hours, minutes, seconds);
     departureDate?.setHours(departureDate.getHours() - 2);
     const boardingTime = departureDate?.toTimeString()?.slice(0, 5);
-    console.log(`Boarding Time: ${boardingTime}`);
+    // console.log(`Boarding Time: ${boardingTime}`);
     return (
       <>
         {/* Main Content */}

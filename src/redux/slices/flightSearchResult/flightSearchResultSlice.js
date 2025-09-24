@@ -195,6 +195,7 @@ export const fetchFlightReturnData = createAsyncThunk(
 
       // Handle axios response
       const { data } = response; // Axios response contains `data`
+      console.log(data, "return flight data");
       data.from = from;
       data.to = to;
 
