@@ -48,6 +48,8 @@ import AdminTopFlightEdit from "./pages/Admin/AdminFlightRoute/AdminTopFlightEdi
 import AdminTopFlightRoute from "./pages/Admin/AdminFlightRoute/AdminTopFlightRoute";
 import AdminInstantPayment from "./pages/Admin/AdminInstantPayment";
 import AdminFlightLead from "./pages/Admin/AdminFlightLead";
+import AdminTopDestination from "./pages/Admin/AdminDestination/AdminTopDestination";
+import AdminTopDestinationEdit from "./pages/Admin/AdminDestination/AdminTopDestinationEdit";
 
 // Admin Components
 // import AdminLayout from "./pages/Admin/AdminLayout";
@@ -150,7 +152,12 @@ function App() {
             <Route path="enquiry" element={<AdminEnquiry />} />
             <Route path="testimonial" element={<AdminTestimonial />} />
             <Route path="topflightadd" element={<AdminTopFlightRoute />} />
+            <Route path="topdestinationadd" element={<AdminTopDestination />} />
             <Route path="topflightedit" element={<AdminTopFlightEdit />} />
+            <Route
+              path="topdestinationedit"
+              element={<AdminTopDestinationEdit />}
+            />
             <Route path="instantpayment" element={<AdminInstantPayment />} />
             <Route path="flightleads" element={<AdminFlightLead />} />
           </Route>

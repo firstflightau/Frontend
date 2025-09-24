@@ -75,12 +75,26 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
         },
       ],
     },
+    {
+      name: "Top Destination",
+      icon: <Plane className="w-6 h-6" />,
+      subItems: [
+        {
+          path: "/admin/topdestinationadd",
+          name: "Add Top Destination",
+        },
+        {
+          path: "/admin/topdestinationedit",
+          name: "View & Delete",
+        },
+      ],
+    },
   ];
 
   return (
     <div
       className={`h-screen bg-gray-800 fixed left-0 top-0 z-20 transition-all duration-300 ${
-        isCollapsed ? "w-20 px-3 py-4" : "w-64 px-4 py-4"
+        isCollapsed ? "w-20 px-3 py-4" : "w-68 px-4 py-4"
       }`}
     >
       {/* Sidebar Header */}
