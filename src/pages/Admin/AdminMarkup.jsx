@@ -123,9 +123,9 @@ const AdminMarkup = () => {
   return (
     <div className="h-full flex flex-col justify-center items-center bg-gray-100 p-6">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-        <h2 className="text-xl font-bold mb-4 text-gray-700">
+        <h5 className="text-xl font-bold mb-4 text-gray-700">
           Manage Markup & Discount
-        </h2>
+        </h5>
 
         {/* ✅ Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -133,32 +133,38 @@ const AdminMarkup = () => {
           <div>
             <h3 className="font-semibold text-gray-600 mb-2">Global Markup</h3>
             <div className="grid grid-cols-2 gap-4">
-              <input
-                type="number"
-                placeholder="Onward %"
-                value={markupData.markup.onward}
-                onChange={(e) =>
-                  handleChange("markup", "onward", e.target.value)
-                }
-                className="border p-2 rounded w-full"
-              />
-              <input
-                type="number"
-                placeholder="Return %"
-                value={markupData.markup.return}
-                onChange={(e) =>
-                  handleChange("markup", "return", e.target.value)
-                }
-                className="border p-2 rounded w-full"
-              />
+              <div>
+                <label htmlFor="">Onward</label>
+                <input
+                  type="number"
+                  placeholder="Onward %"
+                  value={markupData.markup.onward}
+                  onChange={(e) =>
+                    handleChange("markup", "onward", e.target.value)
+                  }
+                  className="border p-2 rounded w-full"
+                />
+              </div>
+              <div>
+                <label htmlFor="">Return</label>
+                <input
+                  type="number"
+                  placeholder="Return %"
+                  value={markupData.markup.return}
+                  onChange={(e) =>
+                    handleChange("markup", "return", e.target.value)
+                  }
+                  className="border p-2 rounded w-full"
+                />
+              </div>
             </div>
           </div>
 
           {/* Global Discount */}
-          <div>
-            <h3 className="font-semibold text-gray-600 mb-2">
+          {/* <div>
+            <h5 className="font-semibold text-gray-600 mb-2">
               Global Discount
-            </h3>
+            </h5>
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="number"
@@ -179,49 +185,58 @@ const AdminMarkup = () => {
                 className="border p-2 rounded w-full"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Destination Markups */}
           <div>
-            <h3 className="font-semibold text-gray-600 mb-2">
+            <h5 className="font-semibold text-gray-600 mb-2">
               Destination Specific Markups
-            </h3>
+            </h5>
             {markupData.destinationMarkups.map((dest, index) => (
               <div
                 key={index}
                 className="grid grid-cols-4 gap-2 items-center mb-2"
               >
-                <input
-                  type="text"
-                  placeholder="Code (e.g. DXB)"
-                  value={dest.code}
-                  onChange={(e) =>
-                    handleDestinationChange(index, "code", e.target.value)
-                  }
-                  className="border p-2 rounded"
-                />
-                <input
-                  type="number"
-                  placeholder="Onward %"
-                  value={dest.onward}
-                  onChange={(e) =>
-                    handleDestinationChange(index, "onward", e.target.value)
-                  }
-                  className="border p-2 rounded"
-                />
-                <input
-                  type="number"
-                  placeholder="Return %"
-                  value={dest.return}
-                  onChange={(e) =>
-                    handleDestinationChange(index, "return", e.target.value)
-                  }
-                  className="border p-2 rounded"
-                />
+                <div>
+                  <label htmlFor="">Destination Code</label>
+                  <input
+                    type="text"
+                    placeholder="Code (e.g. DXB)"
+                    value={dest.code}
+                    onChange={(e) =>
+                      handleDestinationChange(index, "code", e.target.value)
+                    }
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Onward</label>
+                  <input
+                    type="number"
+                    placeholder="Onward %"
+                    value={dest.onward}
+                    onChange={(e) =>
+                      handleDestinationChange(index, "onward", e.target.value)
+                    }
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Return</label>
+                  <input
+                    type="number"
+                    placeholder="Return %"
+                    value={dest.return}
+                    onChange={(e) =>
+                      handleDestinationChange(index, "return", e.target.value)
+                    }
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
                 <button
                   type="button"
                   onClick={() => removeDestinationMarkup(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-3"
                 >
                   X
                 </button>
@@ -239,7 +254,7 @@ const AdminMarkup = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+            className="w-full bg-secondary-6000 text-white py-2 rounded hover:bg-green-700"
           >
             Save Changes
           </button>
