@@ -980,7 +980,7 @@ const PassengerComponent = forwardRef((props, ref) => {
             <input
               type="tel"
               id="tellll"
-              placeholder="eg : +91 9876543210"
+              placeholder="eg : +61 450424186"
               value={passengerData.mobile}
               onChange={(e) =>
                 setPassengerData((prev) => ({

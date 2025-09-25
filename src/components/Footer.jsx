@@ -261,7 +261,13 @@ const Footer = () => {
                     © <span className="current-year">2025</span> FIRST FLIGHT
                     PTY LTD. All Rights Reserved.
                   </p>
-                  <p className="pera">Powered by @The Design'O</p>
+                  <a
+                    href="http://www.thedesigno.co.in"
+                    target="_blank"
+                    className="pera"
+                  >
+                    Powered by @The Design'O
+                  </a>
                 </div>
               </div>
             </div>
