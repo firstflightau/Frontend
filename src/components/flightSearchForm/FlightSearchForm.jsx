@@ -30,20 +30,6 @@ const FlightSearchForm = () => {
                   <li className="nav-item" role="presentation">
                     <button
                       className="plan-link active"
-                      id="tour-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#tour"
-                      type="button"
-                      role="tab"
-                      aria-controls="tour"
-                      aria-selected="true"
-                    >
-                      <PlaneTakeoff size={21} /> Oneway Trip
-                    </button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button
-                      className="plan-link"
                       id="book-tab"
                       data-bs-toggle="tab"
                       data-bs-target="#book"
@@ -55,47 +41,37 @@ const FlightSearchForm = () => {
                       <ArrowLeftRight size={21} /> Round Trip
                     </button>
                   </li>
-                  {/* <li className="nav-item" role="presentation">
+                  <li className="nav-item" role="presentation">
                     <button
-                      className="plan-link"
-                      id="book-tab"
+                      className="plan-link "
+                      id="tour-tab"
                       data-bs-toggle="tab"
-                      data-bs-target="#multicity"
+                      data-bs-target="#tour"
                       type="button"
                       role="tab"
-                      aria-controls="book"
-                      aria-selected="false"
+                      aria-controls="tour"
+                      aria-selected="true"
                     >
-                      <PlaneTakeoff size={21} /> Multicity
+                      <PlaneTakeoff size={21} /> Oneway Trip
                     </button>
-                  </li> */}
+                  </li>
                 </ul>
                 <div className="tab-content" id="tourTab">
                   <div
                     className="tab-pane fade show active"
-                    id="tour"
-                    role="tabpanel"
-                    aria-labelledby="tour-tab"
-                  >
-                    <OnewaySearchForm />
-                  </div>
-
-                  {/* <div
-                    className="tab-pane fade"
-                    id="multicity"
-                    role="tabpanel"
-                    aria-labelledby="multicity-tab"
-                  >
-
-                  </div> */}
-
-                  <div
-                    className="tab-pane fade"
                     id="book"
                     role="tabpanel"
                     aria-labelledby="book-tab"
                   >
                     <ReturnSearchForm />
+                  </div>
+                  <div
+                    className="tab-pane fade  "
+                    id="tour"
+                    role="tabpanel"
+                    aria-labelledby="tour-tab"
+                  >
+                    <OnewaySearchForm />
                   </div>
                 </div>
               </div>
