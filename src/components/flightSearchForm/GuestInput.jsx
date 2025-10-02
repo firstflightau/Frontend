@@ -15,6 +15,7 @@ const GuestsInput = ({
   Adult,
   Child,
   Infant,
+  initialFlightClass,
 }) => {
   // console.log(Adult, "Adult", "Child", Child, Infant, "infant");
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(
@@ -49,7 +50,9 @@ const GuestsInput = ({
 
     { id: 6, value: "PremiumFirst", label: "Premium First" },
   ];
-  const [flightClassState, setFlightClassState] = useState(flightClass?.[0]);
+  const [flightClassState, setFlightClassState] = useState(
+    initialFlightClass || flightClass?.[0]
+  );
 
   useEffect(() => {
     onFlightClassChange(flightClassState);

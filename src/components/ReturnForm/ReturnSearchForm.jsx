@@ -75,6 +75,8 @@ const ReturnSearchForm = () => {
     navigate(`/returnSearchResult?${queryString}`);
   };
 
+  console.log(JSON.stringify(flightClass));
+
   const renderForm = () => {
     return (
       <form className="w-full relative rounded-[10px]   bg-white ">

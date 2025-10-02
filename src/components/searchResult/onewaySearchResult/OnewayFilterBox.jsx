@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox, RangeSlider } from "flowbite-react";
+import { Checkbox } from "flowbite-react";
 import { closeSidebar } from "../../../redux/slices/sidebarToggle/sidebarSlice";
+import { findAirlineByCode } from "../../../redux/slices/feature2/utils";
+
 const OnewayFilterBox = ({
   airlineCodes,
   minPrice,
@@ -13,16 +15,15 @@ const OnewayFilterBox = ({
   durationRange,
   stopsAirline,
 }) => {
-  // console.log(stopsAirline, "stopsAirlinedddd");
-  const [selectedCodes, setSelectedCodes] = useState([]);
   const isOpenBurger = useSelector((state) => state.sidebar.isOpen);
   const dispatch = useDispatch();
   const handleCloseBurger = () => dispatch(closeSidebar());
+
+  const [selectedCodes, setSelectedCodes] = useState([]);
   const [selectedStops, setSelectedStops] = useState([]);
   const [selectedStopsReturn, setSelectedStopsRetrun] = useState([]);
   const [currentPriceRange, setCurrentPriceRange] = useState(priceRange);
   const [currentPriceRangeNew, setCurrentPriceRangeNew] = useState(priceRange);
-
   const [currentDurationRange, setCurrentDurationRange] =
     useState(durationRange);
   const [selectedTimes, setSelectedTimes] = useState([]);
@@ -31,203 +32,120 @@ const OnewayFilterBox = ({
   const [selectedLandingTimesReturn, setSelectedLandingTimesReturn] = useState(
     []
   );
-  const debounceTimer = useRef(null); // Use ref to store the timer
-  const flightList = useSelector((state) => state?.flightList);
   const [airlines, setAirlines] = useState([]);
-  const [airports, setAirports] = useState([]);
-  const handlePriceChange = (value) => {
-    setCurrentPriceRange(value?.target?.value);
 
-    setCurrentPriceRangeNew(value?.target?.value);
-    // Clear existing timer
+  const debounceTimer = useRef(null);
+
+  const triggerFilter = (updatedFilters) => {
+    const defaults = {
+      selectedCodes,
+      selectedStops,
+      currentPriceRange,
+      selectedTimes,
+      selectedLandingTimes,
+      currentDurationRange,
+      selectedStopsReturn,
+      selectedTimesReturn,
+      selectedLandingTimesReturn,
+      airlines,
+    };
+    const finalFilters = { ...defaults, ...updatedFilters };
+    onFilter(
+      finalFilters.selectedCodes,
+      finalFilters.selectedStops,
+      finalFilters.currentPriceRange,
+      finalFilters.selectedTimes,
+      finalFilters.selectedLandingTimes,
+      finalFilters.currentDurationRange,
+      finalFilters.selectedStopsReturn,
+      finalFilters.selectedTimesReturn,
+      finalFilters.selectedLandingTimesReturn,
+      finalFilters.airlines
+    );
+  };
+
+  const handlePriceChange = (value) => {
+    const newValue = value?.target?.value;
+    setCurrentPriceRange(newValue);
+    setCurrentPriceRangeNew(newValue);
+
     if (debounceTimer.current) {
       clearTimeout(debounceTimer.current);
     }
-    let newValue = value?.target?.value;
-    // console.log(newValue, "newValue");
-
-    // Apply debounce to prevent frequent updates
     debounceTimer.current = setTimeout(() => {
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        newValue, // Use the latest price range
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
+      triggerFilter({ currentPriceRange: newValue });
     }, 300);
   };
 
   const handleAirlineChange = (event) => {
     const { value, checked } = event.target;
-    // console.log(value, checked, "valueChecked");
-    const airlineValue = value;
-    setAirlines((prev) => {
-      const updateAirline = checked
-        ? [...prev, airlineValue]
-        : prev.filter((air) => air !== airlineValue);
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        updateAirline
-      );
-      // console.log(updateAirline, "updateAirline");
-      return updateAirline;
-    }); // 300ms delay (adjust as needed)
+    const updatedAirlines = checked
+      ? [...airlines, value]
+      : airlines.filter((air) => air !== value);
+    setAirlines(updatedAirlines);
+    triggerFilter({ airlines: updatedAirlines });
   };
+
   const handleStopChange = (event) => {
     const { value, checked } = event.target;
     const stopValue = parseInt(value, 10);
-    setSelectedStops((prev) => {
-      const updateStop = checked
-        ? [...prev, stopValue]
-        : prev.filter((stop) => stop !== stopValue);
-      onFilter(
-        selectedCodes,
-        updateStop,
-        currentPriceRange,
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
-      return updateStop;
-    });
+    const updatedStops = checked
+      ? [...selectedStops, stopValue]
+      : selectedStops.filter((stop) => stop !== stopValue);
+    setSelectedStops(updatedStops);
+    triggerFilter({ selectedStops: updatedStops });
   };
-  const handleStopChangeRetrun = (event) => {
-    const { value, checked } = event.target;
-    const stopValue = parseInt(value, 10);
-    setSelectedStopsRetrun((prev) => {
-      const updateStopsreturn = checked
-        ? [...prev, stopValue]
-        : prev.filter((stop) => stop !== stopValue);
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        updateStopsreturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
-      return updateStopsreturn;
-    });
-  };
-  const handleTimeChange = (event) => {
-    const { value, checked } = event.target;
-    const timeRange = value.split("-").map((v) => parseInt(v, 10));
-    setSelectedTimes((prev) => {
-      const updateSelectedTimes = checked
-        ? [...prev, timeRange]
-        : prev.filter((range) => range.join("-") !== value);
-      // console.log(updateSelectedTimes, "updateSelectedTimes");
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        updateSelectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
-      return updateSelectedTimes;
-    });
-  };
-  const handleTimeChangeReturn = (event) => {
-    const { value, checked } = event.target;
-    const timeRange = value.split("-").map((v) => parseInt(v, 10));
-    setSelectedTimesReturn((prev) => {
-      const updateSelectedTimesReturn = checked
-        ? [...prev, timeRange]
-        : prev.filter((range) => range.join("-") !== value);
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        updateSelectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
-      return updateSelectedTimesReturn;
-    });
-  };
-  const handleLandingTimeChange = (event) => {
-    const { value, checked } = event.target;
-    const timeRange = value.split("-").map((v) => parseInt(v, 10));
-    setSelectedLandingTimes((prev) => {
-      const updateSelectedLandingTimes = checked
-        ? [...prev, timeRange]
-        : prev.filter((range) => range.join("-") !== value);
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        selectedTimes,
-        updateSelectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        selectedLandingTimesReturn,
-        airlines
-      );
-      return updateSelectedLandingTimes;
-    });
-  };
-  const handleLandingTimeChangeReturn = (event) => {
-    const { value, checked } = event.target;
-    const timeRange = value.split("-").map((v) => parseInt(v, 10));
-    setSelectedLandingTimesReturn((prev) => {
-      const updateLandingTimesReturn = checked
-        ? [...prev, timeRange]
-        : prev.filter((range) => range.join("-") !== value);
-      onFilter(
-        selectedCodes,
-        selectedStops,
-        currentPriceRange,
-        selectedTimes,
-        selectedLandingTimes,
-        currentDurationRange,
-        selectedStopsReturn,
-        selectedTimesReturn,
-        updateLandingTimesReturn,
-        airlines
-      );
 
-      return updateLandingTimesReturn;
-    });
+  // --- New Handlers for Select All / Clear ---
+
+  const handleSelectAllStops = () => {
+    const allStops = Object.keys(stopsAirline?.JourneyStopes || {})
+      .map((key, index) => ({ key, index }))
+      .filter(({ key }) => stopsAirline.JourneyStopes[key]?.count > 0)
+      .map(({ index }) => index);
+    setSelectedStops(allStops);
+    triggerFilter({ selectedStops: allStops });
   };
+
+  const handleClearStops = () => {
+    setSelectedStops([]);
+    triggerFilter({ selectedStops: [] });
+  };
+
+  const handleSelectAllAirlines = () => {
+    const allAirlines = Object.keys(stopsAirline?.Airlines || {});
+    setAirlines(allAirlines);
+    triggerFilter({ airlines: allAirlines });
+  };
+
+  const handleClearAirlines = () => {
+    setAirlines([]);
+    triggerFilter({ airlines: [] });
+  };
+
+  // --- Filter Sub-components ---
+
   const StopFilter = ({ handleStopChange, stops, selected }) => {
     return (
-      <div className="bg-white  rounded-lg ">
+      <div className="bg-white rounded-lg">
         <p className="text-lg font-semibold text-gray-800 mb-3">
           Filter by Stops
         </p>
-
+        <div className="flex justify-end items-center text-xs -mt-2 mb-2">
+          <span
+            onClick={handleSelectAllStops}
+            className="text-secondary-6000 hover:text-blue-800 font-medium cursor-pointer"
+          >
+            Select All
+          </span>
+          <span className="mx-1 text-gray-400">|</span>
+          <span
+            onClick={handleClearStops}
+            className="text-gray-800 hover:text-blue-800 font-medium cursor-pointer"
+          >
+            Clear
+          </span>
+        </div>
         <div className="space-y-3">
           {stops &&
             Object.keys(stops).map((key, index) => {
@@ -255,7 +173,6 @@ const OnewayFilterBox = ({
                       {key === "moreThanOneStop" ? "2+ stops" : key}
                     </label>
                   </div>
-
                   <div className="flex items-center gap-2 sm:gap-1 lg:gap-2">
                     <p className="text-green-500 font-medium text-sm">{`$ ${price}`}</p>
                     <p className="text-xs text-gray-600">{`(${count})`}</p>
@@ -267,113 +184,34 @@ const OnewayFilterBox = ({
       </div>
     );
   };
-  // const StopFilter = ({ handleStopChange, stops, selected }) => {
-  //   return (
-  //     <div className="PackagetagFilters flight-filter-aireline">
-  //       <p>Filter By Stop's</p>
-  //       <>
-  //         {stops &&
-  //           Object.keys(stops).map((key, index) => {
-  //             const isItem = stops[key]?.count > 0;
-  //             const price = stops[key]?.minPrice;
-  //             const count = stops[key]?.count;
 
-  //             let itemShow = isItem ? (
-  //               <div className="flex justify-between items-center w-full">
-  //                 {/* Flowbite Checkbox */}
-  //                 <div className="flex items-center">
-  //                   <Checkbox
-  //                     id={`stop-${index}`}
-  //                     value={index}
-  //                     checked={selected?.includes(index)}
-  //                     onChange={handleStopChange}
-  //                   />
-  //                   <label
-  //                     htmlFor={`stop-${index}`}
-  //                     className="ml-2 text-sm font-medium text-gray-900"
-  //                   >
-  //                     {key === "moreThanOneStop" ? "2+ stops" : key}
-  //                   </label>
-  //                 </div>
-
-  //                 {/* Price and Count */}
-  //                 <div className="flex items-center gap-1">
-  //                   <div className="flex">
-  //                     <p className="text-green-400 text-nowrap text-sm">₹</p>
-  //                     <p className="font-medium text-sm">{price}</p>
-  //                   </div>
-  //                   <p className="text-sm font-medium">{`${count}`}</p>
-  //                 </div>
-  //               </div>
-  //             ) : null;
-  //             return itemShow;
-  //           })}
-  //       </>
-  //     </div>
-  //   );
-  // };
-
-  // const AirlineFilter = () => {
-  //   const Airlines = stopsAirline?.Airlines;
-
-  //   return (
-  //     <div className="bg-white">
-  //       <p className="text-lg font-semibold text-gray-800 mb-3">
-  //         Filter By Airlines
-  //       </p>
-
-  //       <div className="flex flex-col gap-2">
-  //         {Airlines &&
-  //           Object.keys(Airlines).map((key) => {
-  //             const Price = Airlines?.[key]?.minPrice;
-
-  //             return (
-  //               <div
-  //                 key={key}
-  //                 className="flex justify-between items-center p-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition w-full"
-  //               >
-  //                 <label className="flex items-center gap-2 w-full cursor-pointer">
-  //                   <Checkbox
-  //                     value={key}
-  //                     className="w-4 h-4 text-blue-600"
-  //                     checked={airlines.includes(key)}
-  //                     onChange={handleAirlineChange}
-  //                   />
-  //                   <img
-  //                     src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${key}.png`}
-  //                     alt="flight"
-  //                     className="w-6 h-6 rounded-md"
-  //                   />
-  //                   <p className="text-sm font-medium text-gray-900">{key}</p>
-  //                 </label>
-
-  //                 <div className="flex items-center gap-1 min-w-[50px]">
-  //                   <p className="text-green-500 text-sm font-medium text-nowrap">
-  //                     {`$ ${Price}`}
-  //                   </p>
-  //                 </div>
-  //               </div>
-  //             );
-  //           })}
-  //       </div>
-  //     </div>
-  //   );
-  // };
   const AirlineFilter = () => {
     const Airlines = stopsAirline?.Airlines;
-
     return (
       <div className="bg-white">
         <p className="text-lg font-semibold text-gray-800 mb-3">
           Filter By Airlines
         </p>
-
+        <div className="flex justify-end items-center text-xs -mt-2 mb-2">
+          <span
+            onClick={handleSelectAllAirlines}
+            className="text-secondary-6000 hover:text-blue-800 font-medium cursor-pointer"
+          >
+            Select All
+          </span>
+          <span className="mx-1 text-gray-400">|</span>
+          <span
+            onClick={handleClearAirlines}
+            className="text-gray-800 hover:text-blue-800 font-medium cursor-pointer"
+          >
+            Clear
+          </span>
+        </div>
         <div className="flex flex-col gap-2">
           {Airlines &&
             Object.keys(Airlines).map((key) => {
               const Price = Airlines?.[key]?.minPrice;
               const isChecked = airlines.includes(key);
-
               return (
                 <div
                   key={key}
@@ -385,23 +223,21 @@ const OnewayFilterBox = ({
                   }`}
                 >
                   <label className="flex items-center gap-2 w-full cursor-pointer">
-                    {/* Hidden Checkbox */}
                     <Checkbox
                       value={key}
                       className="hidden"
                       checked={isChecked}
                       onChange={handleAirlineChange}
                     />
-
                     <img
                       src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${key}.png`}
-                      // src={`https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/QF.png`}
                       alt="flight"
                       className="w-6 h-6 rounded-md"
                     />
-                    <p className="text-sm font-medium text-gray-900">{key}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {findAirlineByCode(key)?.airlineName}
+                    </p>
                   </label>
-
                   <div className="flex-1 items-center gap-1 ">
                     <p className="text-green-500 text-sm font-medium text-nowrap">
                       {`$ ${Price}`}
@@ -440,28 +276,18 @@ const OnewayFilterBox = ({
           onClick={handleCloseBurger}
           className="expand-icon close-btn flex text-gray-500 d-lg-none"
         >
-          <i class="fa-solid fa-angles-left"></i>
+          <i className="fa-solid fa-angles-left"></i>
         </div>
         <StopFilter
           handleStopChange={handleStopChange}
           stops={stopsAirline?.JourneyStopes}
           selected={selectedStops}
         />
-
         <AirlineFilter />
-
-        {/* Price Filter Section */}
         <div className="bg-white ">
           <p className="text-lg font-semibold text-gray-800 mb-3">
             Filter By Price
           </p>
-          {/* <RangeSlider
-            className=""
-            
-            
-            
-           
-          /> */}
           <input
             id="default-range"
             onChange={handlePriceChange}
@@ -469,9 +295,8 @@ const OnewayFilterBox = ({
             min={minPrice}
             max={maxPrice + 1}
             value={currentPriceRangeNew || maxPrice}
-            class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer "
+            className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer "
           ></input>
-
           <div className="flex justify-between items-center mt-2">
             <span className="font-semibold text-sm">{`$ ${currentPriceRangeNew}`}</span>
             <span className="font-semibold text-sm">$ {maxPrice}</span>
@@ -482,4 +307,5 @@ const OnewayFilterBox = ({
     </>
   );
 };
+
 export default OnewayFilterBox;

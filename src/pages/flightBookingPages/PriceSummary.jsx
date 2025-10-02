@@ -116,6 +116,13 @@ const PriceSummary = () => {
     onwards?.flights?.[onwards?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
 
   const onwardMarkup = addMarkup(onwardPrice, type, onwardDestination);
+  console.log(
+    onwardPrice,
+    type,
+    onwardDestination,
+    "onwardPrice, type, onwardDestination"
+  );
+  console.log(onwardMarkup, "onward markup");
 
   const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
   const grandTotal = Number(onwardPrice) + Number(onwardMarkup);

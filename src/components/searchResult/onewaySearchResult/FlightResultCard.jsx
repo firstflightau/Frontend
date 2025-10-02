@@ -7,6 +7,7 @@ import freemeal from "../../../assets/images/freemeal.png";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import ViewFlightDetails from "./ViewFlightDetails";
+import { addMarkup } from "../../../utils/utils";
 
 dayjs.extend(duration);
 
@@ -49,6 +50,20 @@ const FlightResultCard = ({
     return sum.add(dayjs.duration(dur?.duration));
   }, dayjs.duration(0));
   let durations11 = `${durations1.hours()}H:${durations1.minutes()}M`;
+
+  const onwardPrice =
+    item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardTaxes =
+    item?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes;
+  const onwardDestination =
+    item?.flights?.[item?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+
+  const onwardMarkup = addMarkup(onwardPrice, "onward", onwardDestination);
+
+  const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
+
+  // console.log(onwardPrice.onwardMarkup);
 
   // console.log(item, "item");
   return (
@@ -116,8 +131,8 @@ const FlightResultCard = ({
         </div>
         <div className="flex flex-1 flex-col items-end justify-center gap-2 min-w-[82px]">
           <p class={`text-xs md:text-lg font-semibold text-gray-700"`}>
-            {/* $ {item?.productsoption?.[0]?.Price?.TotalPrice} AUD */}${" "}
-            {item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice} AUD
+            {/* $ {item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice} AUD ${" "} */}
+            ${grandTotal.toFixed(2)} AUD
           </p>
           <button
             onClick={() => handleNavigate(item)}

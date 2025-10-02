@@ -48,6 +48,8 @@ const ReturnSearchFormInner = () => {
   const [flightClassState, setFlightClassState] = useState(Class1);
   const [loader, setLoader] = useState(false);
 
+  console.log(flightClassState, "flight class state");
+
   useEffect(() => {
     setDepDate(queryParams.get("date"));
     setRetDate(queryParams.get("retrunDate"));
@@ -58,11 +60,9 @@ const ReturnSearchFormInner = () => {
     children: 0,
     infant: 0,
   });
-  const [flightClass, setFlightClass] = useState({
-    id: 2,
-    value: "Y",
-    label: "Economy",
-  });
+  const [flightClass, setFlightClass] = useState(flightClassState);
+
+  console.log(flightClass, "flight classssssss");
 
   const handleFromSelect = (location) => {
     setFromCity(location);
@@ -106,104 +106,48 @@ const ReturnSearchFormInner = () => {
     };
     const queryString = new URLSearchParams(params).toString();
 
-    // console.log(params, "querystring");
-
     dispatch(searchpy(params));
 
     navigate(`/returnSearchResult?${queryString}`);
   };
-  const handleSubmitt = async () => {
-    if (to === from) {
-      return;
-    }
-    sessionStorage.setItem("SessionExpireTime", new Date());
-    const payload = {
-      EndUserIp: reducerState?.ip?.ipData,
-      TokenId: reducerState?.ip?.tokenData,
-      AdultCount: adult,
-      ChildCount: child,
-      InfantCount: infant,
-      DirectFlight: "false",
-      OneStopFlight: "false",
-      JourneyType: 1,
-      PreferredAirlines: null,
-      Segments: [
-        {
-          Origin: from,
-          Destination: to,
-          FlightCabinClass: flightClassState?.id || Class,
-          PreferredDepartureTime: dDate,
-          PreferredArrivalTime: dDate,
-        },
-      ],
-      Sources: null,
-      to: to,
-      from: from,
-      date: dDate,
-      cabinClass: flightClassState?.value || Class,
-      px: adult,
-    };
-    const payloadReturn = {
-      EndUserIp: reducerState?.ip?.ipData,
-      TokenId: reducerState?.ip?.tokenData,
-      AdultCount: adult,
-      ChildCount: child,
-      InfantCount: infant,
-      DirectFlight: "false",
-      OneStopFlight: "false",
-      JourneyType: 1,
-      PreferredAirlines: null,
-      Segments: [
-        {
-          Destination: fromCity.AirportCode || from,
-          Origin: toCity.AirportCode || to,
-          FlightCabinClass: flightClassState?.id || Class,
-          PreferredDepartureTime: rDate,
-          PreferredArrivalTime: rDate,
-        },
-      ],
-      Sources: null,
+  // const handleSubmitt = async () => {
+  //   console.log("clicned");
+  //   if (to === from) {
+  //     return;
+  //   }
+  //   console.log("clicned222222222222");
+  //   sessionStorage.setItem("SessionExpireTime", new Date());
+  //   const searchpy = {
+  //     from: fromCity,
+  //     to: toCity,
+  //     FlightCabinClass: flightClass?.value,
+  //     date: departDate,
+  //     returnDate: returnDate,
+  //   };
 
-      from: to,
-      to: from,
-      date: rDate,
-      cabinClass: flightClassState?.value || Class,
-      px: adult,
-    };
-    const searchpy = {
-      from: fromCity,
-      to: toCity,
-      FlightCabinClass: flightClass?.id,
-      date: departDate,
-      returnDate: returnDate,
-    };
+  //   dispatch(searchFlight(searchpy));
 
-    dispatch(searchFlight(searchpy));
+  //   sessionStorage.setItem("adults", adult);
+  //   sessionStorage.setItem("childs", child);
+  //   sessionStorage.setItem("infants", infant);
+  //   const params = {
+  //     from: from,
+  //     to: to,
+  //     date: dDate,
+  //     retrunDate: rDate,
+  //     Adult: adult,
+  //     Child: child,
+  //     Infant: infant,
+  //     class: JSON.stringify(flightClassState),
+  //     FlightCabinClass: flightClassState?.value,
+  //   };
+  //   const queryString = new URLSearchParams(params).toString();
 
-    amadeusSearch(payload, payloadReturn);
-    flightReturnTboAndKafila(payload, payloadReturn);
-
-    sessionStorage.setItem("adults", adult);
-    sessionStorage.setItem("childs", child);
-    sessionStorage.setItem("infants", infant);
-    const params = {
-      from: from,
-      to: to,
-      date: dDate,
-      retrunDate: rDate,
-      Adult: adult,
-      Child: child,
-      Infant: infant,
-      class: JSON.stringify(flightClassState),
-      FlightCabinClass: flightClassState?.id,
-    };
-    const queryString = new URLSearchParams(params).toString();
-
-    navigate(`/ReturnResult?${queryString}`);
-  };
-  useEffect(() => {
-    handleSubmitt();
-  }, [rDate, dDate, from, to, adult, child]);
+  //   navigate(`/ReturnResult?${queryString}`);
+  // };
+  // useEffect(() => {
+  //   handleSubmitt();
+  // }, [rDate, dDate, from, to, adult, child, Class1]);
   const renderForm = () => {
     return (
       // <form className="w-full relative rounded-[10px]   bg-white ">
@@ -238,6 +182,7 @@ const ReturnSearchFormInner = () => {
                   Adult={Adult}
                   Child={Child}
                   Infant={Infant}
+                  initialFlightClass={flightClassState}
                 />
                 <div className="h-full w-full md:w-auto ">
                   <button

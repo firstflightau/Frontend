@@ -1,7 +1,7 @@
 // components/RoundTripResultCard.js
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { calculateFlightDurationNew } from "../utils/utils";
+import { addMarkup, calculateFlightDurationNew } from "../utils/utils";
 import FlightDetailTabs from "./FlightDetailsTabs";
 
 const RoundTripResultCard = ({ combo, onSelect }) => {
@@ -38,6 +38,22 @@ const RoundTripResultCard = ({ combo, onSelect }) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString("en-US", { day: "numeric", month: "short" });
   };
+
+  // const type = "return" ;
+
+  // outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+
+  const onwardPrice =
+    outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardTaxes =
+    outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalTaxes;
+  const onwardDestination =
+    outbound?.flights?.[outbound?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+
+  const onwardMarkup = addMarkup(onwardPrice, "return", onwardDestination);
+
+  const totalTax = Number(onwardTaxes) + Number(onwardMarkup);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
 
   // Flight segment component for reusability
   const FlightSegment = ({ flight, duration, direction, title }) => {
@@ -148,7 +164,8 @@ const RoundTripResultCard = ({ combo, onSelect }) => {
         <div className="border-t w-full  md:border-t-0 border-gray-200 p-4 md:p-6 flex flex-col justify-between md:w-72">
           <div className="flex flex-col items-end mb-4">
             <div className="text-2xl font-bold text-primary-6000 mb-1">
-              $ {totalPrice.toFixed(2)} AUD
+              $ {grandTotal.toFixed(2)} AUD
+              {/* $ {totalPrice.toFixed(2)} AUD */}
             </div>
             <div className="text-xs text-gray-500">Total for all travelers</div>
           </div>

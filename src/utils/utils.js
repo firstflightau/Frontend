@@ -275,13 +275,13 @@ export const standardizeFlightBaggageResponse = (BaggageAllowance) => {
 export function addMarkup(value, tripType = "onward", destinationCode = "") {
   const reducerState = store.getState();
   const markupData = reducerState?.markupData?.markupAmount;
-  console.log(markupData, "markupData");
+  // console.log(markupData, "markupData");
 
   if (!markupData) return 0;
 
   let markupPercentage = 0;
 
-  console.log(value, tripType, destinationCode, "addMarkup");
+  // console.log(value, tripType, destinationCode, "addMarkup");
 
   // ✅ Check if destination-specific markup exists
   if (destinationCode && Array.isArray(markupData.destinationMarkups)) {

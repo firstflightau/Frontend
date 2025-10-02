@@ -1,6 +1,6 @@
-// RoundTripFilterBox.jsx
 import React, { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { findAirlineByCode } from "../redux/slices/feature2/utils";
 
 const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
   const [filters, setFilters] = useState({
@@ -23,7 +23,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
   // Extract unique airlines and calculate max price from combinations
   useEffect(() => {
     if (combinations && combinations.length > 0) {
-      // Get all unique airlines
       const airlinesSet = new Set();
       let maxPriceValue = 0;
 
@@ -35,23 +34,24 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
 
         if (price > maxPriceValue) maxPriceValue = price;
 
-        // Add outbound airline
         if (combo.outbound?.flights?.[0]?.carrier) {
           airlinesSet.add(combo.outbound.flights[0].carrier);
         }
 
-        // Add inbound airline
         if (combo.inbound?.flights?.[0]?.carrier) {
           airlinesSet.add(combo.inbound.flights[0].carrier);
         }
       });
 
-      setAllAirlines(Array.from(airlinesSet).sort());
-      setMaxPrice(Math.ceil(maxPriceValue));
+      const sortedAirlines = Array.from(airlinesSet).sort();
+      setAllAirlines(sortedAirlines);
+
+      const roundedMaxPrice = Math.ceil(maxPriceValue);
+      setMaxPrice(roundedMaxPrice);
       setFilters((prev) => ({
         ...prev,
-        maxPrice: Math.ceil(maxPriceValue),
-        priceRange: [0, Math.ceil(maxPriceValue)],
+        maxPrice: roundedMaxPrice,
+        priceRange: [0, roundedMaxPrice],
       }));
     }
   }, [combinations]);
@@ -64,7 +64,7 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
 
     allAirlines.forEach((airline) => {
       airlineCounts[airline] = 0;
-      airlinePrices[airline] = Infinity; // Start with a high value to find minimum
+      airlinePrices[airline] = Infinity;
     });
 
     combinations.forEach((combo) => {
@@ -73,7 +73,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
           0
       );
 
-      // Count stops
       const outboundStops = combo.outbound?.flights?.length - 1 || 0;
       const inboundStops = combo.inbound?.flights?.length - 1 || 0;
       const totalStops = Math.max(outboundStops, inboundStops);
@@ -82,7 +81,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
       else if (totalStops === 1) stopsCount.oneStop++;
       else stopsCount.twoPlusStops++;
 
-      // Count airlines and find minimum price
       const outboundAirline = combo.outbound?.flights?.[0]?.carrier;
       const inboundAirline = combo.inbound?.flights?.[0]?.carrier;
 
@@ -143,7 +141,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
       const newRange = [...prev.priceRange];
       newRange[index] = value;
 
-      // Ensure min doesn't exceed max and vice versa
       if (index === 0 && value > prev.priceRange[1]) newRange[1] = value;
       if (index === 1 && value < prev.priceRange[0]) newRange[0] = value;
 
@@ -166,21 +163,49 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
     onFilterChange(clearedFilters);
   };
 
-  // Check if any filters are active
+  // Handlers for Select All / Clear for a specific section
+  const handleSelectAll = (section) => {
+    setFilters((prev) => {
+      let newFilters;
+      if (section === "stops") {
+        newFilters = { ...prev, stops: ["nonStop", "oneStop", "twoPlusStops"] };
+      } else if (section === "airlines") {
+        newFilters = { ...prev, airlines: [...allAirlines] };
+      } else {
+        return prev;
+      }
+      onFilterChange(newFilters);
+      return newFilters;
+    });
+  };
+
+  const handleClearSection = (section) => {
+    setFilters((prev) => {
+      let newFilters;
+      if (section === "stops") {
+        newFilters = { ...prev, stops: [] };
+      } else if (section === "airlines") {
+        newFilters = { ...prev, airlines: [] };
+      } else {
+        return prev;
+      }
+      onFilterChange(newFilters);
+      return newFilters;
+    });
+  };
+
   const hasActiveFilters =
     filters.stops.length > 0 ||
     filters.airlines.length > 0 ||
     filters.priceRange[0] > 0 ||
     filters.priceRange[1] < maxPrice;
 
-  // Function to get airline logo URL
   const getAirlineLogo = (airlineCode) => {
     return `https://raw.githubusercontent.com/The-SkyTrails/Images/main/FlightImages/${airlineCode}.png`;
   };
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
-      {/* Header */}
       <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
         {hasActiveFilters && (
@@ -209,130 +234,133 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
         </div>
 
         {expandedSections.stops && (
-          <div className="mt-3 space-y-3">
-            <div
-              className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
-                filters.stops.includes("nonStop")
-                  ? "bg-blue-50 border border-blue-200"
-                  : "hover:bg-gray-50"
-              }`}
-              onClick={() => handleStopFilter("nonStop")}
-            >
-              <div className="flex items-center">
-                <div
-                  className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
-                    filters.stops.includes("nonStop")
-                      ? "bg-blue-600 border-blue-600"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {filters.stops.includes("nonStop") && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <span className="text-sm">Nonstop</span>
-              </div>
-              <span className="text-sm text-gray-600">
-                $
-                {/* {stopsCount.nonStop > 0
-                  ? Math.round(airlinePrices.nonStop || 0)
-                  : 0}{" "} */}
-                ({stopsCount.nonStop})
+          <>
+            <div className="flex justify-end items-center text-xs mt-2 -mb-1">
+              <span
+                onClick={() => handleSelectAll("stops")}
+                className="text-secondary-6000 hover:text-blue-800 font-medium cursor-pointer"
+              >
+                Select All
+              </span>
+              <span className="mx-1 text-gray-400">|</span>
+              <span
+                onClick={() => handleClearSection("stops")}
+                className="text-gray-800 hover:text-blue-800 font-medium cursor-pointer"
+              >
+                Clear
               </span>
             </div>
-
-            <div
-              className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
-                filters.stops.includes("oneStop")
-                  ? "bg-blue-50 border border-blue-200"
-                  : "hover:bg-gray-50"
-              }`}
-              onClick={() => handleStopFilter("oneStop")}
-            >
-              <div className="flex items-center">
-                <div
-                  className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
-                    filters.stops.includes("oneStop")
-                      ? "bg-blue-600 border-blue-600"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {filters.stops.includes("oneStop") && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
+            <div className="mt-3 space-y-3">
+              <div
+                className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
+                  filters.stops.includes("nonStop")
+                    ? "bg-blue-50 border border-blue-200"
+                    : "hover:bg-gray-50"
+                }`}
+                onClick={() => handleStopFilter("nonStop")}
+              >
+                <div className="flex items-center">
+                  <div
+                    className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
+                      filters.stops.includes("nonStop")
+                        ? "bg-primary-6000 border-blue-600"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    {filters.stops.includes("nonStop") && (
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-sm">Nonstop</span>
                 </div>
-                <span className="text-sm">1 Stop</span>
+                <span className="text-sm text-gray-600">
+                  ({stopsCount.nonStop})
+                </span>
               </div>
-              <span className="text-sm text-gray-600">
-                $
-                {/* {stopsCount.oneStop > 0
-                  ? Math.round(airlinePrices.oneStop || 0)
-                  : 0}{" "} */}
-                ({stopsCount.oneStop})
-              </span>
-            </div>
-
-            <div
-              className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
-                filters.stops.includes("twoPlusStops")
-                  ? "bg-blue-50 border border-blue-200"
-                  : "hover:bg-gray-50"
-              }`}
-              onClick={() => handleStopFilter("twoPlusStops")}
-            >
-              <div className="flex items-center">
-                <div
-                  className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
-                    filters.stops.includes("twoPlusStops")
-                      ? "bg-blue-600 border-blue-600"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {filters.stops.includes("twoPlusStops") && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
+              <div
+                className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
+                  filters.stops.includes("oneStop")
+                    ? "bg-blue-50 border border-blue-200"
+                    : "hover:bg-gray-50"
+                }`}
+                onClick={() => handleStopFilter("oneStop")}
+              >
+                <div className="flex items-center">
+                  <div
+                    className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
+                      filters.stops.includes("oneStop")
+                        ? "bg-primary-6000 border-blue-600"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    {filters.stops.includes("oneStop") && (
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-sm">1 Stop</span>
                 </div>
-                <span className="text-sm">2+ Stops</span>
+                <span className="text-sm text-gray-600">
+                  ({stopsCount.oneStop})
+                </span>
               </div>
-              <span className="text-sm text-gray-600">
-                $
-                {/* {stopsCount.twoPlusStops > 0
-                  ? Math.round(airlinePrices.twoPlusStops || 0)
-                  : 0}{" "} */}
-                ({stopsCount.twoPlusStops})
-              </span>
+              <div
+                className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
+                  filters.stops.includes("twoPlusStops")
+                    ? "bg-blue-50 border border-blue-200"
+                    : "hover:bg-gray-50"
+                }`}
+                onClick={() => handleStopFilter("twoPlusStops")}
+              >
+                <div className="flex items-center">
+                  <div
+                    className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
+                      filters.stops.includes("twoPlusStops")
+                        ? "bg-primary-6000 border-blue-600"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    {filters.stops.includes("twoPlusStops") && (
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-sm">2+ Stops</span>
+                </div>
+                <span className="text-sm text-gray-600">
+                  ({stopsCount.twoPlusStops})
+                </span>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
 
@@ -351,61 +379,81 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
         </div>
 
         {expandedSections.airlines && (
-          <div className="mt-3 space-y-3 ">
-            {allAirlines.map((airline) => (
-              <div
-                key={airline}
-                className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
-                  filters.airlines.includes(airline)
-                    ? "bg-blue-50 border border-blue-200"
-                    : "hover:bg-gray-50"
-                }`}
-                onClick={() => handleAirlineFilter(airline)}
+          <>
+            <div className="flex justify-end items-center text-xs mt-2 -mb-1">
+              <span
+                onClick={() => handleSelectAll("airlines")}
+                className="text-secondary-6000 hover:text-blue-800 font-medium cursor-pointer"
               >
-                <div className="flex items-center">
-                  <div
-                    className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
-                      filters.airlines.includes(airline)
-                        ? "bg-blue-600 border-blue-600"
-                        : "border-gray-300"
-                    }`}
-                  >
-                    {filters.airlines.includes(airline) && (
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </div>
+                Select All
+              </span>
+              <span className="mx-1 text-gray-400">|</span>
+              <span
+                onClick={() => handleClearSection("airlines")}
+                className="text-secondary-6000 hover:text-blue-800 font-medium cursor-pointer"
+              >
+                Clear
+              </span>
+            </div>
+            <div className="mt-3 space-y-3 ">
+              {allAirlines.map((airline) => (
+                <div
+                  key={airline}
+                  className={`flex justify-between items-center p-2 rounded-lg cursor-pointer transition-colors ${
+                    filters.airlines.includes(airline)
+                      ? "bg-blue-50 border border-blue-200"
+                      : "hover:bg-gray-50"
+                  }`}
+                  onClick={() => handleAirlineFilter(airline)}
+                >
                   <div className="flex items-center">
-                    <img
-                      src={getAirlineLogo(airline)}
-                      alt={airline}
-                      className="w-6 h-6 object-contain mr-2"
-                      onError={(e) => {
-                        e.target.src =
-                          "https://via.placeholder.com/24x24?text=Airline";
-                      }}
-                    />
-                    <span className="text-sm">{airline}</span>
+                    <div
+                      className={`w-4 h-4 rounded border flex items-center justify-center mr-2 ${
+                        filters.airlines.includes(airline)
+                          ? "bg-primary-6000 border-blue-600"
+                          : "border-gray-300"
+                      }`}
+                    >
+                      {filters.airlines.includes(airline) && (
+                        <svg
+                          className="w-3 h-3 text-white"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="flex items-center">
+                      <img
+                        src={getAirlineLogo(airline)}
+                        alt={airline}
+                        className="w-6 h-6 object-contain mr-2"
+                        onError={(e) => {
+                          e.target.src =
+                            "https://via.placeholder.com/24x24?text=Airline";
+                        }}
+                      />
+                      <span className="text-sm">
+                        {" "}
+                        {findAirlineByCode(airline)?.airlineName}
+                      </span>
+                    </div>
                   </div>
+                  <span className="text-sm text-gray-600">
+                    $
+                    {airlineCounts[airline] > 0
+                      ? Math.round(airlinePrices[airline] || 0)
+                      : 0}
+                  </span>
                 </div>
-                <span className="text-sm text-gray-600">
-                  $
-                  {airlineCounts[airline] > 0
-                    ? Math.round(airlinePrices[airline] || 0)
-                    : 0}
-                </span>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -433,7 +481,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
                 ${filters.priceRange[1]}
               </span>
             </div>
-
             <div className="relative h-2 bg-gray-200 rounded-full">
               <div
                 className="absolute h-2 bg-blue-600 rounded-full"
@@ -446,7 +493,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
                   }%`,
                 }}
               ></div>
-
               <input
                 type="range"
                 min="0"
@@ -455,7 +501,6 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
                 onChange={(e) => handlePriceChange(e, 0)}
                 className="absolute w-full h-2 opacity-0 cursor-pointer z-10"
               />
-
               <input
                 type="range"
                 min="0"
@@ -464,15 +509,17 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
                 onChange={(e) => handlePriceChange(e, 1)}
                 className="absolute w-full h-2 opacity-0 cursor-pointer z-10"
               />
-
               <div
                 className="absolute w-4 h-4 bg-blue-600 rounded-full -mt-1 cursor-pointer"
-                style={{ left: `${(filters.priceRange[0] / maxPrice) * 100}%` }}
+                style={{
+                  left: `${(filters.priceRange[0] / maxPrice) * 100}%`,
+                }}
               ></div>
-
               <div
                 className="absolute w-4 h-4 bg-blue-600 rounded-full -mt-1 cursor-pointer"
-                style={{ left: `${(filters.priceRange[1] / maxPrice) * 100}%` }}
+                style={{
+                  left: `${(filters.priceRange[1] / maxPrice) * 100}%`,
+                }}
               ></div>
             </div>
           </div>

@@ -15,7 +15,7 @@ const ReturnSearchResult = () => {
   const reducerState = useSelector((state) => state);
   const location = useLocation();
   const navigate = useNavigate();
-
+  console.log(reducerState, "reducer state");
   const queryParams = new URLSearchParams(location.search);
   const from = queryParams.get("from");
   const to = queryParams.get("to");
@@ -57,7 +57,7 @@ const ReturnSearchResult = () => {
         payload: { tptoken: tpToken, requestData },
       })
     );
-  }, [from, to, date, retrunDate, Adult, Child, Infant]);
+  }, [from, to, date, retrunDate, Adult, Child, Infant, FlightCabinClass]);
 
   // Build combinations
   useEffect(() => {

@@ -75,6 +75,7 @@ function App() {
   useEffect(() => {
     // const tpToken = compareDates();
     // if (tpToken) {
+    dispatch(fetchMarkupAmount());
     dispatch(fetchIpAddress());
     // }
     if (reducerState?.airlineList?.airlines?.length === 0) {
@@ -83,7 +84,6 @@ function App() {
     if (reducerState?.airportList?.airports?.length === 0)
       dispatch(fetchAirlineList());
     // if (!reducerState?.markupData?.markupAmount?.markup) {
-    dispatch(fetchMarkupAmount());
     // }
   }, []);
 
