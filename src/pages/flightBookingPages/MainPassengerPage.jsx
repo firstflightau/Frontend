@@ -214,7 +214,7 @@ const MainPassengerPage = () => {
       const formData = passengerRef.current.getPassengerData();
 
       const payloadtosavepassenger = {
-        totalAmount: grandTotal,
+        totalAmount: grandTotal.toFixed(2),
         markup: onwardMarkup,
         email: formData.email,
         phoneNumber: formData.mobile,
