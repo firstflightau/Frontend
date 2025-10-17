@@ -232,17 +232,17 @@ const Footer = () => {
                   </a>
                 </li>
                 <li className="single-list">
-                  <a href="privacy-policy.php" className="single">
+                  <a href="privacy-policy" className="single">
                     Privacy Policy
                   </a>
                 </li>
                 <li className="single-list">
-                  <a href="disclaimer.php" className="single">
+                  <a href="disclaimer" className="single">
                     Disclaimer
                   </a>
                 </li>
                 <li className="single-list">
-                  <a href="terms-conditions.php" className="single">
+                  <a href="term-condition" className="single">
                     Terms & Conditions
                   </a>
                 </li>
