@@ -156,7 +156,7 @@ const Footer = () => {
                       </li>
                       <li className="single-list">
                         <p className="font-semibold text-gray-300 text-sm md:text-base flex flex-row items-center justify-start gap-2 ">
-                          <Phone size={16} /> (+61) 450 424 186
+                          <Phone size={16} /> (+61) 290 112 019
                         </p>
                       </li>
                       <li className="single-list">
