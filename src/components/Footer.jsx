@@ -227,7 +227,7 @@ const Footer = () => {
             <div className="footer-bottom">
               <ul className="listing">
                 <li className="single-list">
-                  <a href="cookie-policy.php" className="single">
+                  <a href="cookie-policy" className="single">
                     Cookie Policy
                   </a>
                 </li>
