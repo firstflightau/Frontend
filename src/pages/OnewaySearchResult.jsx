@@ -25,7 +25,8 @@ const OnewaySearchResult = () => {
 
   let from = queryParams.get("from");
   let to = queryParams.get("to");
-
+  const fromName = queryParams.get("fromName");
+  const toName = queryParams.get("toName");
   let date = queryParams.get("date");
   let retrunDate = queryParams.get("retrunDate");
   let Adult = queryParams.get("Adult");
@@ -343,10 +344,12 @@ const OnewaySearchResult = () => {
 
   return (
     <div>
-      {homeData && (
+      {(homeData || from || to) && (
         <Helmet>
           {/* Main SEO Tags */}
-          <title>{homeData?.title}</title>
+          <title>
+            {`flight for ${from} to ${to}, flight for ${fromName} to ${toName}`}
+          </title>
           <meta name="description" content={homeData?.description} />
           <meta name="keywords" content={homeData?.keywords} />
           <link rel="canonical" href={homeData?.canonical} />

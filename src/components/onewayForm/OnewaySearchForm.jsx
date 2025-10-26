@@ -69,7 +69,8 @@ const OnewaySearchForm = () => {
     const params = {
       from: fromCity?.AirportCode,
       to: toCity?.AirportCode,
-
+      fromName: fromCity?.name,
+      toName: toCity?.name,
       date: departDate,
       retrunDate: "",
       Adult: guests?.adults,

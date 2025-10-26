@@ -57,7 +57,8 @@ const ReturnSearchForm = () => {
     const params = {
       from: fromCity?.AirportCode,
       to: toCity?.AirportCode,
-
+      fromName: fromCity?.name,
+      toName: toCity?.name,
       date: departDate,
       retrunDate: returnDate,
       Adult: guests?.adults,
@@ -75,7 +76,7 @@ const ReturnSearchForm = () => {
     navigate(`/returnSearchResult?${queryString}`);
   };
 
-  console.log(JSON.stringify(flightClass));
+  console.log(fromCity, toCity, "dafdfadf");
 
   const renderForm = () => {
     return (
