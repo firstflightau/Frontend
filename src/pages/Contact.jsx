@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Toast } from "flowbite-react";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { HiFire } from "react-icons/hi";
 import callcentergirl from "../assets/images/gallery/callcentergirl.png";
 import { apiURL } from "../constant/Constant";
@@ -104,8 +105,29 @@ const Contact = () => {
     }
   };
 
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.contact
+  );
+
   return (
     <main>
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
+
       <section className="tour-details-section section-padding2">
         <div className="tour-details-area">
           <div className="tour-details-container">

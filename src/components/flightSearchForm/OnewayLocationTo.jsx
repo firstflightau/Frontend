@@ -73,7 +73,6 @@ const OnewayLocationTo = ({
         const matched = airports?.find(
           (item) => item?.AirportCode === mostRecentCode
         );
-        console.log(airports, mostRecentCode, "mmaattcchhss");
         if (matched) {
           setSelectedLocation(matched);
           setValue(matched.name);

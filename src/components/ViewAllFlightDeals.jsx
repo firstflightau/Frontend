@@ -5,17 +5,20 @@ import "swiper/css";
 import { ArrowRight, MapPin, PlaneLanding, PlaneTakeoff } from "lucide-react";
 import { Dialog } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NcInputNumber from "./NcInputNumber";
 import { searchpy } from "../redux/slices/SearchFlightPayload/searchFlightPayloadSlice";
 import dayjs from "dayjs";
 import axios from "axios";
 import { apiURL } from "../constant/Constant";
+import { Helmet } from "react-helmet-async";
+import SearchResultLoader from "./SearchResultLoader";
 
-const BestFlightDeal = () => {
+const ViewAllFlightDeals = () => {
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(1);
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(0);
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(0);
+  const [loader, setLoader] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [recentSearches, setRecentSearches] = useState(
     JSON.parse(localStorage.getItem("FlightRecentSearchesFrom")) || []
@@ -42,7 +45,9 @@ const BestFlightDeal = () => {
   const fetchDestinations = async () => {
     try {
       const res = await axios.get(`${apiURL.baseURL}/api/topdestination`);
+
       setDestinations(res.data.routes || []);
+      setLoader(false);
     } catch (err) {
       console.error("Error fetching top destinations", err);
     }
@@ -114,13 +119,34 @@ const BestFlightDeal = () => {
     navigate(`/onewaySearchResult?${queryString}`);
   };
 
-  const handleViewAll = () => {
-    navigate(`/city/best-flight-deals`);
-  };
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.bestflightdeal
+  );
+
+  if (loader) {
+    return <SearchResultLoader />;
+  }
 
   return (
     <section className="feature-area feature-area-bg section-padding2">
-      <div className="container">
+      {/* 4. Apply all metadata using Helmet */}
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
+      <div className="container mb-40">
         <div className="row justify-content-center position-relative z-10">
           <div className="col-xl-7 col-lg-7">
             <div className="section-title mx-650 mx-auto text-center">
@@ -131,85 +157,65 @@ const BestFlightDeal = () => {
             </div>
           </div>
         </div>
-        <div className="row g-4 position-relative z-10">
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            loop={true}
-            spaceBetween={15}
-            autoplay={{ delay: 3000 }}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
-            }}
-          >
-            {destinations?.slice(0, 6).map((item, index) => (
-              <SwiperSlide key={index} onClick={(e) => handleSubmit(e, item)}>
-                <div className="max-w-sm mx-auto mb-2 cursor-pointer bg-white rounded-lg shadow-md overflow-hidden">
-                  {/* Image Section */}
-                  <div className="relative">
-                    {item?.image && (
-                      <img
-                        src={item.image}
-                        alt={`${item?.from?.fromCity} to ${item?.to?.toCity}`}
-                        className="w-full h-48 object-cover"
-                      />
-                    )}
+        <div className="grid grid-cols-1 lg:grid-cols-4 g-4 position-relative z-10">
+          {destinations?.map((item, index) => (
+            <div
+              key={index}
+              onClick={(e) => handleSubmit(e, item)}
+              className="max-w-sm mx-auto mb-2 cursor-pointer bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              {/* Image Section */}
+              <div className="relative">
+                {item?.image && (
+                  <img
+                    src={item.image}
+                    alt={`${item?.from?.fromCity} to ${item?.to?.toCity}`}
+                    className="w-full h-48 object-cover"
+                  />
+                )}
+              </div>
+
+              {/* Content Section */}
+              <div className="p-2">
+                {/* Destination Info */}
+                <div className="text-center flex gap-2 mb-3 text-base">
+                  <MapPin size={16} />
+                  <p className="text-gray-700 flex gap-1 text-base">
+                    {item?.from?.fromCity} <ArrowRight size={16} />{" "}
+                    {item?.to?.toCity}
+                  </p>
+                </div>
+
+                {/* Airports */}
+                <div className="space-y-2 mb-3 p-2 rounded-md">
+                  <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
+                    <PlaneTakeoff size={16} />
+                    <p className="text-sm text-gray-700 truncate">
+                      {item?.from?.fromAirport}
+                    </p>
                   </div>
-
-                  {/* Content Section */}
-                  <div className="p-2">
-                    {/* Destination Info */}
-                    <div className="text-center flex gap-2 mb-3 text-base">
-                      <MapPin size={16} />
-                      <p className="text-gray-700 flex gap-1 text-base">
-                        {item?.from?.fromCity} <ArrowRight size={16} />{" "}
-                        {item?.to?.toCity}
-                      </p>
-                    </div>
-
-                    {/* Airports */}
-                    <div className="space-y-2 mb-3 p-2 rounded-md">
-                      <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
-                        <PlaneTakeoff size={16} />
-                        <p className="text-sm text-gray-700 truncate">
-                          {item?.from?.fromAirport}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
-                        <PlaneLanding size={16} />
-                        <p className="text-sm text-gray-700 truncate">
-                          {item?.to?.toAirport}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-end">
-                      <button
-                        onClick={(e) => handleSubmit(e, item)}
-                        className="w-full bg-secondary-6000 px-3 py-1 text-white font-semibold rounded-md"
-                      >
-                        search
-                      </button>
-                    </div>
+                  <div className="flex items-center gap-1 bg-gray-200 py-2 ps-2">
+                    <PlaneLanding size={16} />
+                    <p className="text-sm text-gray-700 truncate">
+                      {item?.to?.toAirport}
+                    </p>
                   </div>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+
+                <div className="flex justify-end">
+                  <button
+                    onClick={(e) => handleSubmit(e, item)}
+                    className="w-full bg-secondary-6000 px-3 py-1 text-white font-semibold rounded-md"
+                  >
+                    search
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Passenger & Flight Class Dialog */}
-
-      <div className="container relative z-1 flex justify-center mt-4">
-        <button
-          onClick={handleViewAll}
-          className="px-4 py-2 font-semibold cursor-pointer bg-secondary-6000 hover:bg-secondary-700 text-white  border rounded-3xl"
-        >
-          View All
-        </button>
-      </div>
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
@@ -304,4 +310,4 @@ const BestFlightDeal = () => {
   );
 };
 
-export default BestFlightDeal;
+export default ViewAllFlightDeals;

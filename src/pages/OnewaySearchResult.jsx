@@ -14,6 +14,7 @@ import { PenLine } from "lucide-react";
 import { clearWorkBench } from "../redux/slices/workbench/workBenchSlice";
 import { clearPassengerData } from "../redux/slices/passenger/passengerSlice";
 import OnewaySearchFormInner from "../components/onewayForm/OnewaySearchFormInner";
+import { Helmet } from "react-helmet-async";
 
 const OnewaySearchResult = () => {
   const dispatch = useDispatch();
@@ -335,10 +336,29 @@ const OnewaySearchResult = () => {
 
     window.scrollTo(0, 0);
   }, [from, to, date, retrunDate, Adult, Child, Infant]);
-  console.log(journeyFlight, jornyFlights, "setJornyFlightsss");
-  console.log(reducerState, "reducer state in the oneway result");
+
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.onewaysearchresult
+  );
+
   return (
     <div>
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
       <FlightBreadcrumb />
       <div className="tour-list-section section-padding2">
         <div className="container">

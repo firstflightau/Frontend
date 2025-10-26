@@ -1,10 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import faq from "../assets/images/gallery/faq.jpg";
+import { Helmet } from "react-helmet-async"; // 1. Import Helmet
+import { useSelector } from "react-redux";
 
 const Faq = () => {
+  const homeData = useSelector((state) => state?.metaData?.allMetaData?.faq);
   return (
     <main>
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
       <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
         <div className="container">
           <h1

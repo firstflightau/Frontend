@@ -1,11 +1,33 @@
 import React from "react";
-
+import { Helmet } from "react-helmet-async"; // 1. Import Helmet
+import { useSelector } from "react-redux";
 import aboutBanner from "../assets/images/gallery/about-banner-three.png";
 import { Link } from "react-router-dom";
 
 const About = () => {
+  // 3. Get the metadata from the Redux store
+  const aboutData = useSelector(
+    (state) => state?.metaData?.allMetaData?.aboutUs
+  );
   return (
-    <main>
+    <div>
+      {/* 4. Apply all metadata using Helmet */}
+      {aboutData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{aboutData?.title}</title>
+          <meta name="description" content={aboutData?.description} />
+          <meta name="keywords" content={aboutData?.keywords} />
+          <link rel="canonical" href={aboutData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={aboutData?.ogTitle} />
+          <meta property="og:description" content={aboutData?.ogDescription} />
+          <meta property="og:image" content={aboutData?.ogImage} />
+          <meta property="og:url" content={aboutData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
       <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
         <div className="container">
           <h1
@@ -102,7 +124,7 @@ const About = () => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

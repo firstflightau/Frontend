@@ -2,18 +2,18 @@ import { PlaneTakeoff } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NcInputNumber from "./NcInputNumber";
 import { searchpy } from "../redux/slices/SearchFlightPayload/searchFlightPayloadSlice";
 import dayjs from "dayjs";
 import { apiURL } from "../constant/Constant";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+import SearchResultLoader from "./SearchResultLoader";
 
-const TopFlightRoute = () => {
+const TopFlightRouteDomestic = () => {
   const [filterType, setFilterType] = useState("DOMESTIC");
-  const filterOptions = ["DOMESTIC", "INTERNATIONAL"];
 
-  // const [selectedFlight, setSelectedFlight] = useState(null);
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(1);
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(0);
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(0);
@@ -25,11 +25,7 @@ const TopFlightRoute = () => {
     const fetchTopROute = async () => {
       try {
         const response = await axios.get(`${apiURL.baseURL}/api/toproute`);
-        // const response = await axios.get(
-        //   `https://ffbackend-sn85.onrender.com/api/toproute`
-        // );
         setData(response?.data?.routes);
-        // console.log(response);
         setLoader(false);
       } catch (error) {
         console.error("Failed to fetch markup data:", error);
@@ -130,43 +126,42 @@ const TopFlightRoute = () => {
     }
   });
 
-  console.log(filteredData);
-
-  const handleViewAll = () => {
-    navigate(`/top-route/${filterType.toLowerCase()}`);
-  };
-
+  // 3. Get the metadata from the Redux store
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.topflightdomestic
+  );
   return (
     <section className="special-area">
-      <div className="container">
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
+
+      <div className="container mb-40">
         <div className="row justify-content-center">
           <div className="col-xl-7 col-lg-7">
             <div className="section-title mx-650 mx-auto text-center">
               <span className="highlights fancy-font font-400">
                 <br />
               </span>
-              <h4 className="title">Top Domestic & International Tour</h4>
+              <h4 className="title">Top Domestic Flight Routes</h4>
             </div>
           </div>
         </div>
         <div className="row">
-          <div className="flex justify-center space-x-4 mb-4">
-            {filterOptions.map((type, index) => (
-              <button
-                key={index}
-                className={`px-4 py-2 font-semibold ${
-                  filterType === type
-                    ? "bg-secondary-6000 hover:bg-secondary-700 text-white  border rounded-3xl "
-                    : " text-black bg-gray-200 border rounded-3xl "
-                }`}
-                onClick={() => setFilterType(type)}
-              >
-                {type.charAt(0) + type.slice(1).toLowerCase()}
-              </button>
-            ))}
-          </div>
-
-          {filteredData?.slice(0, 6).map((item, index) => (
+          {filteredData?.map((item, index) => (
             <div
               key={index}
               // onClick={() => handleCardClick(item)}
@@ -204,15 +199,6 @@ const TopFlightRoute = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="container flex justify-center mt-4">
-        <button
-          onClick={handleViewAll}
-          className="px-4 py-2 font-semibold bg-secondary-6000 hover:bg-secondary-700 text-white  border rounded-3xl"
-        >
-          View All
-        </button>
       </div>
 
       <Dialog
@@ -286,23 +272,6 @@ const TopFlightRoute = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="flex justify-end mt-6 space-x-4">
-                  <button
-                    type="button"
-                    onClick={() => setIsOpen(false)}
-                    className="px-4 py-2 bg-gray-300 rounded"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    type="button"
-                    className="px-4 py-2 bg-blue-600 text-white rounded"
-                  >
-                    Continue
-                  </button>
-                </div>
               </form>
             </div>
           </div>
@@ -312,4 +281,4 @@ const TopFlightRoute = () => {
   );
 };
 
-export default TopFlightRoute;
+export default TopFlightRouteDomestic;

@@ -8,6 +8,7 @@ import ReviewPassenger from "./ReviewPassenger";
 import { handlePayment } from "../../utils/payment";
 import SearchResultLoader from "../../components/SearchResultLoader";
 import { addMarkup } from "../../utils/utils";
+import { Helmet } from "react-helmet-async";
 
 const MainBookingPage = () => {
   const reducerState = useSelector((state) => state);
@@ -68,8 +69,28 @@ const MainBookingPage = () => {
     );
   };
 
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.reviewBooking
+  );
+
   return (
     <main>
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
       <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
         <div className="container">
           <h1

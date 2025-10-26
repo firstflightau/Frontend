@@ -23,7 +23,6 @@ import { useDispatch, useSelector } from "react-redux";
 import MainPassengerPage from "./pages/flightBookingPages/MainPassengerPage";
 import { fetchIpAddress } from "./redux/slices/token/tokenSlice";
 import { useEffect } from "react";
-import dayjs from "dayjs";
 import { fetchAirportList } from "./redux/slices/AirportList/airportSlice";
 import { fetchAirlineList } from "./redux/slices/AirlineList/AirlineListSlice";
 import MainBookingPage from "./pages/flightBookingPages/MainBookingPage";
@@ -50,40 +49,31 @@ import AdminInstantPayment from "./pages/Admin/AdminInstantPayment";
 import AdminFlightLead from "./pages/Admin/AdminFlightLead";
 import AdminTopDestination from "./pages/Admin/AdminDestination/AdminTopDestination";
 import AdminTopDestinationEdit from "./pages/Admin/AdminDestination/AdminTopDestinationEdit";
-
-// Admin Components
-// import AdminLayout from "./pages/Admin/AdminLayout";
-// import AdminDashboard from "./pages/Admin/Dashboard";
-// import AdminUsers from "./pages/Admin/Users";
-// import AdminBookings from "./pages/Admin/Bookings";
-// import AdminTestimonials from "./pages/Admin/Testimonials";
-// import AdminEnquiries from "./pages/Admin/Enquiries";
+import AddMetaData from "./pages/Admin/AdminSeo/AddMetaData";
+import { fetchAllMetaData } from "./redux/slices/metaData/metaDataSlice";
+import TopFlightRouteDomestic from "./components/ViewAllTopFLightDomestic";
+import TopFlightRouteInternational from "./components/ViewAllTopFLightInternational";
+import ViewAllFlightDeals from "./components/ViewAllFlightDeals";
 
 function App() {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const compareDates = () => {
-    let comparisonDate = reducerState?.tpToken?.date;
-    if (!comparisonDate) {
-      return true;
-    }
-    const currentDate = dayjs().format("YYYY-MM-DD");
-    return dayjs(currentDate).isBefore(comparisonDate);
-  };
-
   useEffect(() => {
-    // const tpToken = compareDates();
-    // if (tpToken) {
     dispatch(fetchMarkupAmount());
     dispatch(fetchIpAddress());
     // }
     if (reducerState?.airlineList?.airlines?.length === 0) {
       dispatch(fetchAirportList());
     }
-    if (reducerState?.airportList?.airports?.length === 0)
+    if (reducerState?.airportList?.airports?.length === 0) {
       dispatch(fetchAirlineList());
-    // if (!reducerState?.markupData?.markupAmount?.markup) {
+    }
+    // if (
+    //   !reducerState?.metaData?.isLoading &&
+    //   Object.keys(reducerState?.metaData?.allMetaData).length === 0
+    // ) {
+    dispatch(fetchAllMetaData());
     // }
   }, []);
 
@@ -135,6 +125,18 @@ function App() {
                 />
 
                 <Route path="/bookings" element={<Booking />} />
+                <Route
+                  path="/top-route/domestic"
+                  element={<TopFlightRouteDomestic />}
+                />
+                <Route
+                  path="/top-route/international"
+                  element={<TopFlightRouteInternational />}
+                />
+                <Route
+                  path="/city/best-flight-deals"
+                  element={<ViewAllFlightDeals />}
+                />
               </Routes>
               <Footer />
             </>
@@ -154,6 +156,7 @@ function App() {
             <Route path="topflightadd" element={<AdminTopFlightRoute />} />
             <Route path="topdestinationadd" element={<AdminTopDestination />} />
             <Route path="topflightedit" element={<AdminTopFlightEdit />} />
+            <Route path="add/metadata" element={<AddMetaData />} />
             <Route
               path="topdestinationedit"
               element={<AdminTopDestinationEdit />}

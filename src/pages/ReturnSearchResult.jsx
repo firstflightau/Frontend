@@ -9,6 +9,7 @@ import { setSelectedFlight } from "../redux/slices/SelectedFlight/selectedFlight
 import { PenLine } from "lucide-react";
 import RoundTripSearchResults from "./RoundTripSearchResults";
 import RoundTripFilterBox from "./RoundTripFilterBox";
+import { Helmet } from "react-helmet-async";
 
 const ReturnSearchResult = () => {
   const dispatch = useDispatch();
@@ -152,8 +153,28 @@ const ReturnSearchResult = () => {
     if (newWindow) newWindow.focus();
   };
 
+  const homeData = useSelector(
+    (state) => state?.metaData?.allMetaData?.returnsearchresult
+  );
+
   return (
     <div>
+      {homeData && (
+        <Helmet>
+          {/* Main SEO Tags */}
+          <title>{homeData?.title}</title>
+          <meta name="description" content={homeData?.description} />
+          <meta name="keywords" content={homeData?.keywords} />
+          <link rel="canonical" href={homeData?.canonical} />
+
+          {/* Open Graph (Social Media) Tags */}
+          <meta property="og:title" content={homeData?.ogTitle} />
+          <meta property="og:description" content={homeData?.ogDescription} />
+          <meta property="og:image" content={homeData?.ogImage} />
+          <meta property="og:url" content={homeData?.canonical} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+      )}
       <FlightBreadcrumbReturn />
       <div className="tour-list-section pt-[40px]">
         <div className="container">

@@ -27,6 +27,7 @@ import addPassengerReducer from "./slices/passenger/addTravellerSlice";
 import addPNRReducer from "./slices/pnr/generatePNRSlice";
 import markupReducer from "./slices/markup/markupSlice";
 import sidebarReducer from "./slices/sidebarToggle/sidebarSlice";
+import metaDataReducer from "./slices/metaData/metaDataSlice";
 // Load persisted state
 import { saveToLocalStorage, loadFromLocalStorage } from "./localStorageHelper";
 const persistedState = loadFromLocalStorage();
@@ -48,6 +49,7 @@ export const store = configureStore({
     pnr: addPNRReducer,
     markupData: markupReducer,
     sidebar: sidebarReducer,
+    metaData: metaDataReducer,
   },
   preloadedState: persistedState, // Use the persisted state
 });

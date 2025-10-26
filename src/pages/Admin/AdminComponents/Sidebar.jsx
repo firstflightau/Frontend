@@ -89,6 +89,16 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
         },
       ],
     },
+    {
+      name: "Seo",
+      icon: <Plane className="w-6 h-6" />,
+      subItems: [
+        {
+          path: "/admin/add/metadata",
+          name: "Add MetaData",
+        },
+      ],
+    },
   ];
 
   return (
