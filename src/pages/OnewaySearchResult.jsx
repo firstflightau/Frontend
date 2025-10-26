@@ -348,7 +348,7 @@ const OnewaySearchResult = () => {
         <Helmet>
           {/* Main SEO Tags */}
           <title>
-            {`flight for ${from} to ${to}, flight for ${fromName} to ${toName}`}
+            {`flight for ${from} to ${to}, flight for ${fromName?.toLowerCase()} to ${toName?.toLowerCase()}`}
           </title>
           <meta name="description" content={homeData?.description} />
           <meta name="keywords" content={homeData?.keywords} />
