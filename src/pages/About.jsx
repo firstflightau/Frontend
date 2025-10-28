@@ -15,7 +15,8 @@ const About = () => {
       {/* {aboutData && ( */}
       <Helmet>
         {/* Main SEO Tags */}
-        <title>{aboutData?.title}</title>
+        {/* <title>{aboutData?.title}</title> */}
+        <title>Testing</title>
         {/* <meta name="description" content={aboutData?.description} /> */}
         <meta name="description" content="about the first flight website" />
         <meta name="keywords" content={aboutData?.keywords} />
