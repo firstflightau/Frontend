@@ -7,6 +7,9 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
+  build: {
+    outDir: "dist",
+  },
 });
 
 // import { defineConfig } from "vite";

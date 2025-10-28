@@ -119,11 +119,11 @@ const TopFlightRouteInternational = () => {
 
   const filteredData = data?.filter((item) => {
     // Since tripData is an array, check the first item's type (or loop if needed)
-    if (filterType === "DOMESTIC") {
-      return item?.tripData?.[0]?.type === "domestic"; // Check first element
-    } else {
-      return item?.tripData?.[0]?.type === "international";
-    }
+    // if (filterType === "DOMESTIC") {
+    //   return item?.tripData?.[0]?.type === "domestic"; // Check first element
+    // } else {
+    return item?.tripData?.[0]?.type === "international";
+    // }
   });
 
   // 3. Get the metadata from the Redux store
