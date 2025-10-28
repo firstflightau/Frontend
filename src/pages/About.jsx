@@ -12,22 +12,23 @@ const About = () => {
   return (
     <div>
       {/* 4. Apply all metadata using Helmet */}
-      {aboutData && (
-        <Helmet>
-          {/* Main SEO Tags */}
-          <title>{aboutData?.title}</title>
-          <meta name="description" content={aboutData?.description} />
-          <meta name="keywords" content={aboutData?.keywords} />
-          <link rel="canonical" href={aboutData?.canonical} />
+      {/* {aboutData && ( */}
+      <Helmet>
+        {/* Main SEO Tags */}
+        <title>{aboutData?.title}</title>
+        {/* <meta name="description" content={aboutData?.description} /> */}
+        <meta name="description" content="about the first flight website" />
+        <meta name="keywords" content={aboutData?.keywords} />
+        <link rel="canonical" href={aboutData?.canonical} />
 
-          {/* Open Graph (Social Media) Tags */}
-          <meta property="og:title" content={aboutData?.ogTitle} />
-          <meta property="og:description" content={aboutData?.ogDescription} />
-          <meta property="og:image" content={aboutData?.ogImage} />
-          <meta property="og:url" content={aboutData?.canonical} />
-          <meta property="og:type" content="website" />
-        </Helmet>
-      )}
+        {/* Open Graph (Social Media) Tags */}
+        <meta property="og:title" content={aboutData?.ogTitle} />
+        <meta property="og:description" content={aboutData?.ogDescription} />
+        <meta property="og:image" content={aboutData?.ogImage} />
+        <meta property="og:url" content={aboutData?.canonical} />
+        <meta property="og:type" content="website" />
+      </Helmet>
+      {/* )} */}
       <section className="breadcrumbs-area breadcrumb-bg bg-tertiary-6000 !py-5 md:!py-10">
         <div className="container">
           <h1
