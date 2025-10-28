@@ -52,7 +52,7 @@
   },
  "reactSnap": {
   "inlineCss": true,
-  "include": ["/", "/about", "/contact"],
+  "include": ["/", "/about", "/contact", "/terms", "/services", "/faq", "/testimonials", "/privacy", "/returnSearchResult", "/onewaySearchResult"],
   "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
   "source": "dist",
   "destination": "dist"
