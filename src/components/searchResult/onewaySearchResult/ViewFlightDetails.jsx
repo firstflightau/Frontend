@@ -20,6 +20,7 @@ import {
   standardizeFlightDetailResponse,
   standardizeFlightFareResponse,
   standardizeFlightBaggageResponse,
+  addMarkup,
 } from "../../../utils/utils";
 // const Tabs = ["Flight Information", "Fare Details", "Baggage", "Cancellation"];
 const Tabs = ["Flight Information", "Fare Details", "Baggage"];
@@ -143,8 +144,28 @@ const FareDetails = ({ item }) => {
     FlightFare?.ADT?.Basic + FlightFare?.CHD?.Basic + FlightFare?.INF?.Basic;
   const totalTax =
     FlightFare?.ADT?.Taxes + FlightFare?.CHD?.Taxes + FlightFare?.INF?.Taxes;
-  const grandTotal =
+  const grand =
     FlightFare?.ADT?.Total + FlightFare?.CHD?.Total + FlightFare?.INF?.Total;
+
+  const onwardDestination =
+    item?.flights?.[item?.flights?.length - 1]?.Arrival?.location;
+  const onwardMarkup = addMarkup(grand, "onward", onwardDestination);
+  const grandTotal = Number(grand) + Number(onwardMarkup);
+
+  // adult price breakdown
+  const adultPrice = FlightFare?.ADT?.Total;
+  const adultMarkup = addMarkup(adultPrice, "onward", onwardDestination);
+  const adultTotal = Number(adultPrice) + Number(adultMarkup);
+  // child price breakdown
+  const childPrice = FlightFare?.CHD?.Total;
+  const childMarkup = addMarkup(childPrice, "onward", onwardDestination);
+  const childTotal = Number(childPrice) + Number(childMarkup);
+  // child price breakdown
+  const infantPrice = FlightFare?.INF?.Total;
+  const infantMarkup = addMarkup(infantPrice, "onward", onwardDestination);
+  const infantTotal = Number(infantPrice) + Number(infantMarkup);
+
+  console.log(FlightFare, "flight fare", onwardMarkup);
   return (
     <div className="w-full mx-auto py-2 px-4  mt-2 rounded-lg border ">
       <div className=" border-b ">
@@ -152,31 +173,27 @@ const FareDetails = ({ item }) => {
           <div className="flex justify-between text-sm mb-1">
             <span>{adult} x Adult</span>
             <span className="font-medium">
-              $ {(Number(FlightFare?.ADT?.Basic) + Number(totalTax)).toFixed(2)}{" "}
-              AUD
+              $ {Number(adultTotal).toFixed(2)} AUD
+              {/* $ {Number(FlightFare?.ADT?.Total).toFixed(2)} AUD */}
             </span>
           </div>
         )}
         {0 < FlightFare?.CHD?.Basic && (
           <div className="flex justify-between text-sm mb-1">
             <span>{child} x Child</span>
-            <span className="font-medium">$ {FlightFare?.CHD?.Basic} AUD</span>
+            <span className="font-medium">
+              $ {childTotal.toFixed(2)} AUD
+              {/* $ {FlightFare?.CHD?.Total.toFixed(2)} AUD */}
+            </span>
           </div>
         )}
         {0 < FlightFare?.INF?.Basic && (
           <div className="flex justify-between text-sm mb-1">
             <span>{infant} x Infant</span>
-            <span className="font-medium">$ {FlightFare?.INF?.Basic} AUD</span>
+            <span className="font-medium">$ {infantTotal.toFixed(2)} AUD</span>
+            {/* <span className="font-medium">$ {FlightFare?.INF?.Basic} AUD</span> */}
           </div>
         )}
-        {/* <div className="flex justify-between text-sm mb-1">
-          <span>Total (Base Fare)</span>
-          <span className="font-medium">$ {totalBase?.toFixed(0)} AUD</span>
-        </div> */}
-        {/* <div className="flex justify-between text-sm mb-1">
-          <span>Fee & Surcharges</span>
-          <span className="font-medium">+ $ {totalTax?.toFixed(0)} AUD</span>
-        </div> */}
       </div>
       <div className="flex justify-between text-base font-semibold mt-2">
         <span>Total Price</span>

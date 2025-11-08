@@ -20,14 +20,10 @@ const FlightResultCard = ({
   selectedIndex,
 }) => {
   const type = isOnward ? "onward" : "return";
-  // console.log(
-  //   item?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice,
-  //   "itemitemitemitemitem"
-  // );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const brandAttribute = item?.productsoption?.[0]?.Brand?.BrandAttribute;
-  // console.log(brandAttribute, "brand attributes");
 
   const handleNavigate = (item) => {
     dispatch(
