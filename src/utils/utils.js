@@ -3,36 +3,46 @@ import duration from "dayjs/plugin/duration";
 import store from "../redux/store";
 
 dayjs.extend(duration);
-export const findCheapestFlight = (a, b) => {
-  // console.log(
-  //   a?.productsoption?.[0]?.Price?.TotalPrice,
-  //   b?.productsoption?.[0]?.Price?.TotalPrice,
-  //   "findCheapestFlight"
-  // );
-  return (
-    // a?.productsoption?.[0]?.Price?.TotalPrice -
-    // b?.productsoption?.[0]?.Price?.TotalPrice
-    a?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice -
-    b?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice
+
+// --- NEW HELPER FUNCTION ---
+// Gets the final marked-up price for a single flight
+const getMarkedUpPrice = (flight, addMarkup) => {
+  if (!flight) return 0;
+
+  const basePrice = Number(
+    flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice || 0
   );
+
+  // If addMarkup function isn't provided, return the base price
+  if (typeof addMarkup !== "function") {
+    return basePrice;
+  }
+
+  const onwardDestination =
+    flight?.flights?.[flight?.flights?.length - 1]?.Arrival?.location;
+
+  // Assuming "oneway" as this is the oneway flow
+  const markup = addMarkup(basePrice, "oneway", onwardDestination);
+  const grandTotal = Number(basePrice) + Number(markup);
+
+  return grandTotal;
 };
+
+// --- MODIFIED FUNCTION ---
+export const findCheapestFlight = (a, b, addMarkup) => {
+  // Use the helper function to compare marked-up prices
+  return getMarkedUpPrice(a, addMarkup) - getMarkedUpPrice(b, addMarkup);
+};
+
 export const findStopsFlight = (a, b) => {
   return a?.flights?.length - b?.flights?.length;
 };
+
 export const findFastestFlight = (a, b) => {
-  // let durations1 = a?.flights?.reduce((sum, dur) => {
-  //   // console.log(dur, dur?.duration, "|djhdsbf");
-  //   return sum.add(dayjs.duration(dur?.duration));
-  // }, dayjs.duration(0));
   let durations1 = calculateFlightDuration(
     a.flights?.[0]?.Departure,
     a.flights?.[a.flights?.length - 1]?.Arrival
   );
-  // let durations11 = `PT${durations1.hours()}H${durations1.minutes()}M`;
-
-  // let durations2 = b?.flights?.reduce((sum, dur) => {
-  //   return sum.add(dayjs.duration(dur?.duration));
-  // }, dayjs.duration(0));
   let durations2 = calculateFlightDuration(
     b?.flights?.[0]?.Departure,
     b?.flights?.[b?.flights?.length - 1]?.Arrival
@@ -47,36 +57,21 @@ export const findFastestFlight = (a, b) => {
   });
   const totalMinutesA = timeDurationA.asMinutes();
 
-  // Get the total minutes
   const totalMinutesB = timeDurationB.asMinutes();
-  // let durations22 = `PT${durations2.hours()}H${durations1.minutes()}M`;
-  // const durationA = dayjs.duration(durations11).asMinutes();
-  // const durationB = dayjs.duration(durations22).asMinutes();
-  //   console.log(
-  //     durations1,
-  //     durations11,
-  //     durations2,
-  //     durations22,
-  //     durationA,
-  //     durationB,
-  //     "durationAB"
-  //   );
-  // return durationA - durationB;
-  // console.log("durationsss", totalMinutesA, totalMinutesB);
   return totalMinutesA - totalMinutesB;
 };
-export const cheapesBestFastest = ({ sortedData, key }) => {
-  // console.log("keydddd", key, sortedData);
+
+// --- MODIFIED FUNCTION ---
+export const cheapesBestFastest = ({ sortedData, key, addMarkup }) => {
   if (!sortedData || !Array.isArray(sortedData)) return [];
 
-  // Clone the array to avoid mutating the original reference
   const sortedArray = [...sortedData];
 
   sortedArray.sort((a, b) => {
     switch (key) {
       case "Cheapest":
         // console.log("price");
-        return findCheapestFlight(a, b);
+        return findCheapestFlight(a, b, addMarkup); // Pass addMarkup
       case "Fastest":
         // console.log("price");
 
@@ -87,23 +82,31 @@ export const cheapesBestFastest = ({ sortedData, key }) => {
         return (
           findStopsFlight(a, b) ||
           findFastestFlight(a, b) ||
-          findCheapestFlight(a, b)
+          findCheapestFlight(a, b, addMarkup) // Pass addMarkup
         );
     }
   });
   // console.log("keyddddAFTER", key, sortedData);
   return sortedArray;
 };
-export const cheapesBestFastestPrice = ({ sortedData }) => {
+
+// --- MODIFIED FUNCTION ---
+export const cheapesBestFastestPrice = ({ sortedData, addMarkup }) => {
   // Helper function to get the price for a given key
   const getPrice = (key) => {
     let newSorted = [...sortedData];
-    // const result = cheapesBestFastest({ sortedData: newSorted, key })?.[0]
-    //   ?.productsoption?.[0]?.Price?.TotalPrice;
-    const result = cheapesBestFastest({ sortedData: newSorted, key })?.[0]
-      ?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
 
-    return result || 0; // Default to 0 if the result is undefined or null
+    // Get the top-sorted flight for the given key (e.g., the "Cheapest" flight)
+    const resultFlight = cheapesBestFastest({
+      sortedData: newSorted,
+      key,
+      addMarkup, // Pass addMarkup to the sorting function
+    })?.[0];
+
+    // Get the final marked-up price of that specific flight
+    const markedUpPrice = getMarkedUpPrice(resultFlight, addMarkup);
+
+    return markedUpPrice || 0; // Default to 0 if the result is undefined or null
   };
 
   // Calculate prices
@@ -118,6 +121,7 @@ export const cheapesBestFastestPrice = ({ sortedData }) => {
     bestPrice,
   };
 };
+
 export function calculateFlightDuration(Departure, Arrival) {
   const departureDateTime = dayjs(`${Departure?.date} ${Departure?.time}`);
   const arrivalDateTime = dayjs(`${Arrival?.date} ${Arrival?.time}`);
@@ -225,24 +229,9 @@ export const standardizeFlightBaggageResponse = (BaggageAllowance) => {
     let passengerTypeCodes = item.passengerTypeCodes[0];
     let baggageType = item.baggageType;
     let baggageItem;
-    // console.log(item?.BaggageItem?.[0], "FirstCheckedBag");
-    // if (baggageType == "FirstCheckedBag") {
-    //     baggageItem = `${item.BaggageItem[0]?.Measurement?.[0]?.value}  ${item.BaggageItem[0]?.Measurement?.[0]?.unit}`;
 
-    // }
-    // else if (baggageType == "CarryOn") {
-    //     if (item.BaggageItem[0]?.Measurement) {
-
-    //         baggageItem = `${item.BaggageItem[0]?.Measurement?.[0]?.value}  ${item.BaggageItem[0]?.Measurement?.[0]?.unit}`;
-    //     }
-    //     else {
-
-    //         baggageItem = item?.BaggageItem[0]?.Text || "Not applicable"
-    //     }
-
-    // }
     if (item.BaggageItem[0]?.Measurement) {
-      baggageItem = `${item.BaggageItem[0]?.Measurement?.[0]?.value}  ${item.BaggageItem[0]?.Measurement?.[0]?.unit}`;
+      baggageItem = `${item.BaggageItem[0]?.Measurement?.[0]?.value}  ${item.BaggageItem[0]?.Measurement?.[0]?.unit}`;
     } else if (item?.BaggageItem[0]?.Text) {
       baggageItem = item?.BaggageItem[0]?.Text || "Not applicable";
     } else {
@@ -265,25 +254,14 @@ export const standardizeFlightBaggageResponse = (BaggageAllowance) => {
   return baggage;
 };
 
-// export function addMarkup(value, percentage) {
-//   const reducerState = store.getState();
-//   let markup = reducerState?.markupData?.markupAmount?.markup;
-
-//   return value * (markup / 100);
-// }
-
 export function addMarkup(value, tripType = "onward", destinationCode = "") {
   const reducerState = store.getState();
   const markupData = reducerState?.markupData?.markupAmount;
-  // console.log(markupData, "markupData");
 
   if (!markupData) return 0;
 
   let markupPercentage = 0;
 
-  // console.log(value, tripType, destinationCode, "addMarkup");
-
-  // ✅ Check if destination-specific markup exists
   if (destinationCode && Array.isArray(markupData.destinationMarkups)) {
     const destMarkup = markupData.destinationMarkups.find(
       (dest) => dest.code.toUpperCase() === destinationCode.toUpperCase()

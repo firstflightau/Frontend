@@ -1,4 +1,3 @@
-// ReturnSearchResult.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFlightReturnData } from "../redux/slices/flightSearchResult/flightSearchResultSlice";
@@ -10,13 +9,16 @@ import { PenLine } from "lucide-react";
 import RoundTripSearchResults from "./RoundTripSearchResults";
 import RoundTripFilterBox from "./RoundTripFilterBox";
 import { Helmet } from "react-helmet-async";
+import { addMarkup } from "../utils/utils";
+
+// 1. IMPORT addMarkup - Make sure this path is correct for your project!
+// import { addMarkup } from "../utils/markup"; // <-- UPDATE THIS PATH
 
 const ReturnSearchResult = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(reducerState, "reducer state");
   const queryParams = new URLSearchParams(location.search);
   const from = queryParams.get("from");
   const to = queryParams.get("to");
@@ -131,14 +133,27 @@ const ReturnSearchResult = () => {
       });
     }
 
-    // Filter by price
+    // 2. Filter by price (using markup)
     filtered = filtered.filter((combo) => {
       const price = Number(
         combo.outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice ||
           0
       );
 
-      return price >= filters.priceRange[0] && price <= filters.priceRange[1];
+      // --- START MARKUP LOGIC ---
+      const onwardDestination =
+        combo.outbound?.flights?.[combo.outbound?.flights?.length - 1]?.Arrival
+          ?.location;
+
+      // Use the imported addMarkup function
+      const markup = addMarkup(price, "return", onwardDestination);
+      const grandTotal = Number(price) + Number(markup);
+      // --- END MARKUP LOGIC ---
+
+      return (
+        grandTotal >= filters.priceRange[0] &&
+        grandTotal <= filters.priceRange[1]
+      ); // Filter by grandTotal
     });
 
     setFilteredCombinations(filtered);
@@ -184,9 +199,11 @@ const ReturnSearchResult = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
+              {/* 3. Pass addMarkup as a prop */}
               <RoundTripFilterBox
                 combinations={combinations}
                 onFilterChange={handleFilterChange}
+                addMarkup={addMarkup}
               />
             </div>
             <div className="col-lg-9">
@@ -211,6 +228,7 @@ const ReturnSearchResult = () => {
                 <RoundTripSearchResults
                   combinations={filteredCombinations}
                   onSelect={handleSelect}
+                  addMarkup={addMarkup}
                 />
               )}
             </div>

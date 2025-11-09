@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { findAirlineByCode } from "../redux/slices/feature2/utils";
 
-const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
+// 1. Accept `addMarkup` as a prop
+const RoundTripFilterBox = ({ combinations, onFilterChange, addMarkup }) => {
   const [filters, setFilters] = useState({
     stops: [],
     airlines: [],
@@ -32,7 +33,20 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
             ?.TotalPrice || 0
         );
 
-        if (price > maxPriceValue) maxPriceValue = price;
+        // --- START MARKUP LOGIC ---
+        const onwardDestination =
+          combo.outbound?.flights?.[combo.outbound?.flights?.length - 1]
+            ?.Arrival?.location;
+
+        // 2. Calculate markup and grandTotal
+        //    (Check if addMarkup prop was passed)
+        const markup = addMarkup
+          ? addMarkup(price, "return", onwardDestination)
+          : 0;
+        const grandTotal = Number(price) + Number(markup);
+        // --- END MARKUP LOGIC ---
+
+        if (grandTotal > maxPriceValue) maxPriceValue = grandTotal; // Use grandTotal for max price
 
         if (combo.outbound?.flights?.[0]?.carrier) {
           airlinesSet.add(combo.outbound.flights[0].carrier);
@@ -54,7 +68,7 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
         priceRange: [0, roundedMaxPrice],
       }));
     }
-  }, [combinations]);
+  }, [combinations, addMarkup]); // Add addMarkup to dependency array
 
   // Calculate counts for stops and airlines
   const calculateCounts = () => {
@@ -73,6 +87,18 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
           0
       );
 
+      // --- START MARKUP LOGIC ---
+      const onwardDestination =
+        combo.outbound?.flights?.[combo.outbound?.flights?.length - 1]?.Arrival
+          ?.location;
+
+      // 3. Calculate markup and grandTotal for airline prices
+      const markup = addMarkup
+        ? addMarkup(price, "return", onwardDestination)
+        : 0;
+      const grandTotal = Number(price) + Number(markup);
+      // --- END MARKUP LOGIC ---
+
       const outboundStops = combo.outbound?.flights?.length - 1 || 0;
       const inboundStops = combo.inbound?.flights?.length - 1 || 0;
       const totalStops = Math.max(outboundStops, inboundStops);
@@ -86,15 +112,17 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
 
       if (outboundAirline) {
         airlineCounts[outboundAirline]++;
-        if (price < airlinePrices[outboundAirline]) {
-          airlinePrices[outboundAirline] = price;
+        if (grandTotal < airlinePrices[outboundAirline]) {
+          // Use grandTotal
+          airlinePrices[outboundAirline] = grandTotal; // Use grandTotal
         }
       }
 
       if (inboundAirline && inboundAirline !== outboundAirline) {
         airlineCounts[inboundAirline]++;
-        if (price < airlinePrices[inboundAirline]) {
-          airlinePrices[inboundAirline] = price;
+        if (grandTotal < airlinePrices[inboundAirline]) {
+          // Use grandTotal
+          airlinePrices[inboundAirline] = grandTotal; // Use grandTotal
         }
       }
     });
@@ -102,7 +130,11 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
     return { stopsCount, airlineCounts, airlinePrices };
   };
 
-  const { stopsCount, airlineCounts, airlinePrices } = calculateCounts();
+  // We re-run calculateCounts if combinations or addMarkup changes
+  const { stopsCount, airlineCounts, airlinePrices } = React.useMemo(
+    () => calculateCounts(),
+    [combinations, allAirlines, addMarkup] // Add addMarkup here
+  );
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -444,6 +476,7 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
                       </span>
                     </div>
                   </div>
+                  {/* This span now shows the marked-up price from airlinePrices */}
                   <span className="text-sm text-gray-600">
                     $
                     {airlineCounts[airline] > 0
@@ -458,6 +491,8 @@ const RoundTripFilterBox = ({ combinations, onFilterChange }) => {
       </div>
 
       {/* Price Filter */}
+      {/* This section works as-is because `maxPrice` and `filters.priceRange`
+          are now calculated with the markup included. */}
       <div>
         <div
           className="flex justify-between items-center cursor-pointer"

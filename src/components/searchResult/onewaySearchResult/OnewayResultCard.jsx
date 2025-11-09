@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import airIndia from "../../../assets/images/logo/AI.png";
 import FlightResultCard from "./FlightResultCard";
-// import { dummyFlightdata } from "../../../utils/dummyflightResponse";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import {
@@ -16,12 +13,7 @@ dayjs.extend(duration);
 
 const OnewayResultCard = ({
   data,
-  item,
-  handleSelectedChange,
-  key,
-  index,
-  isOnward,
-  selectedIndex,
+  addMarkup, // 1. Accept addMarkup prop
 }) => {
   const [activeBox, setActiveBox] = useState(null);
   const [sortedData, setSortedData] = useState(data);
@@ -36,20 +28,23 @@ const OnewayResultCard = ({
     setSelectedType(key);
     setActiveBox(key);
 
-    const filterAirline = cheapesBestFastest({ sortedData, key });
+    // 2. Pass addMarkup to the sorting function
+    const filterAirline = cheapesBestFastest({ sortedData, key, addMarkup });
     setSortedData(filterAirline);
   };
+
   // 🔹 Sync sortedData with updated data from props
   useEffect(() => {
     if (data) {
-      // console.log("Sorting data", data);
-      const filterPrice = cheapesBestFastestPrice({ sortedData: data });
+      // 3. Pass addMarkup to the price tab calculation function
+      const filterPrice = cheapesBestFastestPrice({
+        sortedData: data,
+        addMarkup,
+      });
       setPriceTab(filterPrice);
-      // console.log(filterPrice, "filterPriceTAB");
     }
     setSortedData(data);
-  }, [data]);
-  // console.log(data, "dataa");
+  }, [data, addMarkup]); // 4. Add addMarkup to dependency array
 
   const handleClickBurger = (e) => {
     e.stopPropagation();
@@ -84,8 +79,8 @@ const OnewayResultCard = ({
             </div>
           </div>
         </div>
-        <div className="flex  flex-grow gap-2">
-          {/* Best Box */}
+        <div className="flex flex-grow gap-2">
+          {/* Best Box - Now shows marked-up price */}
           <div
             className={`flex-grow cursor-pointer px-2 md:px-4 py-2 rounded-lg text-center ${
               activeBox === "Best"
@@ -99,9 +94,9 @@ const OnewayResultCard = ({
             </span>
           </div>
 
-          {/* Cheapest Box */}
+          {/* Cheapest Box - Now shows marked-up price */}
           <div
-            className={`flex-grow cursor-pointer px-2 md:px-4  py-2 rounded-lg text-center ${
+            className={`flex-grow cursor-pointer px-2 md:px-4 py-2 rounded-lg text-center ${
               activeBox === "Cheapest"
                 ? "bg-primary-6000 text-white"
                 : "bg-gray-200 text-black"
@@ -113,7 +108,7 @@ const OnewayResultCard = ({
             </span>
           </div>
 
-          {/* Fastest Box */}
+          {/* Fastest Box - Now shows marked-up price */}
           <div
             className={`flex-grow cursor-pointer px-2 md:px-4 py-2 rounded-lg text-center ${
               activeBox === "Fastest"
@@ -132,7 +127,12 @@ const OnewayResultCard = ({
         {sortedData &&
           sortedData?.map((item, index) => {
             return (
-              <FlightResultCard key={`FlightResultCard-${index}`} item={item} />
+              // 5. Pass addMarkup down to the individual card
+              <FlightResultCard
+                key={`FlightResultCard-${index}`}
+                item={item}
+                addMarkup={addMarkup}
+              />
             );
           })}
       </div>

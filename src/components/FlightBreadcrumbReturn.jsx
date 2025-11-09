@@ -1,7 +1,4 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { findAirportByCode } from "../redux/slices/feature2/utils";
-import OnewaySearchFormInner from "./onewayForm/OnewaySearchFormInner";
 import ReturnSearchFormInner from "./ReturnForm/ReturnSearchFormInner";
 
 const FlightBreadcrumbReturn = () => {
@@ -12,15 +9,9 @@ const FlightBreadcrumbReturn = () => {
   let from = queryParams.get("from");
   let to = queryParams.get("to");
 
-  let date = queryParams.get("date");
-  let retrunDate = queryParams.get("retrunDate");
   let Adult = queryParams.get("Adult");
   let Child = queryParams.get("Child");
   let Infant = queryParams.get("Infant");
-  let ClassName = queryParams.get("class");
-  let FlightCabinClass = queryParams.get("FlightCabinClass");
-  let travellers = Number(Adult) + Number(Child) + Number(Infant);
-  // console.log(JSON.parse(ClassName), "FlightCabinClass");
   return (
     <>
       <section className="breadcrumbs-area breadcrumb-bg">

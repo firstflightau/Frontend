@@ -1,9 +1,9 @@
-// components/RoundTripSearchResults.js
 import React, { useState, useEffect } from "react";
 import RoundTripResultCard from "./RoundTripResultCard";
 import { sortCombinations, getPriceTabs } from "../utils/sortingUtilities";
 
-const RoundTripSearchResults = ({ combinations, onSelect }) => {
+// 1. Accept `addMarkup` as a prop
+const RoundTripSearchResults = ({ combinations, onSelect, addMarkup }) => {
   const [sortedCombinations, setSortedCombinations] = useState(
     combinations || []
   );
@@ -17,18 +17,20 @@ const RoundTripSearchResults = ({ combinations, onSelect }) => {
   // Initialize with default sorting
   useEffect(() => {
     if (combinations && combinations.length > 0) {
-      const sorted = sortCombinations(combinations, "Cheapest");
+      // 2. Pass `addMarkup` to the utility functions
+      const sorted = sortCombinations(combinations, "Cheapest", addMarkup);
       setSortedCombinations(sorted);
 
-      const prices = getPriceTabs(combinations);
+      const prices = getPriceTabs(combinations, addMarkup);
       setPriceTabs(prices);
     }
-  }, [combinations]);
+  }, [combinations, addMarkup]); // 3. Add `addMarkup` to dependency array
 
   // Handle sort change
   const handleSortChange = (sortType) => {
     setActiveSort(sortType);
-    const sorted = sortCombinations(combinations, sortType);
+    // 4. Pass `addMarkup` here as well
+    const sorted = sortCombinations(combinations, sortType, addMarkup);
     setSortedCombinations(sorted);
   };
 
@@ -92,7 +94,13 @@ const RoundTripSearchResults = ({ combinations, onSelect }) => {
       {/* Flight Results */}
       <div className="space-y-4">
         {sortedCombinations.map((combo, idx) => (
-          <RoundTripResultCard key={idx} combo={combo} onSelect={onSelect} />
+          // 5. Pass `addMarkup` to the card so it can show the marked-up price
+          <RoundTripResultCard
+            key={idx}
+            combo={combo}
+            onSelect={onSelect}
+            addMarkup={addMarkup}
+          />
         ))}
       </div>
     </div>

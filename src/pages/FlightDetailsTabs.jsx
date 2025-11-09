@@ -7,6 +7,7 @@ import {
   standardizeFlightDetailResponse,
   standardizeFlightFareResponse,
   standardizeFlightBaggageResponse,
+  addMarkup,
 } from "../utils/utils";
 import { Clock, MapPin, Calendar } from "lucide-react";
 
@@ -172,13 +173,12 @@ const FlightDetails = ({ outbound, inbound }) => {
 
 // Fare Details Component
 const FareDetails = ({ outbound, inbound }) => {
-  // This would use your fare calculation logic
-  const totalPrice = Number(
-    outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice || 0
-  );
-
-  const baseFare = totalPrice * 0.7; // Example calculation
-  const taxesFees = totalPrice * 0.3; // Example calculation
+  const onwardPrice =
+    outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+  const onwardDestination =
+    outbound?.flights?.[outbound?.flights?.length - 1]?.Arrival?.location; // for example: "DXB"
+  const onwardMarkup = addMarkup(onwardPrice, "return", onwardDestination);
+  const grandTotal = Number(onwardPrice) + Number(onwardMarkup);
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4">
@@ -187,17 +187,12 @@ const FareDetails = ({ outbound, inbound }) => {
       <div className="space-y-3">
         <div className="flex justify-between">
           <span>Base Fare</span>
-          <span>$ {totalPrice.toFixed(2)} AUD</span>
+          <span>$ {grandTotal.toFixed(2)} AUD</span>
         </div>
-
-        {/* <div className="flex justify-between">
-          <span>Taxes & Fees</span>
-          <span>A$ {taxesFees.toFixed(2)}</span>
-        </div> */}
 
         <div className="flex justify-between border-t border-gray-200 pt-3 font-semibold">
           <span>Total</span>
-          <span className="text-blue-600">$ {totalPrice.toFixed(2)} AUD</span>
+          <span className="text-blue-600">$ {grandTotal.toFixed(2)} AUD</span>
         </div>
       </div>
 

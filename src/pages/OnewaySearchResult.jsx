@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import FlightBreadcrumb from "../components/FlightBreadcrumb";
-// import OnewayFilterBox from "../components/searchResult/onewaySearchResult/onewayFilterBox";
 import OnewayResultCard from "../components/searchResult/onewaySearchResult/OnewayResultCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFlightData } from "../redux/slices/flightSearchResult/flightSearchResultSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import FlightFilterScalationBig from "../components/searchResult/onewaySearchResult/FlightFilterScalationBig";
 import FlightFilterScalationRight from "../components/searchResult/onewaySearchResult/FlightFilterScalationRight";
 import SearchResultLoader from "../components/SearchResultLoader";
@@ -13,13 +11,14 @@ import OnewayFilterBox from "../components/searchResult/onewaySearchResult/Onewa
 import { PenLine } from "lucide-react";
 import { clearWorkBench } from "../redux/slices/workbench/workBenchSlice";
 import { clearPassengerData } from "../redux/slices/passenger/passengerSlice";
-import OnewaySearchFormInner from "../components/onewayForm/OnewaySearchFormInner";
 import { Helmet } from "react-helmet-async";
+import { addMarkup } from "../utils/utils";
+
+// 1. IMPORT addMarkup - Make sure this path is correct for your project!
 
 const OnewaySearchResult = () => {
   const dispatch = useDispatch();
   const reducerState = useSelector((state) => state);
-  // console.log(reducerState, "tokennn");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
@@ -32,22 +31,13 @@ const OnewaySearchResult = () => {
   let Adult = queryParams.get("Adult");
   let Child = queryParams.get("Child");
   let Infant = queryParams.get("Infant");
-  //  let class= ,
   let FlightCabinClass = queryParams.get("class");
 
-  let {
-    journeyFlight,
-    returnFlight,
-    isLoading,
-    isError,
-    CatalogProductOfferingsId,
-  } = reducerState?.flightSearchResult;
+  let { journeyFlight, isLoading, isError, CatalogProductOfferingsId } =
+    reducerState?.flightSearchResult;
   const [jornyFlights, setJornyFlights] = useState(journeyFlight);
 
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
-  const [loaderFilter, setLoaderFilter] = useState(false);
-
   const [airlineCodes, setAirlineCodes] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -60,6 +50,8 @@ const OnewaySearchResult = () => {
     journeyFlight || []
   );
   // console.log(journeyFlight, "journeyFlight");
+
+  // 2. MODIFIED: calculatePriceRange to use addMarkup
   const calculatePriceRange = (data) => {
     let min = Infinity;
     let max = -Infinity;
@@ -71,34 +63,26 @@ const OnewaySearchResult = () => {
       moreThanOneStop: { count: 0, minPrice: Infinity },
     };
     let Airlines = {};
-    const findStopes = (flight, stopes) => {
+
+    const findStopes = (flight, stopes, markedUpPrice) => {
       if (flight?.flights.length === 1) {
         let count = stopes.nonStop.count + 1;
-        // let flightPrice = flight?.productsoption?.[0]?.Price?.TotalPrice;
-        let flightPrice =
-          flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
         let stopPrice = stopes.nonStop.minPrice;
-        let stopMinPrice = Math.min(stopPrice, flightPrice);
+        let stopMinPrice = Math.min(stopPrice, markedUpPrice); // Use markedUpPrice
         stopes.nonStop = { count: count, minPrice: stopMinPrice };
       } else if (flight?.flights.length == 2) {
         let count = stopes.oneStop.count + 1;
-        // let flightPrice = flight?.productsoption?.[0]?.Price?.TotalPrice;
-        let flightPrice =
-          flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
         let stopPrice = stopes.oneStop.minPrice;
-        let stopMinPrice = Math.min(stopPrice, flightPrice);
+        let stopMinPrice = Math.min(stopPrice, markedUpPrice); // Use markedUpPrice
         stopes.oneStop = { count: count, minPrice: stopMinPrice };
       } else {
         let count = stopes.moreThanOneStop.count + 1;
-        // let flightPrice = flight?.productsoption?.[0]?.Price?.TotalPrice;
-        let flightPrice =
-          flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
         let stopPrice = stopes.moreThanOneStop.minPrice;
-        let stopMinPrice = Math.min(stopPrice, flightPrice);
+        let stopMinPrice = Math.min(stopPrice, markedUpPrice); // Use markedUpPrice
         stopes.moreThanOneStop = { count: count, minPrice: stopMinPrice };
       }
     };
-    const findAireLine = (flight, Airlines, price) => {
+    const findAireLine = (flight, Airlines, markedUpPrice) => {
       let flightName = flight?.flights?.[0]?.carrier;
       if (!Airlines[flightName]) {
         Airlines[flightName] = { count: 0, minPrice: Infinity };
@@ -106,36 +90,48 @@ const OnewaySearchResult = () => {
       Airlines[flightName].count++;
       Airlines[flightName].minPrice = Math.min(
         Airlines[flightName].minPrice,
-        price
+        markedUpPrice // Use markedUpPrice
       );
     };
+
     standardizedFlights1?.forEach((flight) => {
-      // console.log(flight, "flighttt");
-      findStopes(flight, stopes);
-      // let price = flight?.productsoption?.[0]?.Price?.TotalPrice;
+      // Get base price
       let price = flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
-      //  let dur = flight?.layover;
-      min = Math.min(min, price);
-      max = Math.max(max, price);
-      findStopes(flight, stopes);
-      findAireLine(flight, Airlines, price);
+
+      // --- MARKUP LOGIC ---
+      const onwardDestination =
+        flight?.flights?.[flight?.flights?.length - 1]?.Arrival?.location;
+      const markup = addMarkup
+        ? addMarkup(price, "oneway", onwardDestination) // Assuming 'oneway' for trip type
+        : 0;
+      const grandTotal = Number(price) + Number(markup);
+      const markedUpPrice = Math.round(grandTotal);
+      // --- END MARKUP LOGIC ---
+
+      findStopes(flight, stopes, markedUpPrice); // Pass markedUpPrice
+
+      min = Math.min(min, markedUpPrice); // Use markedUpPrice
+      max = Math.max(max, markedUpPrice); // Use markedUpPrice
+
+      findAireLine(flight, Airlines, markedUpPrice); // Pass markedUpPrice
+
       let newStopsAirline = {
         JourneyStopes: stopes,
-        //   ReturnStopes: stopesReturn,
         Airlines: Airlines,
       };
+
+      // Set state with marked-up prices
       setMinPrice(min);
       setMaxPrice(max);
-      // setPriceRange([min, max]);
-      setPriceRange(max);
+      setPriceRange(max); // This sets the slider's initial position to max
       setMinDuration(minDur);
       setMaxDuration(maxDur);
       setDurationRange([minDur, maxDur]);
       setStopsAirline(newStopsAirline);
-      // console.log(stopes, "stopessss");
-      //  findAireLine(flight, Airlines, price);
     });
   };
+
+  // 3. MODIFIED: handleFilter to use addMarkup
   const handleFilter = useCallback(
     (
       selectedCodes,
@@ -149,41 +145,34 @@ const OnewaySearchResult = () => {
       selectedArrivalTimesReturn,
       airlineCodes
     ) => {
-      // console.log(
-      //   selectedStops,
-      //   priceRange,
-      //   selectedTimes,
-      //   selectedArrivalTimes,
-
-      //   selectedStopsReturn,
-      //   selectedTimesReturn,
-      //   selectedArrivalTimesReturn,
-      //   airlineCodes,
-      //   "selectedStops"
-      // );
       if (Array.isArray(standardizedFlights1)) {
         const filteredJorny = standardizedFlights1?.filter((flight) => {
-          // console.log(flight?.productsoption?.[0]?.Price?.TotalPrice, "rrrrrr");
-          // return flight;
           let airCode = flight?.flights?.[0]?.carrier;
           let stops = flight?.flights?.length;
-          // let price = flight?.productsoption?.[0]?.Price?.TotalPrice;
+
+          // Get base price
           let price =
             flight?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice;
+
+          // --- MARKUP LOGIC ---
+          const onwardDestination =
+            flight?.flights?.[flight?.flights?.length - 1]?.Arrival?.location;
+          const markup = addMarkup
+            ? addMarkup(price, "oneway", onwardDestination) // Assuming 'oneway'
+            : 0;
+          const grandTotal = Number(price) + Number(markup);
+          const markedUpPrice = Math.round(grandTotal);
+          // --- END MARKUP LOGIC ---
+
           let departureTime = "";
           let arrivalTime = "";
           let normalizedDepartureTime = "";
           let normalizedArrivalTime = "";
-          // console.log(priceRange, price, "priceRange, price");
 
-          const matchprice =
-            // true ||
-            !priceRange ||
-            // (price >= priceRange?.[0] && price <= priceRange?.[1]);
-            price <= priceRange;
+          // Filter using the markedUpPrice
+          const matchprice = !priceRange || markedUpPrice <= priceRange;
 
           const matchStops =
-            // true ||
             selectedStops?.length === 0 || selectedStops?.includes(stops - 1);
 
           const matchAirline =
@@ -200,7 +189,7 @@ const OnewaySearchResult = () => {
               return flightHour >= startHour && flightHour <= endHour;
             });
           const matchArrivalTime =
-            true ||
+            true || // This was hardcoded to true in your original code
             selectedArrivalTimes?.length === 0 ||
             selectedArrivalTimes?.some((timeRange) => {
               const [startHour, endHour] = timeRange;
@@ -210,7 +199,7 @@ const OnewaySearchResult = () => {
               );
               return flightHour >= startHour && flightHour <= endHour;
             });
-          // console.log(matchTime, "matchTime");
+
           return (
             matchprice &&
             matchStops &&
@@ -219,91 +208,20 @@ const OnewaySearchResult = () => {
             matchAirline
           );
         });
-        // [...filteredJorny];
-
-        //  const filteredReturn = standardizedFlights2?.filter((flight) => {
-        //    let airCode = flight?.flightName;
-        //    let stops = flight?.stopes;
-        //    let price = flight?.price;
-        //    let departureTime = "";
-        //    let arrivalTime = "";
-        //    let normalizedDepartureTime = "";
-        //    let normalizedArrivalTime = "";
-        //    // console.log("peicernfe", priceRange, standardizedFlights2?.length);
-
-        //    const matchprice =
-        //      !priceRange ||
-        //      (price >= priceRange?.[0] && price <= priceRange?.[1]);
-
-        //    const matchAirline =
-        //      airlineCodes?.length === 0 || airlineCodes?.includes(airCode);
-
-        //    const matchStops =
-        //      selectedStopsReturn?.length === 0 ||
-        //      selectedStopsReturn?.includes(stops);
-
-        //    const matchTime =
-        //      selectedTimesReturn?.length === 0 ||
-        //      selectedTimesReturn?.some((timeRange) => {
-        //        const [startHour, endHour] = timeRange;
-        //        const flightHour = parseInt(
-        //          flight?.departureTime?.split(":")[0],
-        //          10
-        //        );
-        //        return flightHour >= startHour && flightHour <= endHour;
-        //      });
-        //    const matchArrivalTime =
-        //      selectedArrivalTimesReturn?.length === 0 ||
-        //      selectedArrivalTimesReturn?.some((timeRange) => {
-        //        const [startHour, endHour] = timeRange;
-        //        const flightHour = parseInt(
-        //          flight?.arrivalTime?.split(":")[0],
-        //          10
-        //        );
-        //        return flightHour >= startHour && flightHour <= endHour;
-        //      });
-        //    // console.log(
-        //    //   matchprice,
-        //    //   matchStops,
-        //    //   matchTime,
-        //    //   matchArrivalTime,
-        //    //   "matchTime"
-        //    // );
-        //    return (
-        //      matchprice &&
-        //      matchStops &&
-        //      matchTime &&
-        //      matchArrivalTime &&
-        //      matchAirline
-        //    );
-        //  });
-
-        //  setJornyFlights([...filteredJorny]);
-        //  setReturnFlights([...filteredReturn]);
-        // console.log(
-        //   filteredJorny?.length,
-        //   filteredReturn?.length,
-        //   "after filter"
-        // );
-        // console.log(filteredJorny, "after filter");
 
         setJornyFlights([...filteredJorny]);
       }
     },
-    [standardizedFlights1]
+    [standardizedFlights1, addMarkup] // Add addMarkup dependency
   );
+
   useEffect(() => {
     if (standardizedFlights1 && standardizedFlights1.length > 0) {
       calculatePriceRange();
-      // handleFilter();
-      // setJornyFlights(journeyFlight);
     }
-  }, [standardizedFlights1]);
+  }, [standardizedFlights1, addMarkup]); // Add addMarkup dependency
+
   useEffect(() => {
-    // if (journeyFlight && journeyFlight.length > 0) {
-    // calculatePriceRange();
-    // handleFilter();
-    // setJornyFlights(journeyFlight);
     setStandardizedFlights1(journeyFlight);
     setJornyFlights(journeyFlight);
     // }
@@ -321,7 +239,7 @@ const OnewaySearchResult = () => {
       Adult,
       Child,
       Infant,
-      //  let class= ,
+      //  let class= ,
       FlightCabinClass,
     };
 
@@ -370,6 +288,7 @@ const OnewaySearchResult = () => {
               {isLoading ? (
                 <FlightFilterScalationBig />
               ) : (
+                // These props (minPrice, maxPrice, etc.) are now the marked-up values
                 <OnewayFilterBox
                   airlineCodes={airlineCodes}
                   minPrice={minPrice}
@@ -412,12 +331,10 @@ const OnewaySearchResult = () => {
                     </div>
                   ) : (
                     jornyFlights && (
+                      // 4. Pass addMarkup to the Result Card
                       <OnewayResultCard
                         data={jornyFlights}
-                        // chepest={isChepest}
-                        // isOnward={true}
-                        // handleSelectedChange={handleSelectedFlightChange}
-                        // selectedIndex={selectedIndex}
+                        addMarkup={addMarkup}
                       />
                     )
                   )}

@@ -1,10 +1,9 @@
-// utils/sortingUtils.js
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 
 dayjs.extend(duration);
 
-// Calculate total duration for a flight combo
+// Calculate total duration for a flight combo (No change)
 export const calculateTotalDuration = (combo) => {
   const outbound = combo.outbound;
   const inbound = combo.inbound;
@@ -33,31 +32,51 @@ export const calculateTotalDuration = (combo) => {
   return outboundDuration.asMilliseconds() + inboundDuration.asMilliseconds();
 };
 
-// Calculate total price for a flight combo
-export const calculateTotalPrice = (combo) => {
+// --- MODIFIED FUNCTION ---
+// Calculate total price, now including markup
+export const calculateTotalPrice = (combo, addMarkup) => {
+  if (!combo) return 0;
+
   const outbound = combo.outbound;
-  return Number(
+  const basePrice = Number(
     outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice || 0
   );
+
+  // If addMarkup isn't a function, just return the base price
+  if (typeof addMarkup !== "function") {
+    return basePrice;
+  }
+
+  // Calculate markup logic
+  const onwardDestination =
+    outbound?.flights?.[outbound?.flights?.length - 1]?.Arrival?.location;
+
+  const markup = addMarkup(basePrice, "return", onwardDestination);
+  const grandTotal = Number(basePrice) + Number(markup);
+
+  return grandTotal; // Return the final, marked-up price
 };
 
-// Calculate score for "Best" sorting (combination of price and duration)
-export const calculateBestScore = (combo) => {
-  const price = calculateTotalPrice(combo);
+// --- MODIFIED FUNCTION ---
+// Calculate score, now using the marked-up price
+export const calculateBestScore = (combo, addMarkup) => {
+  const price = calculateTotalPrice(combo, addMarkup); // Pass addMarkup
   const duration = calculateTotalDuration(combo);
 
   // Normalize and weight these values (adjust weights as needed)
   return price * 0.7 + (duration / 60000) * 0.3; // duration in minutes
 };
 
-// Sort functions
-export const sortCombinations = (combinations, sortType) => {
+// --- MODIFIED FUNCTION ---
+// Sort functions, now using the marked-up price
+export const sortCombinations = (combinations, sortType, addMarkup) => {
   const sorted = [...combinations];
 
   switch (sortType) {
     case "Cheapest":
       return sorted.sort(
-        (a, b) => calculateTotalPrice(a) - calculateTotalPrice(b)
+        (a, b) =>
+          calculateTotalPrice(a, addMarkup) - calculateTotalPrice(b, addMarkup)
       );
 
     case "Fastest":
@@ -67,7 +86,8 @@ export const sortCombinations = (combinations, sortType) => {
 
     case "Best":
       return sorted.sort(
-        (a, b) => calculateBestScore(a) - calculateBestScore(b)
+        (a, b) =>
+          calculateBestScore(a, addMarkup) - calculateBestScore(b, addMarkup)
       );
 
     default:
@@ -75,20 +95,22 @@ export const sortCombinations = (combinations, sortType) => {
   }
 };
 
-// Get price values for tabs
-export const getPriceTabs = (combinations) => {
+// --- MODIFIED FUNCTION ---
+// Get price values for tabs, now using the marked-up price
+export const getPriceTabs = (combinations, addMarkup) => {
   if (!combinations || combinations.length === 0) {
     return { bestPrice: 0, cheapestPrice: 0, fastestPrice: 0 };
   }
 
-  // Create sorted arrays for each type
-  const cheapestSorted = sortCombinations(combinations, "Cheapest");
-  const fastestSorted = sortCombinations(combinations, "Fastest");
-  const bestSorted = sortCombinations(combinations, "Best");
+  // Create sorted arrays for each type, passing addMarkup
+  const cheapestSorted = sortCombinations(combinations, "Cheapest", addMarkup);
+  const fastestSorted = sortCombinations(combinations, "Fastest", addMarkup);
+  const bestSorted = sortCombinations(combinations, "Best", addMarkup);
 
+  // Get the marked-up price from the first item in each list
   return {
-    bestPrice: calculateTotalPrice(bestSorted[0]).toFixed(0),
-    cheapestPrice: calculateTotalPrice(cheapestSorted[0]).toFixed(0),
-    fastestPrice: calculateTotalPrice(fastestSorted[0]).toFixed(0),
+    bestPrice: calculateTotalPrice(bestSorted[0], addMarkup).toFixed(0),
+    cheapestPrice: calculateTotalPrice(cheapestSorted[0], addMarkup).toFixed(0),
+    fastestPrice: calculateTotalPrice(fastestSorted[0], addMarkup).toFixed(0),
   };
 };

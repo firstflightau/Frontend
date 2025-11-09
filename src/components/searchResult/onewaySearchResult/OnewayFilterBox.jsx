@@ -6,14 +6,14 @@ import { findAirlineByCode } from "../../../redux/slices/feature2/utils";
 
 const OnewayFilterBox = ({
   airlineCodes,
-  minPrice,
-  maxPrice,
-  priceRange,
+  minPrice, // This is now the marked-up minPrice
+  maxPrice, // This is now the marked-up maxPrice
+  priceRange, // This is now the marked-up maxPrice (for slider default)
   onFilter,
   minDuration,
   maxDuration,
   durationRange,
-  stopsAirline,
+  stopsAirline, // This now contains marked-up min prices
 }) => {
   const isOpenBurger = useSelector((state) => state.sidebar.isOpen);
   const dispatch = useDispatch();
@@ -36,6 +36,8 @@ const OnewayFilterBox = ({
 
   const debounceTimer = useRef(null);
 
+  // This logic is fine. It passes the slider value, which is already
+  // based on the marked-up min/max, to the parent for filtering.
   const triggerFilter = (updatedFilters) => {
     const defaults = {
       selectedCodes,
@@ -150,7 +152,7 @@ const OnewayFilterBox = ({
           {stops &&
             Object.keys(stops).map((key, index) => {
               const isItem = stops[key]?.count > 0;
-              const price = stops[key]?.minPrice;
+              const price = stops[key]?.minPrice; // This is now the marked-up min price
               const count = stops[key]?.count;
 
               return isItem ? (
@@ -174,6 +176,7 @@ const OnewayFilterBox = ({
                     </label>
                   </div>
                   <div className="flex items-center gap-2 sm:gap-1 lg:gap-2">
+                    {/* This price display is now correct */}
                     <p className="text-green-500 font-medium text-sm">{`$ ${price}`}</p>
                     <p className="text-xs text-gray-600">{`(${count})`}</p>
                   </div>
@@ -210,17 +213,17 @@ const OnewayFilterBox = ({
         <div className="flex flex-col gap-2">
           {Airlines &&
             Object.keys(Airlines).map((key) => {
-              const Price = Airlines?.[key]?.minPrice;
+              const Price = Airlines?.[key]?.minPrice; // This is now the marked-up min price
               const isChecked = airlines.includes(key);
               return (
                 <div
                   key={key}
                   className={`flex justify-between items-center p-2.5 sm:p-1.5 lg:p-2 rounded-lg border transition w-full
-                  ${
-                    isChecked
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:bg-gray-50"
-                  }`}
+                    ${
+                      isChecked
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:bg-gray-50"
+                    }`}
                 >
                   <label className="flex items-center gap-2 w-full cursor-pointer">
                     <Checkbox
@@ -239,6 +242,7 @@ const OnewayFilterBox = ({
                     </p>
                   </label>
                   <div className="flex-1 items-center gap-1 ">
+                    {/* This price display is now correct */}
                     <p className="text-green-500 text-sm font-medium text-nowrap">
                       {`$ ${Price}`}
                     </p>
@@ -265,6 +269,8 @@ const OnewayFilterBox = ({
     return () => document.removeEventListener("click", handleClickOutside);
   }, [dispatch]);
 
+  // All values used in the slider (minPrice, maxPrice, etc.)
+  // are the correct marked-up values from the props.
   return (
     <>
       <div

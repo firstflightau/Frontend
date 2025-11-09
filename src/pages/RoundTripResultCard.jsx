@@ -64,12 +64,6 @@ const RoundTripResultCard = ({ combo, onSelect }) => {
 
     return (
       <div className="mb-4 last:mb-0">
-        {/* {title && (
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-            {title}
-          </div>
-        )} */}
-
         <div className="flex flex-col md:flex-row md:items-center justify-between w-full">
           <div className="flex items-center gap-2 mb-2 md:mb-0 md:w-1/4">
             <div className="w-8 h-8 flex-shrink-0">
