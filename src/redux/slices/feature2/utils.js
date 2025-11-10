@@ -33,6 +33,7 @@ export function findAirlineByCode(code) {
   const state = store.getState();
 
   // Access the airport list from the state
+  console.log(state?.airlineList, "airline list");
   const airlinetList = state?.airlineList?.airlines;
   // console.log(airlinetList, "airlinetList", state)
 
@@ -44,7 +45,7 @@ export function findAirlineByCode(code) {
     };
   let data = airlinetList.find((airport) => airport?.airlineCode === code);
   // console.log(data, "airlineDataaa");
-  if (data.length == 0) {
+  if (data?.length == 0) {
     return {
       airlineCode: code,
       airlineName: code,

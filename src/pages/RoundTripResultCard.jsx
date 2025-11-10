@@ -11,6 +11,8 @@ const RoundTripResultCard = ({ combo, onSelect }) => {
   const outboundFlight = outbound?.flights || [];
   const inboundFlight = inbound?.flights || [];
 
+  console.log(combo, "combo");
+
   const totalPrice = Number(
     outbound?.productsoption?.[0]?.BestCombinablePrice?.TotalPrice || 0
   );

@@ -66,9 +66,9 @@ function App() {
     if (reducerState?.airlineList?.airlines?.length === 0) {
       dispatch(fetchAirportList());
     }
-    if (reducerState?.airportList?.airports?.length === 0) {
-      dispatch(fetchAirlineList());
-    }
+    // if (reducerState?.airportList?.airports?.length === 0) {
+    dispatch(fetchAirlineList());
+    // }
     // if (
     //   !reducerState?.metaData?.isLoading &&
     //   Object.keys(reducerState?.metaData?.allMetaData).length === 0

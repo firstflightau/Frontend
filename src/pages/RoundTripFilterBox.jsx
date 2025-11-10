@@ -70,6 +70,8 @@ const RoundTripFilterBox = ({ combinations, onFilterChange, addMarkup }) => {
     }
   }, [combinations, addMarkup]); // Add addMarkup to dependency array
 
+  console.log(allAirlines, "all airlines");
+
   // Calculate counts for stops and airlines
   const calculateCounts = () => {
     const stopsCount = { nonStop: 0, oneStop: 0, twoPlusStops: 0 };

@@ -48,8 +48,6 @@ const ReturnSearchFormInner = () => {
   const [flightClassState, setFlightClassState] = useState(Class1);
   const [loader, setLoader] = useState(false);
 
-  console.log(flightClassState, "flight class state");
-
   useEffect(() => {
     setDepDate(queryParams.get("date"));
     setRetDate(queryParams.get("retrunDate"));
