@@ -266,7 +266,7 @@ const Footer = () => {
                     target="_blank"
                     className="pera"
                   >
-                    Powered by @The Design'O
+                    Powered by @First-Flight
                   </a>
                 </div>
               </div>
