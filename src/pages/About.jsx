@@ -2,6 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet-async"; // 1. Import Helmet
 import { useSelector } from "react-redux";
 import aboutBanner from "../assets/images/gallery/about-banner-three.png";
+import aboutBanner2 from "../assets/images/gallery/abour2ndbanner.jpg";
+import aboutBanner3 from "../assets/images/gallery/aboutbanner3.jpg";
+
 import { Link } from "react-router-dom";
 
 const About = () => {
@@ -71,22 +74,13 @@ const About = () => {
             <div className="col-xl-8 col-lg-6">
               <div className="section-title mx-650 mb-7 w-md-100">
                 <h4 className="title">
-                  Get The Best Travel Experience With First Flight
+                  <span style={{ color: "#FE0000" }}>Your Trusted </span>
+                  <span style={{ color: "#00005A" }}>Flight Booking Partner in Australia </span>
                 </h4>
                 <p className="pera">
-                  In the ever-evolving realm of online travel, the key to a
-                  fulfilling travelling experience lies in choosing the right
-                  travel experts to make the journey seamless. Reserving a
-                  flight to a dream destination depends on many factors like
-                  date, time, prices, best deals, discounts, fare class,
-                  airline, and more. To understand the needs and demands of
-                  modern travellers the First Flight Pty Ltd came into existence
-                  on 16<sup>th</sup> July 2024. We are an Australian-based
-                  online flight booking travel agency registered under the
-                  Corporation Act 2001. We pride ourselves on providing plethora
-                  of options to ensure that every traveller not only secures the
-                  best flight deal but also experiences a seamless and
-                  unparalleled booking process that is fast and easy to use.
+                  First Flight Pty Ltd is an Australia-based online travel company committed to making flight bookings simple, affordable and stress-free. We help travellers compare fares, explore routes and book domestic and international flights with complete transparency and real-time pricing.
+                  Founded in July 2024 under the Australian Corporation Act, our mission is clear —
+                  <b>to deliver fast booking, honest pricing and outstanding support for every traveller.</b>
                 </p>
               </div>
             </div>
@@ -97,27 +91,94 @@ const About = () => {
                 </div>
               </div>
             </div>
+            <div className="col-xl-4 col-lg-6">
+              <div className="about-count-section about-count-before-bg mb-60">
+                <div className="banner">
+                  <img src={aboutBanner2} alt="travello" />
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-8 col-lg-6">
+              <div className="section-title mx-650 mb-7 w-md-100 " style={{ marginTop: "-40px", marginLeft: "90px" }}>
+                <h4 className="title">
+                  <span style={{ color: "#FE0000" }}>What </span>
+                  <span style={{ color: "#00005A" }}>We Do</span>
+                </h4>
+
+                <p className="pera">
+                  We specialise in providing a seamless flight booking experience for individuals, families, students and business travellers across Australia. From last-minute flights to long-haul international trips, our experts ensure you always get the best options available.
+                </p>
+                <h5>Our services include:</h5>
+                <li >•	Domestic & international flight bookings</li>
+                <li >•	Fare comparison & best-price guidance</li>
+                <li >•	Group and student travel assistance</li>
+                <li >•	Last-minute & emergency bookings</li>
+                <li >•	Ticketing, changes & support</li>
+                <li >•	Travel advice and route planning</li>
+              </div>
+            </div>
+            <div className="col-xl-8 col-lg-6">
+              <div className="section-title mx-650 mb-7 w-md-100">
+                <h4 className="title">
+                  <span style={{ color: "#FE0000" }}>Why Travellers  </span>
+                  <span style={{ color: "#00005A" }}>Trust First Flight </span>
+                </h4>
+                <ul style={{ listStyleType: "disc", color: "#00005A", marginLeft: "20px" }}>
+                  <li>
+                    ✔ Fast & transparent booking process
+                  </li>
+                  <li>
+                    ✔ Clear pricing with no hidden fees
+                  </li>
+                  <li>
+                    ✔ Responsive & helpful customer support
+                  </li>
+                  <li>
+                    ✔ Trusted airline partners globally
+                  </li>
+                  <li>
+                    ✔ Experienced team with multi-route expertise
+                  </li>
+                  <li>
+                    ✔ Secure payments & verified reviews
+                  </li>
+                </ul>
+
+                <p className="pera">
+                  We combine smart technology with friendly human support to help you travel without stress.
+                </p>
+              </div>
+            </div>
+            <div className="col-xl-4 col-lg-6">
+              <div className="about-count-section about-count-before-bg mb-60">
+                <div className="banner">
+                  <img src={aboutBanner3} alt="travello" />
+                </div>
+              </div>
+            </div>
             <div className="col-xl-12 col-lg-12">
               <div className="section-title mb-30 w-md-100">
+                <span style={{ color: "#FE0000" }}><b>Our Commitment </b> </span>
                 <p className="pera">
-                  The First Flight Pty Ltd distinguishes itself through its
-                  clear navigation, user-friendly approach, intuitive interface,
-                  flexibility, responsiveness, comprehensiveness, and
-                  reliability. Our strength lies in swift and supportive
-                  customer service, cost-effective solutions, transparent
-                  pricing, and an extensive flight inventory has made us the
-                  preferred choice for cost-conscious travellers. Supported by a
-                  team of skilled and experienced travel professionals,
-                  ATOL-protected financial security, state-of-the-art
-                  technology, impeccable service, and exceptional dedication, we
-                  simplify online bookings and strive to eliminate complexities.
+                  We continuously work to improve your travel experience by analysing fare trends, enhancing our booking system and providing reliable assistance throughout your journey.
                 </p>
 
                 <p className="pera">
-                  The type of fares that we offer will serve as a cherry on top
-                  in planning a dream vacation. All you have to do is pack your
-                  bags, select the destination, and entrust the rest to us. We
-                  are just a call away.
+                  <span style={{ color: "#00005A" }}><b>With First Flight, you’re not just booking a ticket —<br/>
+                    you’re choosing peace of mind, value and trusted support.
+                  </b>  </span>
+                </p>
+              </div>
+            </div>
+            <div className="col-xl-12 col-lg-12">
+              <div className="section-title mb-30 w-md-100">
+                <span style={{ color: "#00005A" }}><b>We’re here for you </b> </span>
+                <p className="pera">
+                  Whether you’re flying for work, holiday or family visits, our team ensures your booking is quick, smooth and budget-friendly.
+                </p>
+
+                <p className="pera">
+                  <span style={{ color: "#FE0000" }}><b>Travel smart. Travel safe. Travel with First Flight.</b>  </span>
                 </p>
               </div>
             </div>
