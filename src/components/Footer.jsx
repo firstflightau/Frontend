@@ -262,7 +262,7 @@ const Footer = () => {
                     PTY LTD. All Rights Reserved.
                   </p>
                   <a
-                    href="http://www.thedesigno.co.in"
+                    href="https://www.first-flight.com.au"
                     target="_blank"
                     className="pera"
                   >
