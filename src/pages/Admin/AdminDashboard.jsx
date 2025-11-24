@@ -81,14 +81,15 @@ const AdminDashboard = () => {
             <DashboardCard
               title="Total Enquiry"
               value={data?.totalContact}
-              link="admin/enquiry"
+              link="/admin/enquiry"
               icon={HiSupport}
               colorIndex={3}
             />
+
             <DashboardCard
               title="Total Review"
               value={data?.totalTestimonial}
-              link="admin/testimonial"
+              link="/admin/testimonial"
               icon={StarIcon}
               colorIndex={4}
             />
