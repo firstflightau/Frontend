@@ -20,7 +20,7 @@ const Team = () => {
       img: Empolyee,
       title: "Alex Smith",
       subtitle: "Branch Head CEO",
-      exp: "I more than 15 years of experience in travel industry  and multiple experience in online travel industry working in first-flight for 2 years",
+      exp: "With over 15 years of expertise in the travel industry and strong experience in the online travel sector, I have been contributing to First Flight for the last 2 years.",
 
     },
     {
