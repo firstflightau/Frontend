@@ -131,10 +131,11 @@ const PassengerComponent = forwardRef((props, ref) => {
         !adult.lastName?.trim() ||
         !adult.gender ||
         !isValidDate(adult.dob) ||
-        (passengerData.passportRequired &&
-          (!adult.passportNumber?.trim() ||
-            !isValidDate(adult.passportExpiry) ||
-            !adult.passportIssuingCountry?.countryCode))
+        // (passengerData.passportRequired &&
+        //   (!adult.passportNumber?.trim() ||
+        //     !isValidDate(adult.passportExpiry) ||
+        //     !adult.passportIssuingCountry?.countryCode))
+        false
     );
 
     if (adultErrorIndex !== -1) {
@@ -150,10 +151,11 @@ const PassengerComponent = forwardRef((props, ref) => {
           !child.lastName?.trim() ||
           !child.gender ||
           !isValidDate(child.dob) ||
-          (passengerData.passportRequired &&
-            (!child.passportNumber?.trim() ||
-              !isValidDate(child.passportExpiry) ||
-              !child.passportIssuingCountry?.countryCode))
+          // (passengerData.passportRequired &&
+          //   (!child.passportNumber?.trim() ||
+          //     !isValidDate(child.passportExpiry) ||
+          //     !child.passportIssuingCountry?.countryCode))
+          false
       );
       if (childErrorIndex !== -1) {
         firstError = { type: "childs", index: childErrorIndex };
@@ -169,10 +171,11 @@ const PassengerComponent = forwardRef((props, ref) => {
           !infant.lastName?.trim() ||
           !infant.gender ||
           !isValidDate(infant.dob) ||
-          (passengerData.passportRequired &&
-            (!infant.passportNumber?.trim() ||
-              !isValidDate(infant.passportExpiry) ||
-              !infant.passportIssuingCountry?.countryCode))
+          // (passengerData.passportRequired &&
+          //   (!infant.passportNumber?.trim() ||
+          //     !isValidDate(infant.passportExpiry) ||
+          //     !infant.passportIssuingCountry?.countryCode))
+          false
       );
       if (infantErrorIndex !== -1) {
         firstError = { type: "infants", index: infantErrorIndex };
@@ -532,7 +535,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                           htmlFor={`passportNumber-${type}-${index}`}
                           className="block mb-2 text-sm font-medium text-gray-900 "
                         >
-                          Passport Number
+                          Passport Number Optional
                         </label>
                         <input
                           type="text"
@@ -552,7 +555,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                          Passport Expiry
+                          Passport Expiry Optional
                         </label>
                         <div className="grid grid-cols-3">
                           <Listbox
@@ -673,7 +676,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                          Passport Issuing Country
+                          Passport Issuing Country Optional
                         </label>
                         <Listbox
                           value={passenger.passportIssuingCountry}
@@ -819,3 +822,4 @@ const PassengerComponent = forwardRef((props, ref) => {
 });
 
 export default PassengerComponent;
+  
