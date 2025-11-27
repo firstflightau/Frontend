@@ -20,7 +20,7 @@ const Team = () => {
       img: Empolyee,
       title: "Alex Smith",
       subtitle: "Branch Head CEO",
-      exp: "With over 15 years of expertise in the travel industry and strong experience in the online travel sector, I have been contributing to First Flight for the last 2 years.",
+      exp: "I more than 15 years of experience in travel industry  and multiple experience in online travel industry working in first-flight for 2 years",
 
     },
     {
@@ -43,7 +43,7 @@ const Team = () => {
       id: 1,
       img: Empolyee,
       title: "Henry Hart",
-      subtitle: "IT Head & Software Devloper",
+      subtitle: "IT Head",
       exp: "Specialized in developing responsive web apps, optimizing performance, and working with cross-functional teams to deliver high-quality software products.",
     },
   ];
@@ -107,12 +107,12 @@ const Team = () => {
         </div>
       </section>
 
-      <section className="explore-area section-padding2">
+      <section className="explore-area section-padding2 bg-gradient-to-br from-[#00005A] to-[#FE0000] text-white">
         <div className="container">
           <div className="row g-4 mb-14">
             <div className="col-xl-12 col-lg-12">
               <h4 className="title">Meet our Talented Team</h4>
-              <p>
+              <p className="mb-10 text-white">
                 At First Flight, we believe that great journeys begin with a great team. Our strength comes from a group of passionate travel professionals who work together with one mission — <b>to make every trip smooth, affordable and stress-free for our customers.</b>We are a dedicated team of travel lovers, planners, problem-solvers and customer-care specialists who understand the needs of modern travellers. From finding the best fare to offering round-the-clock support, our team ensures you enjoy a seamless experience from the moment you book until you reach your destination.{" "}
               </p>
             </div>
@@ -143,7 +143,7 @@ const Team = () => {
           </div>
           <div className="container mx-auto px-4">
             {/* Top heading */}
-            <h2 className="text-center text-3xl md:text-4xl font-bold mb-10" style={{ color: '#00005A' }}>
+            <h2 className="text-center text-3xl md:text-4xl font-bold mb-10" >
               {title}
             </h2>
 
@@ -164,7 +164,7 @@ const Team = () => {
           <div className="row g-4 mb-14">
             <div className="col-xl-12 col-lg-12 mt-5">
               <h4 className="title">Our Commitment</h4>
-              <p>
+              <p className="mb-10 text-white">
                 We constantly work on improving ourselves — learning new tools, understanding fare trends, monitoring airlines, and enhancing customer service.
                 Our goal is simple:
                 <b>To give you the best booking experience with honesty, efficiency and genuine care.</b>
@@ -175,7 +175,7 @@ const Team = () => {
           <div className="row g-4 mb-14">
             <div className="col-xl-12 col-lg-12 mt-5">
               <h4 className="title">Together, We Make Your Journey Better</h4>
-              <p>
+              <p className="mb-10 text-white">
                 Behind every smooth booking, every great deal and every satisfied traveller — there is a hardworking team committed to your comfort and happiness.<br />Thank you for trusting First Flight.<br /><b>We are always here for you — before, during and after your journey.</b>
                 {" "}
               </p>
