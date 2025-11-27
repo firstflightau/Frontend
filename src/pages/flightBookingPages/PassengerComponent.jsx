@@ -86,7 +86,7 @@ const PassengerComponent = forwardRef((props, ref) => {
     if (unit === "month") month = value;
     if (unit === "day") day = value;
 
-    const newDate = ${year}-${month}-${day};
+const newDate = `${year}-${month}-${day}`;
     updatedPassengers[index] = {
       ...updatedPassengers[index],
       [field]: newDate,
