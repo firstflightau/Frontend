@@ -86,7 +86,7 @@ const PassengerComponent = forwardRef((props, ref) => {
     if (unit === "month") month = value;
     if (unit === "day") day = value;
 
-    const newDate = `${year}-${month}-${day}`;
+    const newDate = ${year}-${month}-${day};
     updatedPassengers[index] = {
       ...updatedPassengers[index],
       [field]: newDate,
@@ -131,11 +131,10 @@ const PassengerComponent = forwardRef((props, ref) => {
         !adult.lastName?.trim() ||
         !adult.gender ||
         !isValidDate(adult.dob) ||
-        // (passengerData.passportRequired &&
-        //   (!adult.passportNumber?.trim() ||
-        //     !isValidDate(adult.passportExpiry) ||
-        //     !adult.passportIssuingCountry?.countryCode))
-        false
+        (passengerData.passportRequired &&
+          (!adult.passportNumber?.trim() ||
+            !isValidDate(adult.passportExpiry) ||
+            !adult.passportIssuingCountry?.countryCode))
     );
 
     if (adultErrorIndex !== -1) {
@@ -151,11 +150,10 @@ const PassengerComponent = forwardRef((props, ref) => {
           !child.lastName?.trim() ||
           !child.gender ||
           !isValidDate(child.dob) ||
-          // (passengerData.passportRequired &&
-          //   (!child.passportNumber?.trim() ||
-          //     !isValidDate(child.passportExpiry) ||
-          //     !child.passportIssuingCountry?.countryCode))
-          false
+          (passengerData.passportRequired &&
+            (!child.passportNumber?.trim() ||
+              !isValidDate(child.passportExpiry) ||
+              !child.passportIssuingCountry?.countryCode))
       );
       if (childErrorIndex !== -1) {
         firstError = { type: "childs", index: childErrorIndex };
@@ -171,11 +169,10 @@ const PassengerComponent = forwardRef((props, ref) => {
           !infant.lastName?.trim() ||
           !infant.gender ||
           !isValidDate(infant.dob) ||
-          // (passengerData.passportRequired &&
-          //   (!infant.passportNumber?.trim() ||
-          //     !isValidDate(infant.passportExpiry) ||
-          //     !infant.passportIssuingCountry?.countryCode))
-          false
+          (passengerData.passportRequired &&
+            (!infant.passportNumber?.trim() ||
+              !isValidDate(infant.passportExpiry) ||
+              !infant.passportIssuingCountry?.countryCode))
       );
       if (infantErrorIndex !== -1) {
         firstError = { type: "infants", index: infantErrorIndex };
@@ -266,7 +263,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                   <div>
                     <span className="text-sm font-semibold text-gray-800">
                       {passenger.firstName && passenger.lastName
-                        ? `${passenger.firstName} ${passenger.lastName}`
+                        ? ${passenger.firstName} ${passenger.lastName}
                         : `${
                             type.slice(0, -1).charAt(0).toUpperCase() +
                             type.slice(0, -1).slice(1)
@@ -278,7 +275,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                   <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-4">
                     <div className="">
                       <label
-                        htmlFor={`title-${type}-${index}`}
+                        htmlFor={title-${type}-${index}}
                         className="block mb-2 text-sm font-medium text-gray-900 "
                       >
                         Title
@@ -333,7 +330,7 @@ const PassengerComponent = forwardRef((props, ref) => {
 
                     <div className="col-span-3">
                       <label
-                        htmlFor={`fname-${type}-${index}`}
+                        htmlFor={fname-${type}-${index}}
                         className="block mb-2 text-sm font-medium text-gray-900 "
                       >
                         First Name
@@ -341,7 +338,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       <input
                         type="text"
                         placeholder="First Name"
-                        id={`fname-${type}-${index}`}
+                        id={fname-${type}-${index}}
                         value={passenger.firstName}
                         onChange={(e) =>
                           handleChange(type, index, "firstName", e.target.value)
@@ -352,7 +349,7 @@ const PassengerComponent = forwardRef((props, ref) => {
 
                     <div className="col-span-3">
                       <label
-                        htmlFor={`lname-${type}-${index}`}
+                        htmlFor={lname-${type}-${index}}
                         className="block mb-2 text-sm font-medium text-gray-900 "
                       >
                         Last Name
@@ -360,7 +357,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       <input
                         type="text"
                         placeholder="Last Name"
-                        id={`lname-${type}-${index}`}
+                        id={lname-${type}-${index}}
                         value={passenger.lastName}
                         onChange={(e) =>
                           handleChange(type, index, "lastName", e.target.value)
@@ -532,15 +529,15 @@ const PassengerComponent = forwardRef((props, ref) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <label
-                          htmlFor={`passportNumber-${type}-${index}`}
+                          htmlFor={passportNumber-${type}-${index}}
                           className="block mb-2 text-sm font-medium text-gray-900 "
                         >
-                          Passport Number Optional
+                          Passport Number
                         </label>
                         <input
                           type="text"
                           placeholder="Passport Number"
-                          id={`passportNumber-${type}-${index}`}
+                          id={passportNumber-${type}-${index}}
                           value={passenger.passportNumber}
                           onChange={(e) =>
                             handleChange(
@@ -555,7 +552,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                          Passport Expiry Optional
+                          Passport Expiry
                         </label>
                         <div className="grid grid-cols-3">
                           <Listbox
@@ -676,7 +673,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                       </div>
                       <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                          Passport Issuing Country Optional
+                          Passport Issuing Country
                         </label>
                         <Listbox
                           value={passenger.passportIssuingCountry}
@@ -822,4 +819,3 @@ const PassengerComponent = forwardRef((props, ref) => {
 });
 
 export default PassengerComponent;
-  
