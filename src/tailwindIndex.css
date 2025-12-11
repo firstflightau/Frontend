@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    @font-face {
+      font-family: "Kaushan Script";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/kaushanscript/v15/vm8vdRfvXFLG3OLnsO1OpS7ffPp4.ttf") format("truetype");
+    }
+  }
