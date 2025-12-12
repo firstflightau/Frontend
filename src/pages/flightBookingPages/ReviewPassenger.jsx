@@ -46,7 +46,7 @@ const ReviewPassenger = () => {
                 </div>
 
                 {/* Passport Info */}
-                <div className="border-t md:border-t-0 md:border-l md:pt-0 md:pl-4">
+                {/* <div className="border-t md:border-t-0 md:border-l md:pt-0 md:pl-4">
                   <h4 className="text-sm font-semibold text-secondary-6000 uppercase mb-2">
                     Passport Details
                   </h4>
@@ -66,7 +66,7 @@ const ReviewPassenger = () => {
                       {passenger.passportIssuingCountry?.countryName}
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
