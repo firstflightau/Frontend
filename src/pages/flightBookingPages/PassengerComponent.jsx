@@ -53,7 +53,7 @@ const PassengerComponent = forwardRef((props, ref) => {
     // passportRequired: true,
     email: "",
     mobile: "",
-    mobileCode: "+91",
+    mobileCode: "+61",
   });
 
   const [errorIndex, setErrorIndex] = useState(null);
@@ -188,8 +188,15 @@ const PassengerComponent = forwardRef((props, ref) => {
     }
 
     // NEW: Validate mobile number
+    // if (!firstError) {
+    //   if (!passengerData.mobile?.trim()) {
+    //     firstError = { type: "mobile", index: 0 };
+    //   }
+    // }
     if (!firstError) {
-      if (!passengerData.mobile?.trim()) {
+      // Remove spaces and check length
+      const mobileDigits = passengerData.mobile.replace(/\s+/g, '');
+      if (!/^\d{9}$/.test(mobileDigits)) {
         firstError = { type: "mobile", index: 0 };
       }
     }
@@ -264,10 +271,9 @@ const PassengerComponent = forwardRef((props, ref) => {
                     <span className="text-sm font-semibold text-gray-800">
                       {passenger.firstName && passenger.lastName
                         ? `${passenger.firstName} ${passenger.lastName}`
-                        : `${
-                            type.slice(0, -1).charAt(0).toUpperCase() +
-                            type.slice(0, -1).slice(1)
-                          } ${index + 1}`}
+                        : `${type.slice(0, -1).charAt(0).toUpperCase() +
+                        type.slice(0, -1).slice(1)
+                        } ${index + 1}`}
                     </span>
                   </div>
                 </Accordion.Title>
@@ -500,11 +506,10 @@ const PassengerComponent = forwardRef((props, ref) => {
                       <div className="flex">
                         <button
                           type="button"
-                          className={`p-2 flex-1 px-4 rounded-l-md  border-b-4 ${
-                            passenger.gender === 1
-                              ? "border-blue-500 bg-blue-100"
-                              : "border-2 border-gray-200"
-                          }`}
+                          className={`p-2 flex-1 px-4 rounded-l-md  border-b-4 ${passenger.gender === 1
+                            ? "border-blue-500 bg-blue-100"
+                            : "border-2 border-gray-200"
+                            }`}
                           onClick={() => handleChange(type, index, "gender", 1)}
                         >
                           Male
@@ -512,11 +517,10 @@ const PassengerComponent = forwardRef((props, ref) => {
                         <div className="border-r-2 h-full"></div>
                         <button
                           type="button"
-                          className={`p-2 flex-1 px-4 rounded-r-md border-b-4 ${
-                            passenger.gender === 2
-                              ? "border-blue-500 bg-blue-100"
-                              : "border-2 border-gray-200"
-                          }`}
+                          className={`p-2 flex-1 px-4 rounded-r-md border-b-4 ${passenger.gender === 2
+                            ? "border-blue-500 bg-blue-100"
+                            : "border-2 border-gray-200"
+                            }`}
                           onClick={() => handleChange(type, index, "gender", 2)}
                         >
                           Female
@@ -728,9 +732,8 @@ const PassengerComponent = forwardRef((props, ref) => {
     <div className="">
       <div className="rounded-2xl  border-2 border-gray-200 mt-4">
         <p
-          className={` ${
-            isAccordionVisible ? "rounded-ss-2xl rounded-se-2xl" : "rounded-2xl"
-          }  text-gray-700 p-2 px-4 bg-gradient-to-r from-blue-100 via-blue-100  to-blue-50  text-lg font-bold cursor-pointer flex justify-between items-center transition-all duration-200 ease-in-out `}
+          className={` ${isAccordionVisible ? "rounded-ss-2xl rounded-se-2xl" : "rounded-2xl"
+            }  text-gray-700 p-2 px-4 bg-gradient-to-r from-blue-100 via-blue-100  to-blue-50  text-lg font-bold cursor-pointer flex justify-between items-center transition-all duration-200 ease-in-out `}
           onClick={() => setIsAccordionVisible((prev) => !prev)}
         >
           Passenger Details
@@ -739,9 +742,8 @@ const PassengerComponent = forwardRef((props, ref) => {
           </span>
         </p>
         <div
-          className={`transition-all duration-300 ease-in-out  ${
-            isAccordionVisible ? "max-h-full" : "max-h-0  overflow-hidden"
-          }`}
+          className={`transition-all duration-300 ease-in-out  ${isAccordionVisible ? "max-h-full" : "max-h-0  overflow-hidden"
+            }`}
         >
           {renderAccordion("adults", passengerData.adults)}
           {renderAccordion("childs", passengerData.childs)}
@@ -798,7 +800,7 @@ const PassengerComponent = forwardRef((props, ref) => {
             >
               Mobile No
             </label>
-            <input
+            {/* <input
               type="tel"
               id="mobile-contact"
               placeholder="eg : +61 450424186"
@@ -808,7 +810,23 @@ const PassengerComponent = forwardRef((props, ref) => {
                   ...prev,
                   mobile: e.target.value,
                 }))
-              }
+              } */}
+            <input
+              type="tel"
+              id="mobile-contact"
+              placeholder="eg : 290 112 019"
+              value={passengerData.mobile}
+              onChange={(e) => {
+                let value = e.target.value;
+                // Allow only digits and spaces
+                if (/^[\d\s]*$/.test(value)) {
+                  setPassengerData((prev) => ({
+                    ...prev,
+                    mobile: value,
+                    mobileCode: "+61", // always Australia
+                  }));
+                }
+              }}
               className="bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
