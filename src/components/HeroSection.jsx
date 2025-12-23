@@ -1,7 +1,8 @@
 import React from "react";
 
 import heroBanner from "../assets/images/hero/hero-three-banner.png";
-import heroVideo from "../assets/images/videos/travel1.mp4";
+// import heroVideo from "../assets/images/videos/travel1.mp4";
+import heroVideo from "../assets/images/videos/chritsmas.mp4";
 import user1 from "../assets/images/hero/user-1.jpeg";
 import user2 from "../assets/images/hero/user-2.png";
 import user3 from "../assets/images/hero/user-3.png";

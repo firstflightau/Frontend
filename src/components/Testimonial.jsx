@@ -56,8 +56,8 @@ const Testimonial = () => {
         </div>
         <div className="row g-4 align-items-center">
           <div className="col-xl-6 col-lg-6 col-md-6">
-            {/* <div className="swiper testimonialThree-active">
-              <div className="swiper-wrapper"> */}
+            <div className="swiper testimonialThree-active">
+              <div className="swiper-wrapper">
             <Swiper
               modules={[Autoplay, Pagination]}
               loop={true}
@@ -106,7 +106,7 @@ const Testimonial = () => {
                   </div>
                 </SwiperSlide>
               ))}
-              {/* <SwiperSlide className="testimonial-card">
+              <SwiperSlide className="testimonial-card">
                 <div className="testimonial-header">
                   <div className="user-img">
                     <img src={testimonial1} alt="first flight" />
@@ -166,11 +166,11 @@ const Testimonial = () => {
                   </div>
                   <p className="date">August 20, 2024</p>
                 </div>
-              </SwiperSlide> */}
+              </SwiperSlide>
             </Swiper>
-            {/* </div>
+            </div>
               <div className="swiper-pagination"></div>
-            </div> */}
+            </div>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6">
             <div className="hero-banner imgEffect2 o-hidden radius-20">
