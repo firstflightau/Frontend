@@ -130,60 +130,60 @@ const FlightSearchForm = () => {
               />
 
               {/* SEARCH BOX */}
-              <div className="px-3 py-7 bg-white rounded-md shadow-lg z-40 relative">
+              <div className="px-3 py-7 bg-white rounded-md shadow-lg z-40 relative border-3 border-red-500">                
                 <div className="choose-plan-nav">
-                  <ul className="nav nav-tabs" id="myTab" role="tablist">
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="plan-link active"
-                        id="book-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#book"
-                        type="button"
-                        role="tab"
-                        aria-controls="book"
-                        aria-selected="false"
-                      >
-                        <ArrowLeftRight size={21} /> Round Trip
-                      </button>
-                    </li>
-
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="plan-link"
-                        id="tour-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tour"
-                        type="button"
-                        role="tab"
-                        aria-controls="tour"
-                        aria-selected="true"
-                      >
-                        <PlaneTakeoff size={21} /> Oneway Trip
-                      </button>
-                    </li>
-                  </ul>
-
-                  <div className="tab-content" id="tourTab">
-                    <div
-                      className="tab-pane fade show active"
-                      id="book"
-                      role="tabpanel"
-                      aria-labelledby="book-tab"
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className="plan-link active"
+                      id="book-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#book"
+                      type="button"
+                      role="tab"
+                      aria-controls="book"
+                      aria-selected="false"
                     >
-                      <ReturnSearchForm />
-                    </div>
+                      <ArrowLeftRight size={21} /> Round Trip
+                    </button>
+                  </li>
 
-                    <div
-                      className="tab-pane fade"
-                      id="tour"
-                      role="tabpanel"
-                      aria-labelledby="tour-tab"
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className="plan-link"
+                      id="tour-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#tour"
+                      type="button"
+                      role="tab"
+                      aria-controls="tour"
+                      aria-selected="true"
                     >
-                      <OnewaySearchForm />
-                    </div>
+                      <PlaneTakeoff size={21} /> Oneway Trip
+                    </button>
+                  </li>
+                </ul>
+
+                <div className="tab-content " id="tourTab">
+                  <div
+                    className="tab-pane fade show active"
+                    id="book"
+                    role="tabpanel"
+                    aria-labelledby="book-tab"
+                  >
+                    <ReturnSearchForm />
+                  </div>
+
+                  <div
+                    className="tab-pane fade"
+                    id="tour"
+                    role="tabpanel"
+                    aria-labelledby="tour-tab"
+                  >
+                    <OnewaySearchForm />
                   </div>
                 </div>
+              </div>
               </div>
 
             </div>
