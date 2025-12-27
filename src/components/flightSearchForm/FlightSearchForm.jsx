@@ -95,7 +95,7 @@ import { clearPassengerData } from "../../redux/slices/passenger/passengerSlice"
 import { clearAddOffer } from "../../redux/slices/workbench/addOfferSlice";
 
 // 🎅 Santa Image
-import santaImg from "../../assets/images/gallery/shantaImgs.png";
+// import santaImg from "../../assets/images/gallery/shantaImgs.png";
 
 const FlightSearchForm = () => {
   const dispatch = useDispatch();
@@ -117,7 +117,7 @@ const FlightSearchForm = () => {
             <div className="relative">
 
               {/* 🎅 SANTA – EXACT SCREENSHOT STYLE */}
-              <img
+              {/* <img
                 src={santaImg}
                 alt="Santa"
                 className="
@@ -127,7 +127,7 @@ const FlightSearchForm = () => {
                   w-24 sm:w-28 md:w-32
                   z-50
                 "
-              />
+              /> */}
 
               {/* SEARCH BOX */}
               <div className="px-3 py-7 bg-white rounded-md shadow-lg z-40 relative border-3 border-red-500">                
