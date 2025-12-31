@@ -209,7 +209,7 @@ const OnewayLocationFrom = ({
   const renderSuggestedPlaces = () => {
     return (
       <>
-        <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800">
+        <h3 className="block mt-2 sm:mt-0 px-4 sm:px-8 font-semibold text-base sm:text-lg text-neutral-800 ">
           Suggested places
         </h3>
         <div className="mt-2">

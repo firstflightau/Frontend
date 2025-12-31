@@ -130,7 +130,7 @@ const FlightSearchForm = () => {
               /> */}
 
               {/* SEARCH BOX */}
-              <div className="px-3 py-7 bg-white rounded-md shadow-lg z-40 relative border-3 border-red-500">                
+              <div className="px-3 py-7 bg-white rounded-md shadow-lg z-40 relative">                
                 <div className="choose-plan-nav">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                   <li className="nav-item" role="presentation">
