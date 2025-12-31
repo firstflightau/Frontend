@@ -140,6 +140,7 @@ const Footer = () => {
               {/* Get In Touch Section */}
               <div className="col-7 col-md-6 col-lg-3">
                 <div className="">
+                  
                   <div className="f">
                     <h4 className="text-white text-base md:text-2xl mb-3 font-bold">
                       Get In Touch

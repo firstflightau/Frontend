@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/logo01.svg";
 import { ChevronDown, Phone, Star } from "lucide-react";
+import trustpilotLogo from "../assets/images/logo/iata.png";
 
 // import { Dropdown } from "flowbite-react";
 // import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
@@ -82,22 +83,13 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="header-right-three pl-15 d-none d-lg-flex">
-                    <div className="lang p-2">
+                    <div align="right">
                       <a
                         href="https://www.trustpilot.com/review/first-flight.com.au"
                         target="_blank"
                       >
-                        {/* <i className="ri-star-line"></i> */}
-                        <Star size={20} />
+                        <img src={trustpilotLogo} className="responsive" />
                       </a>
-                      <p className="pera">
-                        <a
-                          href="https://www.trustpilot.com/review/first-flight.com.au"
-                          target="_blank"
-                        >
-                          Trustpilot
-                        </a>
-                      </p>
                     </div>
                     <div className="divider gradient-divider"></div>
 

@@ -81,7 +81,7 @@ const ReturnSearchForm = () => {
   const renderForm = () => {
     return (
       <form className="w-full relative rounded-[10px]   bg-white ">
-        <div className="flex flex-col md:flex-row gap-2 items-center flex-1 rounded-full">
+        <div className="flex flex-col md:flex-row gap-2 items-center flex-1 rounded-fullzz">
           <OnewayLocationFrom
             placeHolder="Flying From"
             desc="Where do you want to fly from?"
