@@ -10,7 +10,6 @@ import TopFlightRoute from "../components/TopFlightRoute";
 import BestFlightDeal from "../components/BestFlightDeal";
 import Testimonial from "../components/Testimonial";
 import Partners from "../components/Partners";
-import OurPartnerLogos from '../components/OurPartnerLogos'
 const Home = () => {
   // 3. Get the metadata from the Redux store
   const homeData = useSelector((state) => state?.metaData?.allMetaData?.home);
@@ -38,7 +37,6 @@ const Home = () => {
       {/* Your Page Content */}
       <HeroSection />
       <FlightSearchForm />
-      <OurPartnerLogos/>
       <TopFlightRoute />
       <Partners />
       <BestFlightDeal />
