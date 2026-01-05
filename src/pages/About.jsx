@@ -139,7 +139,7 @@ const About = () => {
                 </h4>
                 <p className="pera">
                   At First Flight AU, our partners are the backbone of our success. We proudly collaborate with trusted airlines, global travel consolidators, education agents, and tourism networks across Australia and worldwide. These strong partnerships allow us to deliver confirmed booking, competitive fares, priority support, and seamless travel experiences for both domestic and international flights. Together, we focus on reliability, transparency, and customer satisfaction. Our partners share our vision of making air travel smarter, faster, and more 
-                  <b>affordable—so every journey starts with confidence and ends with a smile.</b>
+                  <b> affordable—so every journey starts with confidence and ends with a smile.</b>
                 </p>
               </div>
             </div>
