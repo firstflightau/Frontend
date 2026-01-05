@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import aboutBanner from "../assets/images/gallery/about-banner-three.png";
 import aboutBanner2 from "../assets/images/gallery/abour2ndbanner.jpg";
 import aboutBanner3 from "../assets/images/gallery/aboutbanner3.jpg";
+import Ourpartner from '../assets/images/gallery/Ourpartner.jpeg'
 
 import { Link } from "react-router-dom";
 const cards = [
@@ -128,6 +129,29 @@ const About = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="row g-4">
+            <div className="col-xl-8 col-lg-6">
+              <div className="section-title mx-650 mb-7 w-md-100">
+                <h4 className="title">
+                  <span style={{ color: "#FE0000" }}>Our</span>
+                  <span style={{ color: "#00005A" }}> Partner's </span>
+                </h4>
+                <p className="pera">
+                  At First Flight AU, our partners are the backbone of our success. We proudly collaborate with trusted airlines, global travel consolidators, education agents, and tourism networks across Australia and worldwide. These strong partnerships allow us to deliver confirmed booking, competitive fares, priority support, and seamless travel experiences for both domestic and international flights. Together, we focus on reliability, transparency, and customer satisfaction. Our partners share our vision of making air travel smarter, faster, and more 
+                  <b>affordable—so every journey starts with confidence and ends with a smile.</b>
+                </p>
+              </div>
+            </div>
+            <div className="col-xl-4 col-lg-6">
+              <div className="about-count-section about-count-before-bg mb-60">
+                <div className="banner">
+                  <img src={Ourpartner} alt="OurPartner" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row g-4">
             <div className="col-xl-4 col-lg-6">
               <div className="about-count-section about-count-before-bg mb-60">
                 <div className="banner">
@@ -154,6 +178,8 @@ const About = () => {
                 <li >•	Travel advice and route planning</li>
               </div>
             </div>
+          </div>
+          <div className="row g-4">
             <div className="col-xl-8 col-lg-6">
               <div className="section-title mx-650 mb-7 w-md-100">
                 <h4 className="title">
@@ -193,20 +219,22 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-12 col-lg-12">
-              <div className="section-title mb-30 w-md-100">
-                <span style={{ color: "#FE0000" }}><b>Our Commitment </b> </span>
-                <p className="pera">
-                  We continuously work to improve your travel experience by analysing fare trends, enhancing our booking system and providing reliable assistance throughout your journey.
-                </p>
+          </div>
+          <div className="col-xl-12 col-lg-12">
+            <div className="section-title mb-30 w-md-100">
+              <span style={{ color: "#FE0000" }}><b>Our Commitment </b> </span>
+              <p className="pera">
+                We continuously work to improve your travel experience by analysing fare trends, enhancing our booking system and providing reliable assistance throughout your journey.
+              </p>
 
-                <p className="pera">
-                  <span style={{ color: "#00005A" }}><b>With First Flight, you’re not just booking a ticket —<br/>
-                    you’re choosing peace of mind, value and trusted support.
-                  </b>  </span>
-                </p>
-              </div>
+              <p className="pera">
+                <span style={{ color: "#00005A" }}><b>With First Flight, you’re not just booking a ticket —<br />
+                  you’re choosing peace of mind, value and trusted support.
+                </b>  </span>
+              </p>
             </div>
+          </div>
+          <div className="row g-4">
             <div className="col-xl-12 col-lg-12">
               <div className="section-title mb-30 w-md-100">
                 <span style={{ color: "#00005A" }}><b>We’re here for you </b> </span>
@@ -221,8 +249,8 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 
