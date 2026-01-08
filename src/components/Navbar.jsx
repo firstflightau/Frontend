@@ -156,12 +156,9 @@ const Navbar = () => {
 
                   <div className="header-right-three pl-15 d-none d-lg-flex">
                     <div align="right">
-                      <a
-                        href="https://www.trustpilot.com/review/first-flight.com.au"
-                        target="_blank"
-                      >
+                     
                         <img src={trustpilotLogo} className="responsive" />
-                      </a>
+                      
                     </div>
                     <div className="divider gradient-divider"></div>
 
