@@ -53,11 +53,11 @@ const Navbar = () => {
                       <img src={logo} alt="logo" className="w-4/6 md:w-5/6" />
                     </Link>
                   </div>
+                  {/* 
+                  <div className="top-header-right d-flex d-md-flex flex-col flex-md-row gap-3 mt-2 mt-md-0">
 
-                  <div className="top-header-right">
                     <div className="contact-section">
                       <div className="circle-primary-sm">
-                        {/* <i className="ri-mail-line"></i> */}
                         <i className="fa-regular fa-envelope"></i>
                       </div>
                       <div className="info">
@@ -72,7 +72,7 @@ const Navbar = () => {
                     <div className="contact-section">
                       <div className="circle-primary-sm">
                         {/* <i className="ri-phone-line"></i> */}
-                        <Phone size={16} />
+                  {/* <Phone size={16} />
                       </div>
                       <div className="info">
                         <p className="pera">Call our Experts</p>
@@ -81,7 +81,79 @@ const Navbar = () => {
                         </h4>
                       </div>
                     </div>
+                  </div> */}
+                  <div className="top-header-right d-flex flex-md-row gap-4 mt-2 mt-md-0 me-5 me-md-0">
+
+                    {/* EMAIL */}
+                    <a
+                      href="mailto:bookings@First-Flight.com.au"
+                      className="contact-section d-flex flex-column align-items-center align-items-md-start"
+                      title="Email Us"
+                    >
+                      <div className="circle-primary-sm">
+                        <i className="fa-regular fa-envelope"></i>
+                      </div>
+
+                      {/* MOBILE TEXT */}
+                      {/* <small className="d-md-none mt-1 text-xs text-center">
+                        Send Email
+                      </small> */}
+
+                      {/* DESKTOP TEXT */}
+                      <div className="info d-none d-md-block">
+                        <p className="pera">Email Anytime</p>
+                        <h4 className="title">Bookings@First-Flight.com.au</h4>
+                      </div>
+                    </a>
+
+                    {/* CALL */}
+                    <a
+                      href="tel:+61290112019"
+                      className="contact-section d-flex flex-column align-items-center align-items-md-start"
+                      title="Call Us"
+                    >
+                      <div className="circle-primary-sm">
+                        <Phone size={16} />
+                      </div>
+
+                      {/* MOBILE TEXT */}
+                      {/* <small className="d-md-none mt-1 text-xs text-center">
+                        Click to Call
+                      </small> */}
+
+                      {/* DESKTOP TEXT */}
+                      <div className="info d-none d-md-block">
+                        <p className="pera">Call our Experts</p>
+                        <h4 className="title">(+61) 290 112 019</h4>
+                      </div>
+                    </a>
+
+                    {/* WHATSAPP */}
+                    <a
+                      href="https://wa.me/61478646809"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-section d-flex flex-column align-items-center align-items-md-start"
+                      title="WhatsApp"
+                    >
+                      <div className="circle-primary-sm">
+                        <i className="fa-brands fa-whatsapp"></i>
+                      </div>
+
+                      {/* MOBILE TEXT */}
+                      {/* <small className="d-md-none mt-1 text-xs text-center">
+                        Chat on WhatsApp
+                      </small> */}
+
+                      {/* DESKTOP TEXT */}
+                      <div className="info d-none d-md-block">
+                        <p className="pera">WhatsApp</p>
+                        <h4 className="title">Chat with us</h4>
+                      </div>
+                    </a>
+
                   </div>
+
                   <div className="header-right-three pl-15 d-none d-lg-flex">
                     <div align="right">
                       <a

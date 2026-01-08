@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { HiFire } from "react-icons/hi";
 import callcentergirl from "../assets/images/gallery/callcentergirl.png";
 import { apiURL } from "../constant/Constant";
+import GoogleMap from "../components/GoogleMap";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -297,11 +298,12 @@ const Contact = () => {
                 </div>
                 <div className="col-xl-4">
                   <div className="date-travel-card position-sticky top-0">
-                    <img
+                    {/* <img
                       className="w-100 d-none d-lg-block tilt-effect radius-10"
                       src={callcentergirl}
                       alt="image"
-                    />
+                    /> */}
+                    <GoogleMap/>
                   </div>
                 </div>
               </div>
