@@ -793,14 +793,14 @@ const PassengerComponent = forwardRef((props, ref) => {
               className="w-full bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
             />
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <label
               htmlFor="mobile-contact"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Mobile No
-            </label>
-            {/* <input
+            </label> */}
+          {/* <input
               type="tel"
               id="mobile-contact"
               placeholder="eg : +61 450424186"
@@ -811,7 +811,7 @@ const PassengerComponent = forwardRef((props, ref) => {
                   mobile: e.target.value,
                 }))
               } */}
-            <input
+          {/* <input
               type="tel"
               id="mobile-contact"
               placeholder="eg : 290 112 019"
@@ -829,7 +829,48 @@ const PassengerComponent = forwardRef((props, ref) => {
               }}
               className="bg-white rounded-md border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+          </div> */}
+          <div className="w-full">
+            <label
+              htmlFor="mobile-contact"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Mobile <span className="text-red-500">*</span>
+            </label>
+
+            <div className="flex items-center w-full">
+              {/* Country Code */}
+              <div className="flex items-center gap-2 px-3 py-2.5 border border-gray-300 bg-gray-50 rounded-l-md text-sm">
+                <img
+                  src="https://flagcdn.com/w20/au.png"
+                  alt="AU"
+                  className="w-5 h-4 object-cover"
+                />
+                <span className="font-medium">+61</span>
+              </div>
+
+              {/* Mobile Input */}
+              <input
+                type="tel"
+                id="mobile-contact"
+                placeholder="Mobile No"
+                value={passengerData.mobile}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  // Allow only digits and spaces
+                  if (/^[\d\s]*$/.test(value)) {
+                    setPassengerData((prev) => ({
+                      ...prev,
+                      mobile: value,
+                      mobileCode: "+61", // always Australia
+                    }));
+                  }
+                }}
+                className="bg-white border border-l-0 border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 rounded-r-md"
+              />
+            </div>
           </div>
+
         </div>
       </div>
     </div>
