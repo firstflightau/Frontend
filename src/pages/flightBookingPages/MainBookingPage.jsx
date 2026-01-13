@@ -70,14 +70,14 @@ const MainBookingPage = () => {
   // };
   // const jwtToken = reducerState?.auth?.user?.token;
 
-  // const handleBookClick = async () => {
-  //   // Allow guest checkout — do not force login
-  //   setLoader(true);
+  const handleBookClick = async () => {
+    // Allow guest checkout — do not force login
+    setLoader(true);
 
-  //   // pass token if present, otherwise pass null
-  //   handlePayment(jwtToken || null, grandTotal, reservationIdDevKit, handleSuccessFunction);
+    // pass token if present, otherwise pass null
+    handlePayment(jwtToken || null, grandTotal, reservationIdDevKit, handleSuccessFunction);
 
-  // };
+  };
 
   const homeData = useSelector(
     (state) => state?.metaData?.allMetaData?.reviewBooking
@@ -147,15 +147,15 @@ const MainBookingPage = () => {
             <div className="col-12 col-md-4 col-lg-4 col-xl-4 w-full block md:hidden">
               <PriceSummary />
             </div>
-            {/* <BookButton onClick={handleBookClick} name={"Pay Now"} /> */}
-            <a
+            <BookButton onClick={handleBookClick} name={"Pay Now"} />
+            {/* <a
               href="https://cvfrpayments.com/cvfr-payment/client/hpp/fNvMZrytiBqqOer4VZqn"
               target="_blank"
               rel="noopener noreferrer"
               className="block"
             >
               <BookButton name={"Pay Now"} />
-            </a>
+            </a> */}
 
           </div>
           <div className="col-12 col-md-4 col-lg-4 col-xl-4 hidden md:block">
