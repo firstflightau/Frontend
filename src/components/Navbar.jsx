@@ -52,6 +52,8 @@ const Navbar = () => {
                     <Link to="/">
                       <img src={logo} alt="logo" className="w-4/6 md:w-5/6" />
                     </Link>
+                  <p className="ms-5"><span style={{ color: "#FE0000" }}>ABN </span>
+                  <span style={{ color: "#00005A" }}>45 679 155 036  </span></p>
                   </div>
                   {/* 
                   <div className="top-header-right d-flex d-md-flex flex-col flex-md-row gap-3 mt-2 mt-md-0">

@@ -115,6 +115,8 @@ const About = () => {
                   <span style={{ color: "#FE0000" }}>Your Trusted </span>
                   <span style={{ color: "#00005A" }}>Flight Booking Partner in Australia </span>
                 </h4>
+                <b><p><span style={{ color: "#FE0000" }}>ABN </span>
+                  <span style={{ color: "#00005A" }}>45 679 155 036  </span></p></b>
                 <p className="pera">
                   First Flight Pty Ltd is an Australia-based online travel company committed to making flight bookings simple, affordable and stress-free. We help travellers compare fares, explore routes and book domestic and international flights with complete transparency and real-time pricing.
                   Founded in July 2024 under the Australian Corporation Act, our mission is clear —
