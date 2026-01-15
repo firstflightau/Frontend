@@ -353,7 +353,6 @@ const FlightHeroSection = () => {
 
       </div>
     </section>
-    
     </>
   );
 };
