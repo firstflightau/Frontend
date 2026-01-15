@@ -4,6 +4,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../plugin.css";
 import Navbar from "./components/Navbar";
 import "./styles/index.scss";
+import FlightBooking from './pages/FlightBooking';
 import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -80,6 +81,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/flightbooking" element={<FlightBooking />} />
         {/* Website Routes */}
         <Route
           path="/*"
