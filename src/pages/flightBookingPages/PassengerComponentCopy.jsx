@@ -242,10 +242,9 @@ const PassengerComponent = () => {
                       {passenger.firstName && passenger.lastName
                         ? `${passenger.firstName} ${passenger.lastName}`
                         : `
-                            ${
-                              type.slice(0, -1).charAt(0).toUpperCase() +
-                              type.slice(0, -1).slice(1)
-                            } ${index + 1}`}
+                            ${type.slice(0, -1).charAt(0).toUpperCase() +
+                        type.slice(0, -1).slice(1)
+                        } ${index + 1}`}
                     </span>
                   </div>
                 </Accordion.Title>
@@ -269,6 +268,7 @@ const PassengerComponent = () => {
                         <option value="Mr">Mr</option>
                         <option value="Mrs">Mrs</option>
                         <option value="Miss">Miss</option>
+                        <option value="Mstr">Mstr</option>
                       </select>
                     </div>
 
@@ -321,11 +321,10 @@ const PassengerComponent = () => {
                       <div className="flex">
                         <button
                           type="button"
-                          className={`p-2 px-4 bg-gray-100 border-b-2 ${
-                            passenger.gender === 1
+                          className={`p-2 px-4 bg-gray-100 border-b-2 ${passenger.gender === 1
                               ? "border-secondary-500 bg-secondary-50"
                               : ""
-                          }`}
+                            }`}
                           onClick={() => handleChange(type, index, "gender", 1)}
                         >
                           Male
@@ -333,11 +332,10 @@ const PassengerComponent = () => {
                         <div className="border-r-2 h-full"></div>
                         <button
                           type="button"
-                          className={`p-2 px-4 bg-gray-100 border-b-2 ${
-                            passenger.gender === 2
+                          className={`p-2 px-4 bg-gray-100 border-b-2 ${passenger.gender === 2
                               ? "border-secondary-500 bg-secondary-50"
                               : ""
-                          }`}
+                            }`}
                           onClick={() => handleChange(type, index, "gender", 2)}
                         >
                           Female
@@ -647,18 +645,16 @@ const PassengerComponent = () => {
     <div className="">
       <div className="rounded-2xl  border-1 border-gray-200 mt-4">
         <p
-          className={` ${
-            isAccordionVisible ? "rounded-ss-2xl rounded-se-2xl" : "rounded-2xl"
-          }  text-gray-700 p-2 bg-gradient-to-r from-red-200 via-red-100  to-red-50  text-lg font-bold cursor-pointer flex justify-between items-center transition-all duration-200 ease-in-out`}
+          className={` ${isAccordionVisible ? "rounded-ss-2xl rounded-se-2xl" : "rounded-2xl"
+            }  text-gray-700 p-2 bg-gradient-to-r from-red-200 via-red-100  to-red-50  text-lg font-bold cursor-pointer flex justify-between items-center transition-all duration-200 ease-in-out`}
           onClick={() => setIsAccordionVisible((prev) => !prev)}
         >
           Passenger Details
           <span className="text-xl">{isAccordionVisible ? "-" : "+"}</span>
         </p>
         <div
-          className={`transition-all duration-300 ease-in-out  ${
-            isAccordionVisible ? "max-h-full" : "max-h-0"
-          }`}
+          className={`transition-all duration-300 ease-in-out  ${isAccordionVisible ? "max-h-full" : "max-h-0"
+            }`}
         >
           {renderAccordion("adults", passengerData.adults)}
           {renderAccordion("children", passengerData.children)}

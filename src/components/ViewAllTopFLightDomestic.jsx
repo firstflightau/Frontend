@@ -220,7 +220,7 @@ const TopFlightRouteDomestic = () => {
                     max={10}
                     min={1}
                     label="Adults"
-                    desc="Ages 13 or above"
+                    desc="Ages 12 or above"
                   />
                   <NcInputNumber
                     className="w-full mt-6"
@@ -230,7 +230,7 @@ const TopFlightRouteDomestic = () => {
                     }
                     max={4}
                     label="Children"
-                    desc="Ages 2–12"
+                    desc="Ages 2–11"
                   />
                   <NcInputNumber
                     className="w-full mt-6"
@@ -240,7 +240,7 @@ const TopFlightRouteDomestic = () => {
                     }
                     max={4}
                     label="Infants"
-                    desc="Ages 0–2"
+                    desc="Ages 0–23 months"
                   />
 
                   <div

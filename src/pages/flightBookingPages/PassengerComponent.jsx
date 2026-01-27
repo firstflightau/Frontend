@@ -329,6 +329,14 @@ const PassengerComponent = forwardRef((props, ref) => {
                                 Mrs
                               </span>
                             </Listbox.Option>
+                            <Listbox.Option
+                              value="Mrs"
+                              className="group relative cursor-default select-none py-2 pl-3 pr-2 text-gray-900 data-[focus]:bg-blue-500 data-[focus]:text-white"
+                            >
+                              <span className="block truncate font-normal group-data-[selected]:font-semibold">
+                                Mstr
+                              </span>
+                            </Listbox.Option>
                           </Listbox.Options>
                         </div>
                       </Listbox>

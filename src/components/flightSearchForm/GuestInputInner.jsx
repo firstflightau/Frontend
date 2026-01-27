@@ -49,7 +49,7 @@ const GuestsInputInner = ({
     { id: 4, value: "Business", label: "Business" },
     { id: 6, value: "First", label: "First" },
 
-    { id: 6, value: "PremiumFirst", label: "Premium First" },
+    // { id: 6, value: "PremiumFirst", label: "Premium First" },
   ];
   //   const [flightClassState, setFlightClassState] = useState(flightClass?.[0]);
   const [flightClassState, setFlightClassState] = useState(
@@ -133,7 +133,7 @@ const GuestsInputInner = ({
                 max={10}
                 min={1}
                 label="Adults"
-                desc="Ages 13 or above"
+                desc="Ages 12 or above"
               />
               <NcInputNumber
                 className="w-full mt-6"
@@ -141,7 +141,7 @@ const GuestsInputInner = ({
                 onChange={(value) => handleChangeData(value, "guestChildren")}
                 max={4}
                 label="Children"
-                desc="Ages 2–12"
+                desc="Ages 2–11"
               />
               <NcInputNumber
                 className="w-full mt-6"
@@ -149,7 +149,7 @@ const GuestsInputInner = ({
                 onChange={(value) => handleChangeData(value, "guestInfants")}
                 max={4}
                 label="Infants"
-                desc="Ages 0–2"
+                desc="Ages 0–23 months"
               />
 
               <div
