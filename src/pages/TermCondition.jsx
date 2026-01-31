@@ -403,8 +403,15 @@ const TermCondition = () => {
                 <h5 className="sub-title font-600">
                   The cancellation charges are: -
                 </h5>
-
                 <ul className="experience listing listing2">
+                  <li className="single-list">
+                    <i className="ri-shield-check-line"></i>
+                    <p className="pera">
+                      <b>As per as airline policy</b>
+                    </p>
+                  </li>
+                </ul>
+                {/* <ul className="experience listing listing2">
                   <li className="single-list">
                     <i className="ri-shield-check-line"></i>
                     <p className="pera">
@@ -437,7 +444,7 @@ const TermCondition = () => {
                       of the holiday cost.
                     </p>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="single-subterms mb-30">
                 <h5 className="sub-title font-600">Please note: - </h5>
