@@ -46,7 +46,7 @@ const FlightHeroSection = () => {
                   </button>
                 </a>
 
-                <a href="tel:+6129011201">
+                <a href="tel:+61290112019">
                   <button className="border-2 border-[#00005A] text-[#00005A] px-8 py-4 rounded-full font-semibold hover:bg-[#00005A] hover:text-white transition">
                     Click to Call
                   </button>
