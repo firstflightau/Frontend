@@ -69,18 +69,27 @@ const Contact = () => {
 
     setLoading(true);
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     "Content-Type": "application/json",
+      //   },
+      // };
 
-      const response = await axios.post(
-        `${apiURL.baseURL}/api/contact`,
-        formData,
-        config
-      );
+      // const response = await axios.post(
+      //   `${apiURL.baseURL}/api/contact`,
+      //   formData,
+      //   config
+      // );
+await axios.post(
+  `${apiURL.baseURL}/api/contact`,
+  formData,
+  {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
 
       setToast({
         show: true,
