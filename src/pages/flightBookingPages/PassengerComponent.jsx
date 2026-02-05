@@ -881,6 +881,29 @@ const PassengerComponent = forwardRef((props, ref) => {
 
         </div>
       </div>
+      <div className="remember-me terms-condition mt-3">
+            <label>
+              <input
+                className="checkbox-style"
+                type="checkbox"
+                value="remember"
+                name="remember"
+              />
+              <small>
+                I agree to all the
+                <Link to="'term-condition">
+                  <span className="text-primary">Terms</span>
+                </Link>{" "}
+                and{" "}
+                <Link to="/privacy-policy">
+                  <span className="text-primary">
+                    Privacy policy
+                  </span>
+                </Link>
+              </small>
+              <span className="checkmark-style"></span>
+            </label>
+          </div>
     </div>
   );
 });
