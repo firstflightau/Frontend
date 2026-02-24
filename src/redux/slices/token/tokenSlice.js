@@ -7,6 +7,7 @@ export const fetchIpAddress = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(`${apiURL.baseURL}/api/flight/oauthtoken`);
+      // console.log(response)
       if (!response.ok) {
         throw new Error("Failed to fetch IP address");
       }

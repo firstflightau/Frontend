@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { Minus, Plus } from "lucide-react";
-
+import { Link } from "react-router-dom";
 const PassengerComponent = forwardRef((props, ref) => {
   const reducerState = useSelector((state) => state);
   const countryList = reducerState?.airportList?.countryList;
@@ -880,6 +880,30 @@ const PassengerComponent = forwardRef((props, ref) => {
           </div>
 
         </div>
+
+      </div>
+      <div className="remember-me terms-condition mt-3">
+        <label>
+          <input
+            className="checkbox-style"
+            type="checkbox"
+            value="remember"
+            name="remember"
+          />
+          <small>
+            I agree to all the
+            <Link to="'term-condition">
+              <span className="text-primary">Terms</span>
+            </Link>{" "}
+            and{" "}
+            <Link to="/privacy-policy">
+              <span className="text-primary">
+                Privacy policy
+              </span>
+            </Link>
+          </small>
+          <span className="checkmark-style"></span>
+        </label>
       </div>
     </div>
   );

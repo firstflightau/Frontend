@@ -52,8 +52,8 @@ const Navbar = () => {
                     <Link to="/">
                       <img src={logo} alt="logo" className="w-4/6 md:w-5/6" />
                     </Link>
-                  <p className="ms-5"><span style={{ color: "#FE0000" }}>ABN </span>
-                  <span style={{ color: "#00005A" }}>45 679 155 036  </span></p>
+                  {/* <p className="ms-5"><span style={{ color: "#FE0000" }}>ABN </span>
+                  <span style={{ color: "#00005A" }}>45 679 155 036  </span></p> */}
                   </div>
                   {/* 
                   <div className="top-header-right d-flex d-md-flex flex-col flex-md-row gap-3 mt-2 mt-md-0">
@@ -131,7 +131,7 @@ const Navbar = () => {
                     </a>
 
                     {/* WHATSAPP */}
-                    <a
+                    {/* <a
                       href="https://wa.me/61478646809"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -140,7 +140,7 @@ const Navbar = () => {
                     >
                       <div className="circle-primary-sm">
                         <i className="fa-brands fa-whatsapp"></i>
-                      </div>
+                      </div> */}
 
                       {/* MOBILE TEXT */}
                       {/* <small className="d-md-none mt-1 text-xs text-center">
@@ -148,11 +148,11 @@ const Navbar = () => {
                       </small> */}
 
                       {/* DESKTOP TEXT */}
-                      <div className="info d-none d-md-block">
+                      {/* <div className="info d-none d-md-block">
                         <p className="pera">WhatsApp</p>
                         <h4 className="title">Chat with us</h4>
                       </div>
-                    </a>
+                    </a> */}
 
                   </div>
 
@@ -283,22 +283,22 @@ const Navbar = () => {
                               Services
                             </Link>
                           </li>
-                          <li className="single-list">
+                          {/* <li className="single-list">
                             <Link to="/team" className="single">
                               Our Team
                             </Link>
-                          </li>
+                          </li> */}
 
                           <li className="single-list">
                             <Link to="faq" className="single">
                               FAQ's
                             </Link>
                           </li>
-                          <li className="single-list">
+                          {/* <li className="single-list">
                             <Link to="/testimonials" className="single">
                               Testimonial
                             </Link>
-                          </li>
+                          </li> */}
                           <li className="single-list">
                             <Link to="/contact-us" className="single">
                               Contact Us
