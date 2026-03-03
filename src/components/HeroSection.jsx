@@ -1,14 +1,14 @@
 import React from "react";
 
 import heroBanner from "../assets/images/hero/hero-three-banner.png";
-import heroVideo from "../assets/images/videos/travel1.mp4";
+import heroVideo from "../assets/images/videos/aprileaster.mp4";
 // import heroVideo from "../assets/images/videos/chritsmas.mp4";
 import user1 from "../assets/images/hero/user-1.jpeg";
 import user2 from "../assets/images/hero/user-2.png";
 import user3 from "../assets/images/hero/user-3.png";
 import user4 from "../assets/images/hero/user-4.jpeg";
 import hand from "../assets/images/icon/hand.png";
-
+// import aprileaster from '../assets/images/aprileaster1.jpeg'
 const HeroSection = () => {
   return (
     <section className="hero-padding-for-three video-overlay position-relative">
@@ -23,13 +23,19 @@ const HeroSection = () => {
           <source src={heroVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        {/* <img
+          className="hero-slider-video video-cover"
+          src={aprileaster}
+          alt="Hero Banner"
+        /> */}
       </div>
       <div className="container">
         <div className="row align-items-center justify-content-between g-4">
           <div className="col-xl-12">
             <div className="hero-caption-three position-relative z-3">
               <h4 className="title wow fadeInUp" data-wow-delay="0.0s">
-                Plan tours to dream locations in just a click!
+                <span style={{ color: "#FE0000" }}>Celebrate Easter </span>
+                <span style={{ color: "#00005A" }}>with Special Flight Deals!</span>
               </h4>
               <p className="pera wow fadeInUp" data-wow-delay="0.1s">
                 Travel is a transformative and enriching experience that allows
