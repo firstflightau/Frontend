@@ -56,6 +56,7 @@ import TopFlightRouteDomestic from "./components/ViewAllTopFLightDomestic";
 import TopFlightRouteInternational from "./components/ViewAllTopFLightInternational";
 import ViewAllFlightDeals from "./components/ViewAllFlightDeals";
 import WhatsAppButton from "./components/WhatsAppButton";
+import FoodFestivalPopUp from "./components/FoodFestivalPopUp";
 function App() {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -169,6 +170,7 @@ function App() {
         </Route>
       </Routes>
       <WhatsAppButton />
+      <FoodFestivalPopUp />
     </>
   );
 }

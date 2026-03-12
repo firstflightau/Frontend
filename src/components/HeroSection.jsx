@@ -33,18 +33,18 @@ const HeroSection = () => {
         <div className="row align-items-center justify-content-between g-4">
           <div className="col-xl-12">
             <div className="hero-caption-three position-relative z-3">
-              <h4 className="title wow fadeInUp" data-wow-delay="0.0s">
+              <h4 className="title wow fadeInUp d-none d-md-block" data-wow-delay="0.0s">
                 <span style={{ color: "#FE0000" }}>Celebrate Easter </span>
                 <span style={{ color: "#00005A" }}>with Special Flight Deals!</span>
               </h4>
-              <p className="pera wow fadeInUp" data-wow-delay="0.1s">
+              <p className="pera wow fadeInUp d-none d-md-block" data-wow-delay="0.1s">
                 Travel is a transformative and enriching experience that allows
                 individuals to explore new destinations, cultures, and
                 landscapes
               </p>
             </div>
             <div
-              className="hero-footer position-relative z-3 wow fadeInUp"
+              className="hero-footer position-relative z-3 wow fadeInUp d-none d-md-block"
               data-wow-delay="0.3s"
             >
               <div className="all-user">
