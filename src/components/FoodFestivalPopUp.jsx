@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import foodFestival from "../assets/images/foodFestival.jpeg";
+import foodfestival from "../assets/images/foodfestival.jpeg";
 
 const FestivalPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -29,7 +29,7 @@ const FestivalPopup = () => {
 
         {/* Image */}
         <img
-          src={foodFestival}
+          src={foodfestival}
           alt="Food Festival Cheap Flights"
           className="w-full h-40 object-cover img-fluid"
         />
