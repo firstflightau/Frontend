@@ -3,11 +3,11 @@ import React from "react";
 import heroBanner from "../assets/images/hero/hero-three-banner.png";
 import heroVideo from "../assets/images/videos/aprileaster.mp4";
 // import heroVideo from "../assets/images/videos/chritsmas.mp4";
-import user1 from "../assets/images/hero/user-1.jpeg";
-import user2 from "../assets/images/hero/user-2.png";
-import user3 from "../assets/images/hero/user-3.png";
-import user4 from "../assets/images/hero/user-4.jpeg";
-import hand from "../assets/images/icon/hand.png";
+// import user1 from "../assets/images/hero/user-1.jpeg";
+// import user2 from "../assets/images/hero/user-2.png";
+// import user3 from "../assets/images/hero/user-3.png";
+// import user4 from "../assets/images/hero/user-4.jpeg";
+// import hand from "../assets/images/icon/hand.png";
 // import aprileaster from '../assets/images/aprileaster1.jpeg'
 const HeroSection = () => {
   return (
@@ -29,7 +29,7 @@ const HeroSection = () => {
           alt="Hero Banner"
         /> */}
       </div>
-      <div className="container">
+      {/* <div className="container">
         <div className="row align-items-center justify-content-between g-4">
           <div className="col-xl-12">
             <div className="hero-caption-three position-relative z-3">
@@ -71,7 +71,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
