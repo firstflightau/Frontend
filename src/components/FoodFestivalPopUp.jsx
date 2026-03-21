@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import foodFestival from "../assets/images/foodFestival.jpeg"; // 👈 apni image path yaha dalna
 
 const FestivalPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -27,12 +28,19 @@ const FestivalPopup = () => {
           ✕
         </button>
 
+        {/* 🔥 IMAGE ADDED */}
+        <img
+          src={foodFestival}
+          alt="Easter Offer"
+          className="w-full h-44 object-cover"
+        />
+
         {/* Content */}
         <div className="p-6 text-center">
 
           {/* Badge */}
           <div className="inline-block bg-white text-[#FE0000] px-4 py-1 rounded-full text-xs font-bold mb-3 shadow">
-            LIMITED TIME OFFER
+            LIMITED TIME OFFER TILL 5 APRIL
           </div>
 
           {/* Heading */}
