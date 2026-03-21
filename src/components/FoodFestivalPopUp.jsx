@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import foodFestival from "../assets/images/foodFestival.jpeg"; // 👈 apni image path yaha dalna
+import easter from "../assets/images/easter.jpeg"; // 👈 apni image path yaha dalna
 
 const FestivalPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -30,7 +30,7 @@ const FestivalPopup = () => {
 
         {/* 🔥 IMAGE ADDED */}
         <img
-          src={foodFestival}
+          src={easter}
           alt="Easter Offer"
           className="w-full h-44 object-cover"
         />
