@@ -40,12 +40,12 @@ const FestivalPopup = () => {
 
           {/* Badge */}
           <div className="inline-block bg-white text-[#FE0000] px-4 py-1 rounded-full text-xs font-bold mb-3 shadow">
-            LIMITED TIME OFFER TILL 5 APRIL
+            LIMITED TIME OFFER
           </div>
 
           {/* Heading */}
           <h2 className="text-2xl font-extrabold mb-2 leading-snug">
-            ✈️ April Easter Festival
+            ✈️On First Booking
           </h2>
 
           {/* Offer */}
