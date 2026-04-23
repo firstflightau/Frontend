@@ -52,10 +52,10 @@ const Navbar = () => {
                     <Link to="/">
                       <img src={logo} alt="logo" className="w-4/6 md:w-5/6" />
                     </Link>
-                  {/* <p className="ms-5"><span style={{ color: "#FE0000" }}>ABN </span>
+                    {/* <p className="ms-5"><span style={{ color: "#FE0000" }}>ABN </span>
                   <span style={{ color: "#00005A" }}>45 679 155 036  </span></p> */}
                   </div>
-                  
+
                   <div className="top-header-right d-flex d-md-flex flex-col flex-md-row gap-3 mt-2 mt-md-0">
 
                     <div className="contact-section">
@@ -74,7 +74,7 @@ const Navbar = () => {
                     <div className="contact-section">
                       <div className="circle-primary-sm">
                         {/* <i className="ri-phone-line"></i> */}
-                  <Phone size={16} />
+                        <Phone size={16} />
                       </div>
                       <div className="info">
                         <p className="pera">Call our Experts</p>
@@ -84,7 +84,7 @@ const Navbar = () => {
                       </div>
                     </div>
                   </div>
-                 
+
 
                   <div className="header-right-three pl-15 d-none d-lg-flex">
                     {/* <div align="right">
@@ -218,7 +218,16 @@ const Navbar = () => {
                               Our Team
                             </Link>
                           </li> */}
-
+                          <li className="single-list">
+                            <Link to="/contact-us" className="single">
+                              Contact Us
+                            </Link>
+                          </li>
+                           <li className="single-list">
+                            <Link to="/blog" className="single">
+                              Blog
+                            </Link>
+                          </li>
                           <li className="single-list">
                             <Link to="faq" className="single">
                               FAQ's
@@ -229,12 +238,6 @@ const Navbar = () => {
                               Testimonial
                             </Link>
                           </li> */}
-                          <li className="single-list">
-                            <Link to="/contact-us" className="single">
-                              Contact Us
-                            </Link>
-                          </li>
-
                           <li className="single-list">
                             <a
                               href="javascript:void(0)"

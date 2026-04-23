@@ -5,6 +5,7 @@ import "../plugin.css";
 import Navbar from "./components/Navbar";
 import "./styles/index.scss";
 import FlightBooking from './pages/FlightBooking';
+import Blog from './pages/Blog'
 import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -57,6 +58,7 @@ import TopFlightRouteInternational from "./components/ViewAllTopFLightInternatio
 import ViewAllFlightDeals from "./components/ViewAllFlightDeals";
 import WhatsAppButton from "./components/WhatsAppButton";
 import FoodFestivalPopUp from "./components/FoodFestivalPopUp";
+import OverPayBlog from "./pages/Blog/OverPayBlog";
 function App() {
   const reducerState = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -93,6 +95,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="//why-australians-overpay-for-flights" element={<OverPayBlog />} />
+
                 <Route path="/team" element={<Team />} />
                 <Route path="/faq" element={<Faq />} />
                 <Route path="/testimonials" element={<Testimonial />} />
