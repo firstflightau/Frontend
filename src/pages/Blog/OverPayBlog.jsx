@@ -6,7 +6,7 @@ const goTo = (id)=> document.getElementById(id)?.scrollIntoView({behavior:'smoot
 
 const Item = ({children}) => <li className='ml-5 list-disc mb-1'>{children}</li>;
 
-return ( <div className='min-h-screen bg-slate-50 p-6 md:p-10'> <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8'> <main className='md:col-span-8 bg-white rounded-2xl shadow p-6 md:p-10'> <p className='text-sm text-slate-500 mb-2'>SEO Title: Why Australians Are Overpaying for Flights in 2026 | Save Big on Tickets</p> <p className='text-sm text-slate-500 mb-6'>Meta Description: Discover why flight prices keep increasing for Australians and learn proven strategies to avoid overpaying on domestic and international bookings.</p> <h1 className='text-4xl font-bold mb-6'>Why Australians Are Overpaying for Flights (And How to Avoid It in 2026)</h1>
+return ( <div className='min-h-screen bg-slate-50 p-6 md:p-10'> <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8'> <main className='md:col-span-8 bg-white rounded-2xl shadow p-6 md:p-10'>  <h1 className='text-4xl font-bold mb-6'>Why Australians Are Overpaying for Flights (And How to Avoid It in 2026)</h1>
 
 <section id='intro' className='mb-10 scroll-mt-24'>
         <h2 className='text-2xl font-semibold mb-3'>Introduction</h2>
